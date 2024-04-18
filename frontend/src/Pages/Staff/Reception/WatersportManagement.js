@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import useActivityList from "../../hooks/useActivityList";
-import useActivityDelete from "../../hooks/useDeleteActivity";
-import ReceptionNavbar from "../../components/receptionNavbar";
+import useActivityList from "../../../hooks/Staff/Reception/useActivityList";
+import useActivityDelete from "../../../hooks/Staff/Reception/useDeleteActivity";
+import ReceptionNavbar from "../../../components/receptionNavbar";
 
 function WatersportManage() {
   const { ActivityList, isLoading, error } = useActivityList();

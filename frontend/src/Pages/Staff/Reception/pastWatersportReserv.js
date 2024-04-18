@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import usePastReservation from "../../hooks/usePastWatersportReserv";
-import ReceptionNavbar from "../../components/receptionNavbar";
-import ReservationNavbar from "../../components/reservationNavBar";
+import usePastReservation from "../../../hooks/usePastWatersportReserv";
+import ReceptionNavbar from "../../../components/receptionNavbar";
+import ReservationNavbar from "../../../components/reservationNavBar";
 
 function PastWatersportReservations() {
   const { reservationList, isLoading, error } = usePastReservation();

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useAddStock  from "../../hooks/useAddStock";
-import KitchenSidebar from "../../components/KitchenSideBar";
+import useAddStock  from "../../../hooks/Staff/KitchenInventory/useAddStock";
+import KitchenSidebar from "../../../components/KitchenSideBar";
 
 const AddStock = () => {
 

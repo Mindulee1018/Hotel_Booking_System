@@ -1,5 +1,5 @@
-import useTableList from "../../hooks/useDiningReserv";
-import ReceptionNavbar from "../../components/receptionNavbar";
+import useTableList from "../../../hooks/Staff/Reception/useDiningReserv";
+import ReceptionNavbar from "../../../components/receptionNavbar";
 
 const DiningReservations = () => {
   const { TableList, isLoading, error } = useTableList();
