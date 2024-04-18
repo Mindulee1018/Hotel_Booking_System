@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react';
-import { useLogout } from '../hooks/useLogout'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../../../hooks/Client/userLogin/useLogout'
+import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 

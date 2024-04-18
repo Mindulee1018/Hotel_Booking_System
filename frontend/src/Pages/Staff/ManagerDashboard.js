@@ -1,4 +1,4 @@
-import { useLogout } from "../../hooks/useLogout";
+import { useLogout } from "../../hooks/Client/userLogin/useLogout";
 
 function Dashboard() {
   const { logout } = useLogout();

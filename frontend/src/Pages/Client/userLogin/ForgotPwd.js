@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useForgot } from '../hooks/useForgot';
+import { useForgot } from '../../../hooks/Client/userLogin/useForgot';
 
 function Forgotpassword(){
   const {  setEmail, isLoading, error,forgotPassword ,status } = useForgot();

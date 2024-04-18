@@ -1,7 +1,7 @@
 // In useUpdate hook
 import { useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
-import { useAuthContext } from './useAuthContext'
+import { useAuthContext } from '../../useAuthContext'
 
 
 

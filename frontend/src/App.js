@@ -2,10 +2,29 @@ import React from "react";
 import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
+///////////Client Side////////////
+
+//components
 import Login from "./components/Login";
-import ReservationNavbar from "./components/reservationNavBar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+//User login
+import Home from "./Pages/Client/userLogin/Home.js";
+import Signup from "./Pages/Client/userLogin/signup.js";
+import PasswordReset from "./Pages/Client/userLogin/PasswordReset.js";
+import ForgotPassword from "./Pages/Client/userLogin/ForgotPwd.js";
+
+//user management
+import AdminDash from "./Pages/Staff/userManagement/AdminDash.js";
+import Staffmanage from "./Pages/Staff/userManagement/staffManage.js";
+import Usermanage from "./Pages/Staff/userManagement/UserManage.js";
+import AccountManage from "./Pages/Staff/userManagement/AccountManage.js";
+
+
+
+import ReservationNavbar from "./components/reservationNavBar";
+
 import InitialRedirect from "./context/initialDirect";
 import TableReservation from "./Pages/TableReservation";
 import AddReservation from "./Pages/AddReservation";
@@ -15,9 +34,7 @@ import UpdateMenu from "./Pages/Staff/UpdateMenu";
 import MenuByCategoryPage from "./Pages/DisplayMenu";
 import ManagerDash from "./Pages/Staff/ManagerDash";
 import StaffDash from "./Pages/Staff/StaffDash";
-import Staffmanage from "./Pages/Staff/staffManage";
-import Usermanage from "./Pages/Staff/UserManage";
-import AccountManage from "./Pages/Staff/AccountManage";
+
 import ManageTableReservation from "./Pages/Staff/TableReserManagement";
 import DisplayOrders from "./Pages/DisplayFoodOrders";
 import AddNewOrder from "./Pages/AddOrders";
@@ -68,11 +85,8 @@ import AddNewOffer from "./Pages/OffersPackages/addOffer";
 // import Alldates from "./Pages/staff/Alldates";
 import EditBooking from "./Pages/EditBooking";
 import AddItem from "./Pages/Inventory/AddItem";
-import Home from "./Pages/Home";
-import Signup from "./Pages/signup";
-import PasswordReset from "./Pages/PasswordReset";
-import ForgotPassword from "./Pages/ForgotPwd";
-import AdminDash from "./Pages/Staff/AdminDash";
+
+
 import DiningDash from "./Pages/DiningDash";
 
 import AddPayment from "./Pages/addpayment";
@@ -123,13 +137,15 @@ function App() {
               </Layout>
             }
           />
+
+          {/* client Side */}
+          {/* user login */}
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPwd" element={<ForgotPassword />} />
-          <Route
-            path="/user/resetPassword/:token"
-            element={<PasswordReset />}
-          />
+          <Route path="/user/resetPassword/:token" element={<PasswordReset />} />
+
+          {/* user Management */}
           <Route path="/AdminDashbord" element={<AdminDash />} />
           <Route path="/ManagerDash" element={<ManagerDash />} />
           <Route path="/StaffDashbord" element={<StaffDash />} />

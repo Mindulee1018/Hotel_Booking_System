@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import useManagerList from "../../hooks/Staff/useDisplaystaff";
-import Adminsidebar from "../../components/AdminSidebar";
-import { useDelete } from '../../hooks/Staff/useAccountDelete';
-import { useUpdate } from '../../hooks/Staff/useAccountUpdate';
+import useManagerList from "../../../hooks/Staff/userManagement/useDisplaystaff";
+import Adminsidebar from "../../../components/AdminSidebar";
+import { useDelete } from "../../../hooks/Staff/userManagement/useAccountDelete";
+import { useUpdate } from "../../../hooks/Staff/userManagement/useAccountUpdate";
 
 function Staffmanage() {
   const { managerList, staffList } = useManagerList();

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useLogout } from '../hooks/useLogout'
+import { useLogout } from '../hooks/Client/userLogin/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { useUpdate } from '../hooks/useUpdate';
-import { useDelete } from '../hooks/useDelete';
+import { useUpdate } from '../hooks/Client/userLogin/useUpdate';
+import { useDelete } from '../hooks/Client/userLogin/useDelete';
 import { useLocation } from 'react-router-dom';
 
 const Header = () => { 

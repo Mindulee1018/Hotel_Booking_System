@@ -1,6 +1,6 @@
 import React ,{useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { usePwdReset } from '../hooks/usePwdReset';
+import { usePwdReset } from '../../../hooks/Client/userLogin/usePwdReset';
 
 const PasswordReset = () => {
   const { token } = useParams();
