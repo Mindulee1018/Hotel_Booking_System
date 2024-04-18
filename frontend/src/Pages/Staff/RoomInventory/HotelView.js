@@ -1,54 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import Inventorysidebar from '../../components/InventoryManagerSideBar';
+import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 
 
-const RoomManagerView = () => {
+const HotelView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchInventory = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:4000/roominventory/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch inventory data');
+        if (response.ok) {
+          const data = await response.json();
+          setInventory(data);
+        } else {
+          throw new Error('Failed to fetch data');
         }
-        const data = await response.json();
-        setInventory(data);
       } catch (error) {
-        console.error(error);
+        console.error('Error:', error);
       }
     };
 
-    fetchInventory();
+    fetchData();
   }, []);
+  
 
   const filter = inventory.filter(item =>
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const onDelete = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:4000/roominventory/delete/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to delete inventory item');
-      }
-      alert('Deleted successfully');
-      // Remove the deleted item from the inventory state
-      setInventory(inventory.filter(item => item._id !== id));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       <div className="row m-0 p-0">
-        <Inventorysidebar/>
+    <Inventorysidebar/>
       
-      <div className="container-fluid pt-5 col">
+      <div className="container-fluid col">
         <div className="row flex-nowrap">
           <div className="col py-3">
           <div><input
@@ -65,7 +51,7 @@ const RoomManagerView = () => {
                   <th scope="col">Description</th>
                   <th scope="col">Unit_Price</th>
                   <th scope="col">Stock Count</th>
-                  <th scope="col">Status</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -76,25 +62,19 @@ const RoomManagerView = () => {
                     <td>{item.description}</td>
                     <td>{item.unit_price}</td>
                     <td>{item.stockCount}</td>
-                    <td>
+                    {/*<td>
                       <div className="d-grid gap-2">
                         <button type="button" className="btn btn-success btn-sm">
-                          <a href={`/EditItem`} style={{ textDecoration: 'none', color: 'white' }}>
-                            update
+                          <a href={`/pages/inventory/edit/${item._id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                            Update
                           </a>
                         </button>
-                        <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(item._id)}>Delete</button>
                       </div>
-                    </td>
+                    </td>*/}
                   </tr>
                 ))}
               </tbody>
             </table>
-            <button className="btn btn-primary">
-              <a href="AddItem" style={{ textDecoration: 'none', color: 'white' }}>
-                create new Item
-              </a>
-            </button>
           </div>
         </div>
       </div></div>
@@ -102,4 +82,4 @@ const RoomManagerView = () => {
   );
 };
 
-export default RoomManagerView;
+export default HotelView;

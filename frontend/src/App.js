@@ -24,6 +24,13 @@ import AddNewOrder from "./Pages/Client/restaurant/AddOrders.js";
 import DisplayBuffet from "./Pages/Client/restaurant/DisplayBuffet.js";
 import ManageOrders from "./Pages/Client/restaurant/DisplayOrders.js";
 
+//room
+import Room from "./Pages/Client/roomBooking/rooms.js";
+import Reservation from "./Pages/Client/roomBooking/reservation.js";
+import Details from "./Pages/Client/roomBooking/CustomerDetails.js";
+import Mybookings from "./Pages/Client/roomBooking/MyBookings.js";
+
+
 ///////////manager side////////////
 
 //reception
@@ -40,8 +47,6 @@ import Staffmanage from "./Pages/Staff/userManagement/staffManage.js";
 import Usermanage from "./Pages/Staff/userManagement/UserManage.js";
 import AccountManage from "./Pages/Staff/userManagement/AccountManage.js";
 
-//room management
-
 //restaurant management
 import RestaurantNavbar from "./components/RestaurantManagerNavbar";
 import MenuItems from "./Pages/Staff/restaurantManager/MenuManagement.js";
@@ -51,6 +56,12 @@ import ManageBuffet from "./Pages/Staff/restaurantManager/ManageBuffets.js";
 import UpdateBuffet from "./Pages/Staff/restaurantManager/UpdateBuffet.js";
 import AddBuffet from "./Pages/Staff/restaurantManager/AddBuffet.js";
 import ManageTableReservation from "./Pages/Staff/restaurantManager/TableReserManagement.js";
+
+//room management
+import Profile from "./Pages/Staff/roomManager/Profile.js";
+import Bookings from "./Pages/Staff/roomManager/Bookings.js";
+import AddRoom from "./Pages/Staff/roomManager/AddRoom.js";
+import ManageRoom from "./Pages/Staff/roomManager/ManageRoom.js";
 
 //watersport activity management
 import AddActivity from "./Pages/Staff/Reception/AddActivity";
@@ -76,17 +87,10 @@ import Dashboard from "./Pages/Staff/ManagerDashboard";
 
 
 
-import Room from "./Pages/rooms";
-import Reservation from "./Pages/reservation";
-import Details from "./Pages/CustomerDetails";
-import Profile from "./Pages/Staff/Profile";
 
-import Bookings from "./Pages/Staff/Bookings";
-import AddRoom from "./Pages/Staff/AddRoom.js";
-import Mybookings from "./Pages/MyBookings";
-import ManageRoom from "./Pages/Staff/ManageRoom.js";
+
 import DiningNavbar from "./components/DiningNavbar";
-import RoomManagerView from "./Pages/Inventory/RoomManagerView";
+import RoomManagerView from "./Pages/Staff/RoomInventory/RoomManagerView";
 import Offer from "./Pages/OffersPackages/offerPackage";
 import AddNewOffer from "./Pages/OffersPackages/addOffer";
 // import HallList from "./Pages/staff/HallList";
@@ -104,7 +108,7 @@ import AddNewOffer from "./Pages/OffersPackages/addOffer";
 // import HallCalender from "./Pages/staff/HallCalender";
 // import Alldates from "./Pages/staff/Alldates";
 import EditBooking from "./Pages/EditBooking";
-import AddItem from "./Pages/Inventory/AddItem";
+import AddItem from "./Pages/Staff/RoomInventory/AddItem.js";
 
 
 import DiningDash from "./Pages/Client/restaurant/DiningDash.js";
@@ -118,8 +122,8 @@ import AddBulkStock from "./Pages/Staff/KitchenInventory/AddBulkStock.js";
 import BulkStock from "./Pages/Staff/KitchenInventory/BulkStock.js";
 import CombinedInventory from "./Pages/Staff/KitchenInventory/CombinedInventory.js";
 
-import EditItem from "./Pages/Inventory/EditItem";
-import HotelView from "./Pages/Inventory/HotelView";
+import EditItem from "./Pages/Staff/RoomInventory/EditItem.js";
+import HotelView from "./Pages/Staff/RoomInventory/HotelView.js";
 
 const Layout = ({ children }) => (
   <div>

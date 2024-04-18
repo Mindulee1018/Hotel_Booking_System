@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import RoomList from "../../hooks/useRoomList";
-import useDeleteRoom from "../../hooks/useDeleteRoom";
-import useUpdateRoom from "../../hooks/useUpdateRoom";
+import RoomList from "../../../hooks/Client/roomBooking/useRoomList";
+import useDeleteRoom from "../../../hooks/Staff/Rooms/useDeleteRoom";
+import useUpdateRoom from "../../../hooks/Staff/Rooms/useUpdateRoom";
 //import ManagerPanel from '../../components/RoomManagerNavbar';
-import RoomSideBar from "../../components/RoomSideBar";
+import RoomSideBar from "../../../components/RoomSideBar";
 
 function ManageRoom() {
   const { rooms, isLoading, error } = RoomList();

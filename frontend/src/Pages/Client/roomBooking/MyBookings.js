@@ -1,6 +1,6 @@
 import React from 'react';
-import RoomReservationList from '../hooks/useRoomReservationList'
-import useDeleteRoomReserve from '../hooks/useDeleteRoomReserve';
+import RoomReservationList from '../../../hooks/Client/roomBooking/useRoomReservationList'
+import useDeleteRoomReserve from '../../../hooks/Client/roomBooking/useDeleteRoomReserve';
 import { useState } from "react"
 
 function Mybookings () {

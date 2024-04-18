@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import RoomList from "../hooks/useRoomList";
+import RoomList from "../../../hooks/Client/roomBooking/useRoomList";
 
 function Rooms() {
   const location = useLocation();

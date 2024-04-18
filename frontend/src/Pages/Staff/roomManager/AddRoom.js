@@ -1,8 +1,8 @@
 import { useState } from "react";
 import React from "react";
 
-import RoomSideBar from "../../components/RoomSideBar";
-import useAddRoom from "../../hooks/useAddRoom";
+import RoomSideBar from "../../../components/RoomSideBar";
+import useAddRoom from "../../../hooks/Staff/Rooms/useAddRoom";
 
 const AddNewRoom = () => {
   const [Rid, setRid] = useState("");

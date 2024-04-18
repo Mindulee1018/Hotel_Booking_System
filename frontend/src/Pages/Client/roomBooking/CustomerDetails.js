@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAddRoomReserve from '../hooks/useAddRoomReserve';
-import { useAuthContext } from '../hooks/useAuthContext';
+import useAddRoomReserve from '../../../hooks/Client/roomBooking/useAddRoomReserve';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 
 function ReservationDetails() {

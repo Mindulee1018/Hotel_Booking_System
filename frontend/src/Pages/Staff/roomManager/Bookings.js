@@ -1,7 +1,7 @@
 import React from 'react';
-import ManagerPanel from '../../components/RoomManagerNavbar';
-import RoomReservationList from '../../hooks/useRoomReservationList';
-import RoomSideBar from '../../components/RoomSideBar';
+import ManagerPanel from '../../../components/RoomManagerNavbar';
+import RoomReservationList from '../../../hooks/Client/roomBooking/useRoomReservationList';
+import RoomSideBar from '../../../components/RoomSideBar';
 
 function Bookings() {
 

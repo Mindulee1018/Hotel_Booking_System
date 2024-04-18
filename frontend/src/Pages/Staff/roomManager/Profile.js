@@ -1,6 +1,6 @@
 import React from 'react';
 //import ManagerPanel from '../../components/RoomManagerNavbar';
-import RoomSideBar from '../../components/RoomSideBar';
+import RoomSideBar from '../../../components/RoomSideBar';
 function Profile() {
     return (
         <div>
