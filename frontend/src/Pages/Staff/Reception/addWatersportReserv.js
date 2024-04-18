@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import useAddReserv from "../../hooks/useAddReserv";
-import ReceptionNavbar from "../../components/receptionNavbar";
-import { checkActivityAvailability } from "../../hooks/useCheckAvailability";
+import useAddReserv from "../../../hooks/Staff/Reception/useAddReserv";
+import ReceptionNavbar from "../../../components/receptionNavbar";
+import { checkActivityAvailability } from "../../../hooks/Staff/Reception/useCheckAvailability";
 
 const AddReserv = () => {
   const location = useLocation();

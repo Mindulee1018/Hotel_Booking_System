@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import useBulkStockDisplay from '../../hooks/useBulkStockDisplay';
-import useDeleteBulkStock from '../../hooks/useDeleteBulkStock';
-import useUpdateBulkStock from '../../hooks/useUpdateBulkStock';
-import useKitchenStockDisplay from '../../hooks/useKitchenStockDisplay';
-import useDeleteStock from '../../hooks/useDeleteStock';
-import useUpdateStock from '../../hooks/useUpdateStock';
-import KitchenSidebar from '../../components/KitchenSideBar';
+import useBulkStockDisplay from '../../../hooks/Staff/KitchenInventory/useBulkStockDisplay';
+import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
+import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
+import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKitchenStockDisplay';
+import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
+import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
+import KitchenSidebar from '../../../components/KitchenSideBar';
 
 function CombinedInventory() {
     const { BStockList, isLoading: bulkLoading, error: bulkError } = useBulkStockDisplay();

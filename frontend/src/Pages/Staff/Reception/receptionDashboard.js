@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ReceptionNavbar from "../../components/receptionNavbar";
-import useActivityList from "../../hooks/useActivityList";
-import useWatersportReservation from "../../hooks/useWatersportReservations";
+import ReceptionNavbar from "../../../components/receptionNavbar";
+import useActivityList from "../../../hooks/Staff/Reception/useActivityList";
+import useWatersportReservation from "../../../hooks/Staff/Reception/useWatersportReservations";
 
 function ReceptionDashboard() {
   const {

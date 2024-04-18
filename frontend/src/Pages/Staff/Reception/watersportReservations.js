@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import useWatersportReservation from "../../hooks/useWatersportReservations";
-import useDeleteReservation from "../../hooks/useDeleteReservation";
-import useUpdateReserv from "../../hooks/useUpdateWatersportReservation";
-import useCheckoutReserv from "../../hooks/useCheckoutReserv";
-import ReceptionNavbar from "../../components/receptionNavbar";
-import ReservationNavbar from "../../components/reservationNavBar";
+import useWatersportReservation from "../../../hooks/Staff/Reception/useWatersportReservations";
+import useDeleteReservation from "../../../hooks/Staff/Reception/useDeleteReservation";
+import useUpdateReserv from "../../../hooks/Staff/Reception/useUpdateWatersportReservation";
+import useCheckoutReserv from "../../../hooks/Staff/Reception/useCheckoutReserv";
+import ReceptionNavbar from "../../../components/receptionNavbar";
+import ReservationNavbar from "../../../components/reservationNavBar";
 
 function WatersportReservations() {
   const { reservationList, isLoading, error } = useWatersportReservation();

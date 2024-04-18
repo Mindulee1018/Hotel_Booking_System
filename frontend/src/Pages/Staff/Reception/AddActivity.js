@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useAddNew from "../../hooks/useAddNew";
-import ReceptionNavbar from "../../components/receptionNavbar";
+import useAddNew from "../../../hooks/Staff/Reception/useAddNew";
+import ReceptionNavbar from "../../../components/receptionNavbar";
 
 const AddNew = () => {
   const [Activity, setName] = useState("");

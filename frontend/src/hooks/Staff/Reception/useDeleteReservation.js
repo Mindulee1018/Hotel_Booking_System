@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from './useAuthContext';
+import { useAuthContext } from '../../useAuthContext';
 
-const useActivityDelete = () => {
+const useDeleteReservation = () => {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
-  const deleteActivity = async (activityName) => {
+  const deleteReservation = async (reservationId) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:4000/watersport/activities/${activityName}`, {
+      const response = await fetch(`http://localhost:4000/watersportReservation/reservations/${reservationId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -24,8 +24,8 @@ const useActivityDelete = () => {
       if (!response.ok) {
         throw new Error(data.error);
       }else {
-        navigate("/WatersportsManagement");
-        alert('Activity deleted successfully');
+        navigate("/watersportReservation");
+        alert('Watersport Reservation deleted successfully');
       }
 
       
@@ -36,7 +36,7 @@ const useActivityDelete = () => {
     }
   };
 
-  return { deleteActivity, isLoading, error, status };
+  return { deleteReservation, isLoading, error, status };
 };
 
-export default useActivityDelete;
+export default useDeleteReservation;

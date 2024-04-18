@@ -28,14 +28,17 @@ import UpdateBuffet from "./Pages/Staff/UpdateBuffet";
 import AddBuffet from "./Pages/Staff/AddBuffet";
 import WatersportActivities from "./Pages/WatersportActivities";
 import Dashboard from "./Pages/Staff/ManagerDashboard";
-import AddActivity from "./Pages/Staff/AddActivity";
-import WatersportManage from "./Pages/Staff/WatersportManagement";
-import AddReserv from "./Pages/Staff/addWatersportReserv";
-import SelectActivity from "./Pages/Staff/SelectActivity";
-import WatersportReservations from "./Pages/Staff/watersportReservations";
-import PastWatersportReservations from "./Pages/Staff/pastWatersportReserv";
-import DiningReservations from "./Pages/Staff/DiningReservations.js";
-import ReceptionDashboard from "./Pages/Staff/receptionDashboard";
+
+//Reception
+import AddActivity from "./Pages/Staff/Reception/AddActivity";
+import WatersportManage from "./Pages/Staff/Reception/WatersportManagement";
+import AddReserv from "./Pages/Staff/Reception/addWatersportReserv";
+import SelectActivity from "./Pages/Staff/Reception/SelectActivity";
+import WatersportReservations from "./Pages/Staff/Reception/watersportReservations";
+import PastWatersportReservations from "./Pages/Staff/Reception/pastWatersportReserv";
+import DiningReservations from "./Pages/Staff/Reception/DiningReservations.js";
+import ReceptionDashboard from "./Pages/Staff/Reception/receptionDashboard";
+
 import Room from "./Pages/rooms";
 import Reservation from "./Pages/reservation";
 import Details from "./Pages/CustomerDetails";
@@ -71,12 +74,16 @@ import PasswordReset from "./Pages/PasswordReset";
 import ForgotPassword from "./Pages/ForgotPwd";
 import AdminDash from "./Pages/Staff/AdminDash";
 import DiningDash from "./Pages/DiningDash";
-import AddStock from "./Pages/Staff/AddStock";
-import KitchenInventory from "./Pages/Staff/KitchenInventory";
+
 import AddPayment from "./Pages/addpayment";
-import AddBulkStock from "./Pages/Staff/AddBulkStock";
-import BulkStock from "./Pages/Staff/BulkStock";
-import CombinedInventory from "./Pages/Staff/CombinedInventory";
+
+//Kitchen Inventory
+import AddStock from "./Pages/Staff/KitchenInventory/AddStock.js";
+import KitchenInventory from "./Pages/Staff/KitchenInventory/KitchenInventory.js";
+import AddBulkStock from "./Pages/Staff/KitchenInventory/AddBulkStock.js";
+import BulkStock from "./Pages/Staff/KitchenInventory/BulkStock.js";
+import CombinedInventory from "./Pages/Staff/KitchenInventory/CombinedInventory.js";
+
 import EditItem from "./Pages/Inventory/EditItem";
 import HotelView from "./Pages/Inventory/HotelView";
 
@@ -164,14 +171,8 @@ function App() {
           <Route path="/WatersportsManagement" element={<WatersportManage />} />
           <Route path="/addWatersportsReservation" element={<AddReserv />} />
           <Route path="/selectActivity" element={<SelectActivity />} />
-          <Route
-            path="/watersportReservations"
-            element={<WatersportReservations />}
-          />
-          <Route
-            path="/PastReservations"
-            element={<PastWatersportReservations />}
-          />
+          <Route path="/watersportReservations" element={<WatersportReservations />}/>
+          <Route path="/PastReservations" element={<PastWatersportReservations />} />
           <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
           <Route path="/DiningReservations" element={<DiningReservations />} />
 

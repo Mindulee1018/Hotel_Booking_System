@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import useActivityList from "../../hooks/useActivityList";
-import ReceptionNavbar from "../../components/receptionNavbar";
+import useActivityList from "../../../hooks/Staff/Reception/useActivityList";
+import ReceptionNavbar from "../../../components/receptionNavbar";
 
 function SelectActivity() {
   const { ActivityList, isLoading, error } = useActivityList();

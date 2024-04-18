@@ -1,21 +1,21 @@
 import React, { useState, useEffect} from 'react';
-import useBulkStockDisplay from '../../hooks/useBulkStockDisplay';
-import useDeleteBulkStock from '../../hooks/useDeleteBulkStock';
-import useUpdateBulkStock from '../../hooks/useUpdateBulkStock';
-import KitchenSidebar from '../../components/KitchenSideBar';
+import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKitchenStockDisplay';
+import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
+import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
+import KitchenSidebar from '../../../components/KitchenSideBar';
 
-function BulkStock () {
-    const {BStockList, isLoading, error} = useBulkStockDisplay();
-    const { deleteBulkStock } = useDeleteBulkStock();
-    const { updateBulkStock } = useUpdateBulkStock();
+function KitchenInventory () {
+    const {StockList, isLoading, error} = useKitchenStockDisplay();
+    const { deleteStock } = useDeleteStock();
+    const { updateStock } = useUpdateStock();
     const [nameToDelete, setNameToDelete] = useState("");
     const [nameToUpdate, setNameToUpdate] = useState("");
-    const [bname, setBName] = useState("");
-    const [bcategory, setBCategory] = useState("");
-    const [bquantity, setBQuantity] = useState("");
-    const [bunits, setBUnits] = useState("");
-    const [bprice, setBPrice] = useState("");
-    const [bdescription, setBDescription] = useState("");
+    const [saveUpdate, setSaveUpdate] = useState("");
+    const [name, setName] = useState("");
+    const [category, setCategory] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [price, setPrice] = useState("");
+    const [description, setDescription] = useState("");
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
     const [sort, setSort] = useState('');
@@ -23,11 +23,11 @@ function BulkStock () {
     //display only unique categories in filter
     useEffect(() => {
       // Fetch unique categories when StockList changes
-      const uniqueCategories = [...new Set(BStockList.map(BulkStock => BulkStock.category))];
+      const uniqueCategories = [...new Set(StockList.map(Stock => Stock.category))];
       if (uniqueCategories.length > 0) {
         setFilterCategory(''); // Select the first category by default
       }
-    }, [BStockList]);
+    }, [StockList]);
 
 
     if (isLoading) {
@@ -38,32 +38,31 @@ function BulkStock () {
         return <div>Error: {error}</div>;
       }
       const handleDelete = async () => {
-        await deleteBulkStock(nameToDelete);
+        await deleteStock(nameToDelete);
        
         setNameToDelete("");
       };
 
-      const getUpdateBulkStock = (BulkStock) => {
-        setNameToUpdate(BulkStock._id);
-        setBName(BulkStock.bname);
-        setBCategory(BulkStock.bcategory);
-        setBQuantity(BulkStock.bquantity);
-        setBUnits(BulkStock.bunits);
-        setBPrice(BulkStock.bprice);
-        setBDescription(BulkStock.bdescription);
+      const getUpdateStock = (Stock) => {
+        setNameToUpdate(Stock._id);
+        setName(Stock.name);
+        setCategory(Stock.category);
+        setQuantity(Stock.quantity);
+        setPrice(Stock.price);
+        setDescription(Stock.description);
       };
 
       const updateDetails = async () => {
-        await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,bunits, bprice,bdescription );
+        await updateStock(nameToUpdate,name, category,quantity, price,description );
       };
 
   
 
       //search and filter
-      const filteredStockList = BStockList.filter(BulkStock => {
+      const filteredStockList = StockList.filter(Stock => {
         return(
-          BulkStock.bname.toLowerCase().includes(searchkey.toLowerCase()) &&
-          (!filterCategory || BulkStock.bcategory.toLowerCase() === filterCategory.toLowerCase())
+          Stock.name.toLowerCase().includes(searchkey.toLowerCase()) &&
+          (!filterCategory || Stock.category.toLowerCase() === filterCategory.toLowerCase())
         );
       }
       );
@@ -71,13 +70,13 @@ function BulkStock () {
       const sortData = () => {
         const sortedList = [...filteredStockList];
         if (sort === 'priceAsc') {
-          sortedList.sort((a, b) => a.bprice - b.bprice);
+          sortedList.sort((a, b) => a.price - b.price);
         } else if (sort === 'priceDesc') {
-          sortedList.sort((a, b) => b.bprice - a.bprice);
+          sortedList.sort((a, b) => b.price - a.price);
         } else if (sort === 'quantityAsc') {
-          sortedList.sort((a, b) => a.bquantity - b.bquantity);
+          sortedList.sort((a, b) => a.quantity - b.quantity);
         } else if (sort === 'quantityDesc') {
-          sortedList.sort((a, b) => b.bquantity - a.bquantity);
+          sortedList.sort((a, b) => b.quantity - a.quantity);
         }
         else if (sort === 'newestCreated') {
           sortedList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -95,12 +94,12 @@ function BulkStock () {
     
 return (
   <div className="row p-0">
-        <KitchenSidebar/>
-        <div className="col">
+            <KitchenSidebar/>
+            <div className="col">
     <div>
-      <h1 className="mb-4 mt-5">Bulk Inventory</h1>
-      <a href="/AddBulkStock" className="btn btn-primary mb-5">
-              Add New Bulk Stock
+      <h1 className="mb-4 mt-5">Kitchen Inventory</h1>
+      <a href="/AddStock" className="btn btn-primary mb-5">
+              Add New Stock
             </a>
 
        {/* Search Input  and filter*/}
@@ -121,8 +120,8 @@ return (
               onChange={(e) => setFilterCategory(e.target.value)}
             >
               <option value="">All Categories</option>
-              {BStockList.map(BulkStock => BulkStock.bcategory).filter((value, index, self) => self.indexOf(value) === index).map(bcategory => (
-                <option key={bcategory} value={bcategory}>{bcategory}</option>
+              {StockList.map(Stock => Stock.category).filter((value, index, self) => self.indexOf(value) === index).map(category => (
+                <option key={category} value={category}>{category}</option>
               ))}
             </select>
           </div>
@@ -169,16 +168,13 @@ return (
               Product Category
             </th>
             <th className="border border-black" scope="col">
-              Quantity 
+              Quantity Available
             </th>
             <th className="border border-black" scope="col">
-              No of units available
+              Latest Purchased Price At
             </th>
             <th className="border border-black" scope="col">
-              Latest Purchased Price At per unit
-            </th>
-            <th className="border border-black" scope="col">
-              Special Notes
+              SpeciaNotes
             </th>
             <th className="border border-black" scope="col">
               Added Date and Time
@@ -191,111 +187,95 @@ return (
           </tr>
 
           
-          {sortData().map((BulkStock) => (
-            <tbody key={BulkStock._id}>
+          {sortData().map((Stock) => (
+            <tbody key={Stock._id}>
               <tr>
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
-                      name="bname"
-                      defaultValue={BulkStock.bname}
+                      name="name"
+                      defaultValue={Stock.name}
                       disabled=""
                       onChange={(e) => {
-                        setBName(e.target.value);
+                        setName(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{BulkStock.bname}</td>
+                    <td>{Stock.name}</td>
                   )}
                 </td>
 
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
-                      name="bcategory"
-                      defaultValue={BulkStock.bcategory}
+                      name="category"
+                      defaultValue={Stock.category}
                       disabled=""
                       onChange={(e) => {
-                        setBCategory(e.target.value);
+                        setCategory(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{BulkStock.bcategory}</td>
+                    <td>{Stock.category}</td>
                   )}
                 </td>
 
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="number"
-                      name="bquantity"
-                      defaultValue={BulkStock.bquantity}
+                      name="quantity"
+                      defaultValue={Stock.quantity}
                       disabled=""
                       onChange={(e) => {
-                        setBQuantity(e.target.value);
+                        setQuantity(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{BulkStock.bquantity}</td>
-                  )}
-                </td>
-                <td>
-                  {nameToUpdate === BulkStock._id ? (
-                    <input
-                      class="tabledit-input form-control input-sm"
-                      type="number"
-                      name="bunits"
-                      defaultValue={BulkStock.bunits}
-                      disabled=""
-                      onChange={(e) => {
-                        setBQuantity(e.target.value);
-                      }}
-                    ></input>
-                  ) : (
-                    <td>{BulkStock.bunits}</td>
+                    <td>{Stock.quantity}</td>
                   )}
                 </td>
 
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="number"
-                      name="bprice"
-                      defaultValue={BulkStock.bprice}
+                      name="price"
+                      defaultValue={Stock.price}
                       disabled=""
                       onChange={(e) => {
-                        setBPrice(e.target.value);
+                        setPrice(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{BulkStock.bprice}</td>
+                    <td>{Stock.price}</td>
                   )}
                 </td>
 
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
                       name="description"
-                      defaultValue={BulkStock.bdescription}
+                      defaultValue={Stock.description}
                       disabled=""
                       onChange={(e) => {
-                        setBDescription(e.target.value);
+                        setDescription(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{BulkStock.bdescription}</td>
+                    <td>{Stock.description}</td>
                   )}
                 </td>
-                <td>{new Date(BulkStock.createdAt).toLocaleString()}</td>
-                <td>{new Date(BulkStock.updatedAt).toLocaleString()}</td>
+                <td>{new Date(Stock.createdAt).toLocaleString()}</td>
+                <td>{new Date(Stock.updatedAt).toLocaleString()}</td>
 
                 <td>
                   <a
@@ -303,14 +283,14 @@ return (
                     className="btn btn-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#Modal"
-                    onClick={() => setNameToDelete(BulkStock.bname)}
+                    onClick={() => setNameToDelete(Stock.name)}
                   >
                     DELETE
                   </a>
                 </td>
 
                 <td>
-                  {nameToUpdate === BulkStock._id ? (
+                  {nameToUpdate === Stock._id ? (
                     <a
                       href="#"
                       className="btn btn-primary"
@@ -322,7 +302,7 @@ return (
                     <a
                       href="#"
                       className="btn btn-primary"
-                      onClick={() => getUpdateBulkStock(BulkStock)}
+                      onClick={() => getUpdateStock(Stock)}
                     >
                       Update
                     </a>
@@ -386,4 +366,6 @@ return (
 
 }
 
-export default BulkStock;
+export default KitchenInventory;
+
+ 
