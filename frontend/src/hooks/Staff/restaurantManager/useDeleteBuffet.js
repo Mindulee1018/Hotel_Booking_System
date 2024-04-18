@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "./useAuthContext";
+import { useAuthContext } from "../../useAuthContext";
 
-const useDeleteReservation = () => {
+const useDeleteBuffet = () => {
   const [error, setError] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const deleteTableReservation = async (reservationId) => {
+  const deleteBuffetItem = async (id) => {
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await fetch(
-        `http://localhost:4000/table/${reservationId}`,
+        `http://localhost:4000/buffet/${id}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -26,7 +26,7 @@ const useDeleteReservation = () => {
       if (!response.ok) {
         throw new Error(data.error);
       } else {
-        navigate("/TableReservations");
+        navigate("/manageBuffet");
         alert("Reservation deleted successfully!");
       }
     } catch (error) {
@@ -35,7 +35,7 @@ const useDeleteReservation = () => {
     }
   };
 
-  return { deleteTableReservation, isLoading, error };
+  return { deleteBuffetItem, isLoading, error };
 };
 
-export default useDeleteReservation;
+export default useDeleteBuffet;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useTableList from "../../hooks/useTableResvList";
-import useDeleteReservation from "../../hooks/useDeleteTableReservation";
-import RestaurantNavbar from "../../components/RestaurantManagerNavbar";
+import useTableList from "../../../hooks/Client/restaurant/useTableResvList";
+import useDeleteReservation from "../../../hooks/Staff/restaurantManager/useDeleteTableReservation";
+import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
 
 const ManageTableReservation = () => {
   const { TableList, isLoading, error } = useTableList();

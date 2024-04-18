@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useDisplayBuffet from '../../hooks/useDisplayBuffet'
-import useDeleteBuffet from '../../hooks/useDeleteBuffet'
-import RestaurantNavbar from "../../components/RestaurantManagerNavbar";
+import useDisplayBuffet from '../../../hooks/Client/restaurant/useDisplayBuffet'
+import useDeleteBuffet from '../../../hooks/Staff/restaurantManager/useDeleteBuffet'
+import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
 
 const ManageBuffet = () => {
   const { buffetItems, isLoading, error } = useDisplayBuffet();

@@ -1,71 +1,45 @@
 import React, { useState } from "react";
-import useDisplayBuffet from "../../hooks/useDisplayBuffet";
-import useUpdateBuffet from "../../hooks/useUpdateBuffet";
+import useMenuList from "../../../hooks/Staff/restaurantManager/useMenu";
+import useUpdateMenu from "../../../hooks/Staff/restaurantManager/useUpdateMenuItem";
 
-function UpdateBuffet() {
-  const { buffetDetails  } = useUpdateBuffet();
-  const { buffetItems, isLoading, error } = useDisplayBuffet();
-  const [BuffetName, setBuffetName] = useState("");
-  const [ Description, setDescription] = useState("");
-  const [Time, setTime] = useState("");
+function UpdateMenu() {
+  const { updateMenuItem } = useUpdateMenu();
+  const [productName, setProductName] = useState("");
   const [Price, setPrice] = useState("");
-  const [Image, setImage] = useState("");
+  const [category, setCategory] = useState("");
+  const { menuList, isLoading, error } = useMenuList();
   const [ID, setIdToUpdate] = useState("");
-   
+   const [Image, setImage] = useState("");
 
 
 
   const handleupdate = async (ID) => {
 
     setIdToUpdate('');
-    await buffetDetails(ID)
+    await updateMenuItem(ID)
 
   }
   return (
     <div className="row d-flex align-items-center justify-content-center mb-4 mt-1">
-      <h1 className="mt-2 mb-3 ">Update Buffet Details</h1>
-      
+      <h1 className="mt-2 mb-3 ">Update Product Details</h1>
+    
             <form
-             className="bg-primary bg-opacity-50"
+            className="bg-primary bg-opacity-50"
               onSubmit={handleupdate}
               method="Post"
               style={{ width: "25rem" }}
             >
               <div className="mb-3">
                 <label for="ProductName" className="form-label mt-3">
-                Buffet Name:
+                  Product Name:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="BuffetName"
+                  id="ProductName"
                   //   value={menu.productName}
                   onChange={(e) => {
-                    setBuffetName(e.target.value);
-                  }}
-                />
-              </div>
-              
-              <div class="mb-3">
-                <label className="form-label mt-3">Description:</label>
-                <input
-                  type="textarea"
-                  className="form-control"
-                  id="Description"
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-              </div>
-
-              <div class="mb-3">
-                <label className="form-label mt-3">Time:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="Time"
-                  onChange={(e) => {
-                    setTime(e.target.value);
+                    setProductName(e.target.value);
                   }}
                 />
               </div>
@@ -78,6 +52,18 @@ function UpdateBuffet() {
                   id="Price"
                   onChange={(e) => {
                     setPrice(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div class="mb-3">
+                <label className="form-label mt-3">category:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="category"
+                  onChange={(e) => {
+                    setCategory(e.target.value);
                   }}
                 />
               </div>
@@ -107,17 +93,17 @@ function UpdateBuffet() {
 
                 }}
               >
-                Add Buffet Details
+                Update Details
               </button>
 
               <p id="Error"></p>
             </form>
           </div>
-        
+    
       
 
-   
+    
   )
 }
 
-export default UpdateBuffet;
+export default UpdateMenu;

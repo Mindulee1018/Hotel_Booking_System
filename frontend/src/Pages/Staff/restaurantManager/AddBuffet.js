@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useAddBuffet from "../../hooks/useAddBuffet";
-import RestaurantNavbar from "../../components/RestaurantManagerNavbar";
+import useAddBuffet from "../../../hooks/Staff/restaurantManager/useAddBuffet";
+import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
 
 const AddBuffet = () => {
     const [BuffetName, setBuffetName] = useState("");

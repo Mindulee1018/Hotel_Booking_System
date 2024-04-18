@@ -1,10 +1,10 @@
 
 
 import React, { useState } from "react";
-import useMenuList from "../../hooks/useMenu";
-import useDeleteMenu from "../../hooks/useDeleteMenuItem";
-import useUpdateMenu from "../../hooks/useUpdateMenuItem";
-import RestaurantNavbar from "../../components/RestaurantManagerNavbar";
+import useMenuList from "../../../hooks/Staff/restaurantManager/useMenu";
+import useDeleteMenu from "../../../hooks/Staff/restaurantManager/useDeleteMenuItem";
+import useUpdateMenu from "../../../hooks/Staff/restaurantManager/useUpdateMenuItem";
+import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
 
 
 function MenuItems() {

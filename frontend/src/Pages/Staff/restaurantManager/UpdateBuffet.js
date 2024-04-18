@@ -1,61 +1,77 @@
-import { useState } from "react";
-import useAddMenu from "../../hooks/useAddMenu";
-import RestaurantNavbar from "../../components/RestaurantManagerNavbar";
+import React, { useState } from "react";
+import useDisplayBuffet from "../../../hooks/Client/restaurant/useDisplayBuffet";
+import useUpdateBuffet from "../../../hooks/Staff/restaurantManager/useUpdateBuffet";
 
-const AddNewMenu = () => {
-  const [productName, setProductName] = useState("");
+function UpdateBuffet() {
+  const { buffetDetails  } = useUpdateBuffet();
+  const { buffetItems, isLoading, error } = useDisplayBuffet();
+  const [BuffetName, setBuffetName] = useState("");
+  const [ Description, setDescription] = useState("");
+  const [Time, setTime] = useState("");
   const [Price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
   const [Image, setImage] = useState("");
+  const [ID, setIdToUpdate] = useState("");
+   
 
-  const { addMenu, isLoading, error } = useAddMenu();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    await addMenu(productName, Price, category, Image);
-  };
+  const handleupdate = async (ID) => {
 
-  function validation() {
-    var submit = document.getElementById("submit");
+    setIdToUpdate('');
+    await buffetDetails(ID)
 
-    if (productName === "" && Price === "" && category === "" ) {
-      // document.getElementById("emailError").innerHTML = "Can't be empty";
-
-      document.getElementById("Error").innerHTML = "All fields must be filled.";
-    }
   }
-
   return (
-    <div className="row p-0">
-      <RestaurantNavbar />
     <div className="row d-flex align-items-center justify-content-center mb-4 mt-1">
-
-        <h1 className="mt-2 mb-3 ">Add New Item</h1>
+      <h1 className="mt-2 mb-3 ">Update Buffet Details</h1>
       
-            
             <form
              className="bg-primary bg-opacity-50"
-              onSubmit={handleSubmit}
+              onSubmit={handleupdate}
               method="Post"
               style={{ width: "25rem" }}
             >
               <div className="mb-3">
                 <label for="ProductName" className="form-label mt-3">
-                  Product Name
+                Buffet Name:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="ProductName"
+                  id="BuffetName"
+                  //   value={menu.productName}
                   onChange={(e) => {
-                    setProductName(e.target.value);
+                    setBuffetName(e.target.value);
+                  }}
+                />
+              </div>
+              
+              <div class="mb-3">
+                <label className="form-label mt-3">Description:</label>
+                <input
+                  type="textarea"
+                  className="form-control"
+                  id="Description"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
                   }}
                 />
               </div>
 
               <div class="mb-3">
-                <label className="form-label mt-3">Price</label>
+                <label className="form-label mt-3">Time:</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="Time"
+                  onChange={(e) => {
+                    setTime(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div class="mb-3">
+                <label className="form-label mt-3">Price:</label>
                 <input
                   type="number"
                   className="form-control"
@@ -65,19 +81,6 @@ const AddNewMenu = () => {
                   }}
                 />
               </div>
-
-              <div class="mb-3">
-                <label className="form-label mt-3">category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="category"
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                  }}
-                />
-              </div>
-
               <div class="mb-3">
                 <label for="formFile" className="form-label mt-3">
                   Image File
@@ -92,26 +95,29 @@ const AddNewMenu = () => {
                 />
               </div>
 
-              
+
+
+
 
               <button
                 type="submit"
                 className="btn btn-success m-4"
                 id="submit"
                 onClick={() => {
-                  validation();
+
                 }}
               >
-               Add Menu Item
+                Add Buffet Details
               </button>
 
               <p id="Error"></p>
             </form>
           </div>
-          </div>
+        
       
 
-  );
-};
+   
+  )
+}
 
-export default AddNewMenu;
+export default UpdateBuffet;

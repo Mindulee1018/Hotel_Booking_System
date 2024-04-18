@@ -1,5 +1,5 @@
 import React, { uselocation, useState } from "react";
-import useMenuByCategory from "../hooks/useDisplayMenu";
+import useMenuByCategory from "../../../hooks/Client/restaurant/useDisplayMenu";
 import { useNavigate } from 'react-router-dom';
 
 const bufferToBase64 = (buf) => {

@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
-import useOrderList from "../hooks/useDisplayFoodOrders";
-import useDeleteFoodOrders from "../hooks/useDeleteFoodOrders";
-import useAddOrder from "../hooks/useAddOrder";
+import useOrderList from "../../../hooks/Client/restaurant/useDisplayFoodOrders";
+import useDeleteFoodOrders from "../../../hooks/Staff/restaurantManager/useDeleteFoodOrders";
+import useAddOrder from "../../../hooks/Client/restaurant/useAddOrder";
+import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
 
-const DisplayOrders = () => {
+const ManageOrders = () => {
   const { OrderList, isLoading, error } = useOrderList();
 
   const [idToDelete, setidToDelete] = useState("");
   const { deleteFoodOrders } = useDeleteFoodOrders();
   const { AddOrder} = useAddOrder();
 
-  /*const [productName, setproductName] = useState("");
-  const [Quantity, setQuantity] = useState("");
-  const [Price, setPrice] = useState("");
-  const [cusName, setcusName] = useState("");
-  const [email, setemail] = useState("");
-  const [contactNumber, setcontactNumber] = useState("");
-*/
+  
   if (isLoading) {
     return (
       <div className="alert alert-primary" role="alert">
@@ -29,26 +24,7 @@ const DisplayOrders = () => {
     return <div>Error: {error}</div>;
   }
 
-  /* const getUpdateData = (Table) => {
-     setIdToUpdate(Table._id);
-     setDate(Table.Date);
-     setName(Table.Name);
-     setCapacity(Table.Capacity);
-     setemail(Table.email);
-     setcontactNumber(Table.contactNumber);
-   };
- 
-   const updateDetails = async () => {
-     await updateReservation(
-       IdToUpdate,
-       Date,
-       Name,
-       Capacity,
-       email,
-       contactNumber
-     );
-   };
- */
+  
   const handleDelete = async () => {
     await deleteFoodOrders(idToDelete);
     console.log(isLoading, "handleDelete loading");
@@ -57,11 +33,13 @@ const DisplayOrders = () => {
 
   return (
 
-    <div>
-      <h1 className="mb-4 mt-5">My Orders</h1>
+    <div className="row p-0">
+    <RestaurantNavbar />
+    <div className="col">
+      <h1 className="mb-4 mt-5">Manage Orders</h1>
 
       <div className="d-flex align-items-center justify-content-around mb-3">
-        <table className="table" style={{ width: "75rem" }}>
+        <table className="table" style={{ width: "50rem" }}>
           <tr className="border border-black" scope="col">
             <th scope="col">productName</th>
             <th scope="col">Quantity</th>
@@ -80,10 +58,10 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className="form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
-                     Value={Order.productName}
+                    defaultValue={Order.productName}
                     readOnly
                   ></input>
                 </td>
@@ -91,7 +69,7 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className=" form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
                     defaultValue={Order.Quantity}
@@ -102,7 +80,7 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className=" form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
                     defaultValue={Order.Price}
@@ -113,7 +91,7 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className=" form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
                     defaultValue={Order.cusName}
@@ -124,7 +102,7 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className=" form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
                     defaultValue={Order.email}
@@ -135,7 +113,7 @@ const DisplayOrders = () => {
                 <td>
 
                   <input
-                    className=" form-control input-sm"
+                    className="tabledit-input form-control input-sm"
                     type="Text"
                     name="Name"
                     defaultValue={Order.contactNumber}
@@ -208,9 +186,11 @@ const DisplayOrders = () => {
           </div>
         </div>
       </div>
+    </div>
+      
 
     </div>
   );
 };
 
-export default DisplayOrders;
+export default ManageOrders;

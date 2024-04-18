@@ -1,5 +1,5 @@
 import React from 'react';
-import useDisplayBuffet from '../hooks/useDisplayBuffet'
+import useDisplayBuffet from '../../../hooks/Client/restaurant/useDisplayBuffet'
 
 const DisplayBuffet = () => {
   const { buffetItems, isLoading, error } = useDisplayBuffet();
