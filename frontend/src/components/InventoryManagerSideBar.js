@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-import { useLogout } from '../hooks/useLogout';
+import { useLogout } from '../hooks/Client/userLogin/useLogout';
 
 function Inventorysidebar(){
 

@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 
-import { useLogout } from '../hooks/useLogout';
-import { useUpdate } from '../hooks/useUpdate';
+import { useLogout } from '../hooks/Client/userLogin/useLogout';
+import { useUpdate } from '../hooks/Client/userLogin/useUpdate';
 import { useAuthContext } from '../hooks/useAuthContext'
 function RoomSideBar(){
 

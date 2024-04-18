@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaUsers, FaUserCog } from 'react-icons/fa';
 import { IoMdCalendar, IoMdSettings } from 'react-icons/io';
-import Adminsidebar from "../../components/AdminSidebar";
+import Adminsidebar from "../../../components/AdminSidebar";
 
 function AdminDash(){
 

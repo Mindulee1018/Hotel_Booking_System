@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useSignup } from "../hooks/useSignup"
+import { useSignup } from "../../../hooks/Client/userLogin/useSignup"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
