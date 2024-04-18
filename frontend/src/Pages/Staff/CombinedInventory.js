@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import useBulkStockDisplay from '../../hooks/useBulkStockDisplay';
 import useDeleteBulkStock from '../../hooks/useDeleteBulkStock';
@@ -25,6 +26,11 @@ function CombinedInventory() {
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
+    const [bname, setBName] = useState("");
+    const [bcategory, setBCategory] = useState("");
+    const [bquantity, setBQuantity] = useState("");
+    const [bprice, setBPrice] = useState("");
+    const [bdescription, setBDescription] = useState("");
 
     const allStockList = [...BStockList, ...StockList];
 
@@ -78,6 +84,8 @@ function CombinedInventory() {
         }
     };
 
+
+   
     // Render the table rows
     const renderRows = () => {
         return sortData().map(item => (
@@ -100,82 +108,51 @@ function CombinedInventory() {
 
     return (
         <div className="row p-0">
-        <KitchenSidebar/>
-        <div className="col">
-            <div>
-                <h1 className="mb-4 mt-5">Combined Inventory</h1>
-                {/* Add New Stock buttons for bulk and kitchen inventory */}
-                <a href="/AddBulkStock" className="btn btn-primary mb-2">Add New Bulk Stock</a>
-                <a href="/AddStock" className="btn btn-primary mb-2">Add New Kitchen Stock</a>
+            <KitchenSidebar/>
+            <div className="col">
+                <div>
+                    <h1 className="mb-4 mt-5">Kitchen Inventory</h1>
+                    <a href="/AddBulkStock" className="btn btn-primary mb-5"style={{marginRight:"2rem"}}>
+                        Add New Bulk Stock
+                    </a>
+                    <a href="/AddStock" className="btn btn-primary mb-5">
+                        Add New Fresh Produce
+                    </a>
+                
+                    
 
-                {/* Search Input and filter */}
-                <div className="row justify-content-between mb-3">
-                    <div className="col-auto">
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            value={searchkey}
-                            onChange={(e) => setSearchKey(e.target.value)}
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="col-auto">
-                        <select
-                            className="form-select"
-                            value={filterCategory}
-                            onChange={(e) => setFilterCategory(e.target.value)}
-                        >
-                            <option value="">All Categories</option>
-                            {/* Render options based on available categories */}
-                        </select>
-                    </div>
-                    <div className="col-auto">
-                        <select
-                            className="form-select"
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                        >
-                            <option value="">Sort by...</option>
-                            <option value="priceAsc">Price Low to High</option>
-                            <option value="priceDesc">Price High to Low</option>
-                            <option value="quantityAsc">Quantity Low to High</option>
-                            <option value="quantityDesc">Quantity High to Low</option>
-                            <option value="createdAtAsc">Oldest to Newest (Created)</option>
-                            <option value="createdAtDesc">Newest to Oldest (Created)</option>
-                            <option value="updatedAtAsc">Oldest to Newest (Updated)</option>
-                            <option value="updatedAtDesc">Newest to Oldest (Updated)</option>
-                        </select>
+                    {/* Inventory Table */}
+                    <div className="d-flex align-items-center justify-content-around mb-3">
+                        <table className="table table-dark table-striped" style={{ width: "75rem" }}>
+                            <thead>
+                                <tr>
+                                    <th className="border border-black" scope="col">Product Name</th>
+                                    <th className="border border-black" scope="col">Product Category</th>
+                                    <th className="border border-black" scope="col">Quantity</th>
+                                    <th className="border border-black" scope="col">Price</th>
+                                    <th className="border border-black" scope="col">Description</th>
+                                    <th className="border border-black" scope="col">Added Date and Time</th>
+                                    <th className="border border-black" scope="col">Last Updated</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {sortData().map(item => (
+                                    <tr key={item._id}>
+                                        <td>{item.name || item.bname}</td>
+                                        <td>{item.category || item.bcategory}</td>
+                                        <td>{item.quantity || item.bquantity}</td>
+                                        <td>{item.price|| item.bprice}</td>
+                                        <td>{item.description||item.bdescription}</td>
+                                        <td>{new Date(item.createdAt).toLocaleString()}</td>
+                                        <td>{new Date(item.updatedAt).toLocaleString()}</td>
+                                        
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                {/* Render the table */}
-                <table className="table" style={{ width: "100%" }}>
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Category</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderRows()}
-                    </tbody>
-                </table>
-            </div>
-
-            {/* Delete Confirmation Modal */}
-            <div className="modal fade" id="Modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                {/* Modal content */}
-            </div>
-
-            {/* Update Modal */}
-            <div className="modal fade" id="UpdateModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                {/* Modal content */}
-            </div>
             </div>
         </div>
     );
