@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
-import { AuthContext } from '../../context/AuthContext'; // Import the AuthContext
-import SearchHeader from '../../components/SearchHeader';
+import { AuthContext } from '../../../context/AuthContext'; // Import the AuthContext
+import SearchHeader from '../../../components/SearchHeader';
 
 const AllHallList = () => {
   const [halls, setHalls] = useState(null);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useContext } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const BookHall = () => {
   const [hallReserves, setHallReserves] = useState(null);

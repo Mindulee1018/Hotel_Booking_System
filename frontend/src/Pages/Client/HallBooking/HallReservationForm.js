@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const HallReservationForm = () => {
   const { user } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import useAddOffer from "../../hooks/useAddOffer";
+import useAddOffer from "../../../hooks/useAddOffer";
 
 const AddNewOffer = () => {
   const [offerID, setofferID] = useState("");

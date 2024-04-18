@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'; // Import useState and useEffect from react
-import "./halllist.css"; // Import custom CSS file for additional styling
+import "../../Staff/halllist.css"; // Import custom CSS file for additional styling
 import { Link } from "react-router-dom";
 
-import SearchHeader from '../../components/SearchHeader';
-import Footer from '../../components/Footer';
-import HallAdminsidebar from '../../components/HallAdminSidebar';
+import SearchHeader from '../../../components/SearchHeader';
+import Footer from '../../../components/Footer';
+import HallAdminsidebar from '../../../components/HallAdminSidebar';
 
 
 const HallList = () => {

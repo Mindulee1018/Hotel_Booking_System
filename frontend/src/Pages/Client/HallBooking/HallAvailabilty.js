@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const HallAvailability = ({ halls }) => {
   const [selectedDate, setSelectedDate] = useState(null);

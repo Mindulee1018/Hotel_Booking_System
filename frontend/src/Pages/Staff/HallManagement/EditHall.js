@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import useHallData from "../../hooks/useHallData";
-import HallAdminsidebar from "../../components/HallAdminSidebar";
+import useHallData from "../../../hooks/Staff/hallManagement/useHallData";
+import HallAdminsidebar from "../../../components/HallAdminSidebar";
 
 const EditHall = () => {
   const { id } = useParams();

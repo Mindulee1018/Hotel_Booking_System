@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import NewHallDash from '../../components/NewHallDash';
+import NewHallDash from '../../../components/NewHallDash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel, faCalendarAlt, faDatabase } from '@fortawesome/free-solid-svg-icons';
-import "./halllist.css";
+import "../../Staff/halllist.css";
 import { Link } from 'react-router-dom';
-import HallAdminsidebar from '../../components/HallAdminSidebar';
+import HallAdminsidebar from '../../../components/HallAdminSidebar';
 
 function HallAdminDash() {
   const [reservationCount, setReservationCount] = useState(0);

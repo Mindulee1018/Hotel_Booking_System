@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import HallAdminsidebar from '../../components/HallAdminSidebar';
+import HallAdminsidebar from '../../../components/HallAdminSidebar';
 
 const AdminBookHall = () => {
   const [hallReserves, setHallReserves] = useState(null);

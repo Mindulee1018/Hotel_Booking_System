@@ -39,9 +39,7 @@ function Dashboard() {
       >
         <a
           href={
-            userEmail && userEmail.includes("roommanager")
-              ? "/ManageRoom"
-              : "#"
+            userEmail && userEmail.includes("roommanager") ? "/ManageRoom" : "#"
           }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("roommanager") ? "" : "disabled"
@@ -51,7 +49,9 @@ function Dashboard() {
           Room Manager
         </a>
         <a
-          href={userEmail && userEmail.includes("restaurantmanager") ? "/menu" : "#"}
+          href={
+            userEmail && userEmail.includes("restaurantmanager") ? "/menu" : "#"
+          }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("restaurantmanager")
               ? ""
@@ -63,15 +63,17 @@ function Dashboard() {
         </a>
         <a
           href={
-            userEmail &&
-            (userEmail.includes("eventactivitymanager") ||
-              userEmail.includes("activitymanager"))
-              ? "/receptionDashboard"
+            userEmail
+              ? userEmail.includes("activitymanager")
+                ? "/receptionDashboard"
+                : userEmail.includes("eventmanager")
+                ? "/HallAdminDash"
+                : "#"
               : "#"
           }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail &&
-            (userEmail.includes("eventactivitymanager") ||
+            (userEmail.includes("eventmanager") ||
               userEmail.includes("activitymanager"))
               ? ""
               : "disabled"
@@ -80,8 +82,13 @@ function Dashboard() {
         >
           Event & Activity Manager
         </a>
+        
         <a
-          href={userEmail && userEmail.includes("inventorymanager") ? "RoomManagerView" : "#"}
+          href={
+            userEmail && userEmail.includes("inventorymanager")
+              ? "RoomManagerView"
+              : "#"
+          }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("inventorymanager")
               ? ""
@@ -93,7 +100,9 @@ function Dashboard() {
         </a>
         <a
           href={
-            userEmail && userEmail.includes("kitchenmanager") ? "/CombinedInventory" : "#"
+            userEmail && userEmail.includes("kitchenmanager")
+              ? "/CombinedInventory"
+              : "#"
           }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("kitchenmanager") ? "" : "disabled"
