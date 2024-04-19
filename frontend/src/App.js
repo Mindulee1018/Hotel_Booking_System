@@ -46,7 +46,7 @@ import HallReservationForm from "./Pages/Client/HallBooking/HallReservationForm.
 import ViewHall from "./Pages/Client/HallBooking/ViewHall.js";
 
 //watersport
-import WatersportActivities from "./Pages/WatersportActivities";
+import WatersportActivities from "../src/Pages/Client/WatersportActivities.js";
 
 //offers and packages
 import Offer from "./Pages/Client/offerPackage.js";
