@@ -54,6 +54,15 @@ function ManageRoom() {
     setRoomIdToUpdate("");
   };
 
+  const bufferToBase64 = (buf) => {
+    return btoa(
+      new Uint8Array(buf).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ""
+      )
+    );
+  };
+
   return (
     <div>
        <RoomSideBar/>
@@ -66,9 +75,7 @@ function ManageRoom() {
                   {room.Image && room.Image.data && (
                     <img
                       style={{ width: "10rem" }}
-                      src={`data:${room.Image.contentType};base64,${btoa(
-                        String.fromCharCode.apply(null, room.Image.data.data)
-                      )}`}
+                      src={`data:${room.Image.contentType};base64,${bufferToBase64(room.Image.data.data)}`}
                       className="card-img-top mb-1"
                       alt={room.Rtype}
                     />
