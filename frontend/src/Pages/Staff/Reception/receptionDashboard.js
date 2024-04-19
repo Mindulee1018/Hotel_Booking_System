@@ -79,7 +79,7 @@ function ReceptionDashboard() {
                       className="border border-black"
                       key={index}
                       style={{
-                        backgroundColor: isAvailable ? "green" : "red",
+                        backgroundColor: isAvailable ? "" : "red",
                         opacity: 0.50, // Adds 50% opacity
                       }}
                     >
