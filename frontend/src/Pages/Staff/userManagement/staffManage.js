@@ -61,7 +61,7 @@ function Staffmanage() {
           <div className="col">
             <h5 className="mb-4">Managers</h5>
             {filteredManagers.map(manager => (
-              <div className="card pt-3 bg-dark text-white mb-2" key={manager.email}>
+              <div className="card pt-3 text-black border-primary mb-2" key={manager.email}>
                 <div>
                   <div>Name: {manager.name}</div>
                   <div>Email: {manager.email}</div>
@@ -77,7 +77,7 @@ function Staffmanage() {
           <div className="col">
             <h5 className="mb-4">Staff</h5>
             {filteredStaff.map(staff => (
-              <div className='card pt-3 mb-4 bg-dark text-white' key={staff.email}>
+              <div className='card pt-3 text-black border-primary mb-2' key={staff.email}>
                 <div>
                   <div>Name: {staff.name}</div>
                   <div>Email: {staff.email}</div>

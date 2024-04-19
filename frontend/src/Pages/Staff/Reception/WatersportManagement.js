@@ -34,7 +34,7 @@ function WatersportManage() {
         <div>
           <h1 className="mb-4 mt-5">Watersport Activities</h1>
 
-          <a href="/AddActivity" className="btn btn-info mb-5">
+          <a href="/AddActivity" className="btn btn-outline-primary mb-5">
             Add New Activity
           </a>
 
@@ -70,7 +70,7 @@ function WatersportManage() {
                       <p className="card-text fw-medium">{Watersport.Description}</p>
                       <a
                         href="#"
-                        className="btn btn-danger"
+                        className="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#Modal"
                         onClick={() => setNameToDelete(Watersport._id)}

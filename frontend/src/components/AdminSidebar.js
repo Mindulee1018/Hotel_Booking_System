@@ -33,7 +33,7 @@ function Adminsidebar(){
     return(
         <div className="m-0 p-0 vh-100 " 
         >
-        <ul className="nav flex-column bg-black pe-1 vh-100 position-fixed col-3">
+        <ul className="nav flex-column pe-1 vh-100 position-fixed col-2" style={{ backgroundColor: "#1E3A8A" }}>
       
         <div className="d-flex justify-content-center align-items-center"><img src="Sunset Araliya horizontal.png" style={{width:"150px"}} className="mt-4 "></img></div>
         <div className="d-flex flex-column  mt-5 justify-content-around fs-5" style={{height:"250px"}}>

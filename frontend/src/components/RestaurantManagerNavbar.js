@@ -18,7 +18,7 @@ function RestaurantNavbar() {
 
   return (
     <div className="col-2 pe-2">
-      <ul className="nav flex-column bg-black vh-100 position-fixed ">
+      <ul className="nav flex-column vh-100 position-fixed " style={{ backgroundColor: "#1E3A8A" }}>
         <div className="d-flex flex-column  mt-5 justify-content-around fs-5"
           >
           <img

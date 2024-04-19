@@ -51,22 +51,22 @@ function SelectActivity() {
 
             <div className="d-flex align-items-center justify-content-around mb-3">
               <table
-                className="table table-striped"
+                className="table"
                 style={{ width: "50rem" }}
               >
                 <thead>
                   <tr>
                     <th></th>
-                    <th className="border border-black" scope="col">
+                    <th className="border border-black bg-primary bg-opacity-25" scope="col">
                       Activity Name
                     </th>
-                    <th className="border border-black" scope="col">
+                    <th className="border border-black bg-primary bg-opacity-25" scope="col">
                       Estimated Time
                     </th>
-                    <th className="border border-black" scope="col">
+                    <th className="border border-black bg-primary bg-opacity-25" scope="col">
                       Price
                     </th>
-                    <th className="border border-black" scope="col">
+                    <th className="border border-black bg-primary bg-opacity-25" scope="col">
                       Qty per Ride
                     </th>
                   </tr>

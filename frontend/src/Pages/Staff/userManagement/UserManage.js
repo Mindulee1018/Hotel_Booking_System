@@ -44,7 +44,7 @@ function UserManage(){
               /></div>
            <div className="col d-flex justify-content-center align-items-center mt-4">
             {filteredusers.map(user => (
-              <div className="card pt-3 w-50 bg-dark text-white ">
+              <div className="card pt-3 w-50 bg-white text-black border-primary mb-2">
                 <div>
                   <div>Name: {user.name}</div>
                   <div>Email: {user.email}</div>
