@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import useActivityList from "../hooks/Staff/Reception/useActivityList";
+import useActivityList from "../../hooks/Staff/Reception/useActivityList";
 
 function WatersportActivities() {
   const { ActivityList, isLoading, error } = useActivityList();
