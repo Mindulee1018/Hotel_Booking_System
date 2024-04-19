@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./header.css";
+
 
 const SearchHeader = ({ type }) => {
   const [destination, setDestination] = useState("");

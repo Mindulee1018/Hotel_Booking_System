@@ -12,7 +12,7 @@ const DiningDash= () => {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/DiningDashboard">Home</a>
+              <a class="nav-link active" aria-current="page" href="/Dashboard">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/DisplayBuffet">Buffets</a>
