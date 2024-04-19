@@ -30,15 +30,14 @@ function ReceptionDashboard() {
       const slotsAvailability = slots.map((slot) => {
         const isBooked = reservationList.some(
           (reservation) =>
-            reservation.activityId === activity.id &&
+            reservation?.activityList.some(res => res.id === activity.Activity) &&
             reservation.checkinDate === today &&
             reservation.checkinTime.startsWith(slot)
         );
-        console.log(
-          `Activity: ${activity.Activity}, Slot: ${slot}, Booked: ${isBooked}`
-        );
+
         return !isBooked; // true if available, false if booked
       });
+
       return { activity: activity.Activity, availability: slotsAvailability };
     });
 
@@ -57,7 +56,7 @@ function ReceptionDashboard() {
     <div className="row">
       <ReceptionNavbar />
       <div className="col">
-      <h1 className="m-5">Welcome to Reception Dashboard!</h1>
+        <h1 className="m-5">Welcome to Reception Dashboard!</h1>
         <h2 className="m-5">Today Activity Availability Map</h2>
         <div className="d-flex justify-content-around mb-3">
           <table style={{ width: "65rem" }}>
@@ -81,7 +80,7 @@ function ReceptionDashboard() {
                       key={index}
                       style={{
                         backgroundColor: isAvailable ? "green" : "red",
-                        opacity: 0.25, // Adds 50% opacity
+                        opacity: 0.50, // Adds 50% opacity
                       }}
                     >
                       {/* {isAvailable ? "Available" : "Booked"} */}
