@@ -117,11 +117,11 @@ const AddReserv = () => {
 
   return (
     <div className="row">
-      <div className="col-2" style={{ width: "0rem" }}>
+      <div className="col">
       <ReceptionNavbar />
       </div>
       
-      <div className="col">
+      <div className="col-lg-10">
 
         <div className="mt-5 mb-4">
           <h3 className="text-primary fw-bolder fs-4">Selected Activities</h3>
@@ -209,16 +209,16 @@ const AddReserv = () => {
               </table>
 
               {/* display total bill */}
-              <div className="mt-2 mb-4 bg-warning bg-opacity-50">
+              <div className="mt-2 mb-4">
                 <span className="fw-bolder text-danger">Total Bill: </span>
-                <span className="fw-bolder">Rs.{totalPrice}.00</span>
+                <span className="fw-bolder bg-warning bg-opacity-50">Rs.{totalPrice}.00</span>
               </div>
 
               <p className="text-primary fw-bolder fs-4">
                 Customer Details Form
               </p>
 
-              <div className="row d-flex align-items-center justify-content-center">
+              <div className="row align-items-center justify-content-center">
                 <form
                   onSubmit={validate}
                   style={{ width: "18rem" }}

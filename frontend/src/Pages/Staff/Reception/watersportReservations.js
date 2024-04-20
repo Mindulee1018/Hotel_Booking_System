@@ -57,6 +57,7 @@ function WatersportReservations() {
       setOtherReservations(remainingActivities);
     }
   }, [reservationList]);
+  
   if (isLoading) {
     return (
       <div className="alert alert-primary" role="alert">
