@@ -48,13 +48,13 @@ function Staffmanage() {
       <div className="col-md-3 m-0 p-0">
         <Adminsidebar />
       </div>
-      <div className="col-md-9">
+      <div className="col-md-8">
         <div className="row">
           <h2 className="mb-3 mt-3">Staff Accounts</h2>
-          <div><input
+          <div className='d-flex justify-content-center align-items-center mb-4'><input
                 type="search"
                 placeholder="Search by name..."
-                className="form-control"
+                className="form-control w-50 "
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               /></div>

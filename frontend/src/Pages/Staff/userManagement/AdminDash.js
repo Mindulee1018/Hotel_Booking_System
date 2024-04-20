@@ -8,10 +8,10 @@ function AdminDash(){
   return(
     <div className="container-fluid p-0">
       <div className="row m-0 p-0">
-        <div className="col-md-3 p-0">
+        <div className="col-md-2 p-0">
           <Adminsidebar/>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-10">
           <div className="row h4 mb-5" style={{height:"75px"}}>
             <div><p className="mt-5">Admin Dashboard</p></div>
           </div>

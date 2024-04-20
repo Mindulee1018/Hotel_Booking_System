@@ -113,13 +113,7 @@ function ReceptionNavbar() {
             className="btn mt-5"
             sty
             onClick={handlelogout}
-            style={{
-              backgroundColor: "",
-              border: "2px solid white",
-              color:"white",
-              position: "relative",
-              top: "150px",
-            }}
+            style={{backgroundColor:"rgb(85, 180, 254)", position:"relative", top:"190px"}}
           >
             Logout
           </a>

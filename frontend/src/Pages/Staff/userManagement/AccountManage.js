@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAccountCreate } from "../../../hooks/Staff/userManagement/useAccountCreate";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Adminsidebar from "../../../components/AdminSidebar";
 
 
 function CreatePage() {
@@ -30,11 +31,15 @@ function CreatePage() {
   }
 
   return (
-    <div className="container-fluid mt-5  bg-body-tertiary border">
-      <div className="row justify-content-center">
-        <div className="col-md-6 mt-5">
-          <h2 className="mb-4">Assign Staff Users</h2>
-          <form onSubmit={handleSubmit}>
+    <div className="container-fluid p-0">
+      <div className="row m-0 p-0">
+        <div className="col-md-2 p-0">
+          <Adminsidebar/>
+        </div>
+        <div className="col-md-10 ">
+          <h2 className="mb-4 mt-5">Assign Staff Users</h2>
+          <div className='d-flex justify-content-center align-items-center mt-5'>
+          <form onSubmit={handleSubmit} style={{width:"46vw"}} className='border px-3 pt-4 bg-primary bg-opacity-25'>
 
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email address</label>
@@ -82,6 +87,7 @@ function CreatePage() {
             <button type="submit" className="btn btn-primary mt-3 mb-4 " disabled={isLoading} >Create</button><br></br>
             {error && <div className="error bg-danger mt-4" style={{color:"white"}}>{error}</div>}
           </form>
+          </div>
         </div>
       </div>
     </div>
