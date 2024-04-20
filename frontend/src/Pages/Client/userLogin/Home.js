@@ -137,12 +137,12 @@ function Home() {
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
                 
-                <h2
+                <h3
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   COMFORTABLE
-                </h2>
+                </h3>
                 {hoveredElement === 1 && (
                   <div className="bg-dark bg-opacity-75 py-3">
                     <p className="card-description fs-6 fw-bold">
@@ -177,12 +177,12 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h2
+                <h3
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   ELEGANT
-                </h2>
+                </h3>
                 {hoveredElement === 2 && (
                   <div className="bg-dark bg-opacity-75 py-3">
                     <p className="card-description  fs-6 fw-bold">
@@ -219,12 +219,12 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h2
+                <h3
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   UNMATCHED TASTE
-                </h2>
+                </h3>
                 {hoveredElement === 3 && (
                   <div className="bg-dark bg-opacity-75 py-3 px-2">
                     <p className="card-description fs-6 fw-bold">
@@ -259,12 +259,12 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h2
+                <h3
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                  
                 >
                   ENTERTAINMENT
-                </h2>
+                </h3>
                 {hoveredElement === 4 && (
                   <div className="bg-dark bg-opacity-75 py-3 px-2">
                     <p className="card-description fs-6 fw-bold">
