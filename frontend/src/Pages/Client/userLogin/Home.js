@@ -47,8 +47,8 @@ function Home() {
   };
 
   return (
-    <div className="container-fluid p-0" style={{width:"70%"}}>
-      <div className="container d-flex justify-content-center" style={{marginTop:"70px"}}>
+    <div className="container-fluid p-0">
+      <div className="container d-flex justify-content-center" >
         <div
           id="imageCarousel"
           className="carousel slide"

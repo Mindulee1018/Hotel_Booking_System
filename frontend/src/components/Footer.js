@@ -6,7 +6,7 @@ function Footer(){
   const { hotel, error } = useHotelData();
 
     return(
-      <div style={{width:"70%"}} className="position-absolute start-50 translate-middle-x">
+      <div>
          <footer className="bg-dark text-light py-5 mt-4">
              <div className="container">
                <div className="row">
