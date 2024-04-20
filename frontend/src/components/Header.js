@@ -49,7 +49,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div style={{width:"70%"}} className="position-absolute top-0 start-50 translate-middle-x">
       <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3">
         <div className="container-fluid">
           <button
