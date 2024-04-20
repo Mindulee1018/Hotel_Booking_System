@@ -3,10 +3,15 @@ import React, { useState, useEffect } from "react";
 import usePastReservation from "../../../hooks/Staff/Reception/usePastWatersportReserv";
 import ReceptionNavbar from "../../../components/receptionNavbar";
 import ReservationNavbar from "../../../components/reservationNavBar";
+import useDeleteReservation from "../../../hooks/Staff/Reception/useDeleteReservation";
 
 function PastWatersportReservations() {
   const { reservationList, isLoading, error } = usePastReservation();
+  const { deleteReservation } = useDeleteReservation();
+
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [nameToDelete, setNameToDelete] = useState("");
 
   // Filter reservations on the fly
   const filteredReservations = reservationList.filter((reservation) =>
@@ -26,6 +31,12 @@ function PastWatersportReservations() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const handleDelete = async () => {
+    await deleteReservation(nameToDelete);
+
+    setNameToDelete("");
+  };
 
   // Handle search
   const handleSearchChange = (event) => {
@@ -51,21 +62,21 @@ function PastWatersportReservations() {
         <div className="col">
           <div>
             <div>
-              <h2>Reservations</h2>
+              <h2>Past Reservations</h2>
               <div className="d-flex justify-content-around mb-3">
                 <table
-                  className="table table-dark table-striped"
+                  className="table"
                   style={{ width: "75rem" }}
                 >
                   <thead>
                     <tr className="border border-black">
-                      <td className="border border-black">Customer Name</td>
-                      <td className="border border-black">Contact No</td>
-                      <td className="border border-black">Address</td>
-                      <td className="border border-black">CheckIn Date</td>
-                      <td className="border border-black">CheckIn Time</td>
-                      <td className="border border-black">Activities</td>
-                      <td></td>
+                      <th className="border border-black">Customer Name</th>
+                      <th className="border border-black">Contact No</th>
+                      <th className="border border-black">Address</th>
+                      <th className="border border-black">CheckIn Date</th>
+                      <th className="border border-black">CheckIn Time</th>
+                      <th className="border border-black">Activities</th>
+                      <th></th>
                     </tr>
                   </thead>
 
@@ -73,12 +84,12 @@ function PastWatersportReservations() {
                     {filteredReservations.length > 0 ? (
                       filteredReservations.map((reservation) => (
                         <tr key={reservation._id}>
-                          <td>{reservation.CusName}</td>
-                          <td>{reservation.TelNo}</td>
-                          <td>{reservation.Address}</td>
-                          <td>{reservation.checkinDate}</td>
-                          <td>{reservation.checkinTime}</td>
-                          <td>
+                          <td className="border border-black">{reservation.CusName}</td>
+                          <td className="border border-black">{reservation.TelNo}</td>
+                          <td className="border border-black">{reservation.Address}</td>
+                          <td className="border border-black">{reservation.checkinDate}</td>
+                          <td className="border border-black">{reservation.checkinTime}</td>
+                          <td className="border border-black">
                             {reservation.activityList.map((activity, index) => (
                               <div key={index} className="text-start">
                                 <div>Activity Name: {activity.id}</div>
@@ -90,6 +101,17 @@ function PastWatersportReservations() {
                               </div>
                             ))}
                           </td>
+                          <td className="border border-black"><button
+                                  className="btn btn-outline-danger "
+                                  style={{ width: "10rem" }}
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#Modal"
+                                  onClick={() =>
+                                    setNameToDelete(reservation._id)
+                                  }
+                                >
+                                  Delete Reservation
+                                </button></td>
                         </tr>
                       ))
                     ) : (
@@ -100,6 +122,53 @@ function PastWatersportReservations() {
                   </tbody>
                 </table>
               </div>
+
+              {/* model  */}
+            <div
+              className="modal fade"
+              id="Modal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="exampleModalLabel">
+                      CAUTION
+                    </h1>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    Are you sure you want to delete this Reservation?
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+
+                    <form action="" method="delete">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={handleDelete}
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             </div>
           </div>
         </div>
