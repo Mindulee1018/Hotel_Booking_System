@@ -105,11 +105,14 @@
 import React, { useState } from "react";
 import useMenuByCategory from "../../../hooks/Client/restaurant/useDisplayMenu";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const bufferToBase64 = (buf) => {
   const binstr = Array.from(buf, (ch) => String.fromCharCode(ch)).join("");
   return btoa(binstr);
 };
+
+
 
 const categories = [
   { name: "srilankan", image: "/path/to/srilankan.jpg" },
@@ -121,10 +124,15 @@ const categories = [
 ];
 
 const MenuDisplay = () => {
-  const [selectedCategory, setSelectedCategory] = useState("srilankan"); 
+  const location = useLocation();
+  const { category } = location.state || {};
+  
+  const [selectedCategory, setSelectedCategory] = useState(category); 
   const navigate = useNavigate();
 
   const { menuItems, isLoading, error } = useMenuByCategory(selectedCategory);
+
+
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
