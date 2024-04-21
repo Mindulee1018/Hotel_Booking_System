@@ -4,7 +4,7 @@ const Stock = require("../Models/KitchenStockModel");
 
 // add a product
 const addStock = async (req, res) => {
-  const { name, category, quantity, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price, description } = req.body;
 
   try {
       let existingStock = await Stock.findOne({ name });
@@ -17,7 +17,7 @@ const addStock = async (req, res) => {
           res.status(200).json(existingStock);
       } else {
           // If no record with the same name exists, create a new entry
-          const stock = await Stock.create({ name, category, quantity, price, description });
+          const stock = await Stock.create({ name, category, quantity,reorderLevel, price, description });
           res.status(201).json(stock);
       }
   } catch (error) {
@@ -55,7 +55,7 @@ const getsingleStock = async (req,res) =>{
 //update stocks
 const updateStock = async (req, res) => {
 
-  const { name, category, quantity, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price, description } = req.body;
   const{id}  = req.params;
 
   try{
@@ -74,6 +74,7 @@ const updateStock = async (req, res) => {
    if (name) updateFields.name = name;
    if (category) updateFields.category = category;
    if (quantity) updateFields.quantity = quantity;
+   if (reorderLevel) updateFields.reorderLevel = reorderLevel;
    if (price) updateFields.price = price;
    if (description) updateFields.description = description;
 
