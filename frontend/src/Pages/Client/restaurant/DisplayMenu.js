@@ -64,7 +64,6 @@ const CheckAndNavigate = (name, price) => {
           <option value="Pizzas and Pasta">Pizzas and Pasta</option>
           <option value="Cakes">Cakes</option>
           <option value="Desserts">Desserts</option>
-          {/* Add more categories as needed */}
         </select>
       </div>
 
