@@ -15,6 +15,9 @@ function AddNewOrder() {
     const location = useLocation();
     const { productname, price } = location.state || {};
 
+    console.log(productname)
+    console.log(price)
+
     const updateTotal = (quantity) => {
         setTotal(quantity * price);
     };
