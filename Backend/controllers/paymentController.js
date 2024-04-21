@@ -22,13 +22,13 @@ const sendEmail = async (req, res) => {
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'theo.hfern@gmail.com',
-                pass: 'hhtz fjqi zzib yxmk'
+                user: 'aliasantiago03@gmail.com',
+                pass: 'llfl ernf lnzq lsth '
             }
         });
         // Send a thank you email
         await transporter.sendMail({
-            from: 'theo.hfern@gmail.com',
+            from: 'aliasantiago03@gmail.com',
             to: email,
             subject: 'Thank You for Payment!',
             text: 'Thank you for placing your order with us!'
