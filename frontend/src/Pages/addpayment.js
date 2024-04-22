@@ -1,9 +1,34 @@
 import { useState } from 'react';
 import { usePaymentSubmission } from '../hooks/usePayment';
 import { useFormState } from '../hooks/usePayment';
+import { useLocation } from "react-router-dom";
+import useAddOrder from "../hooks/Client/restaurant/useAddOrder";
 
 
 function AddPayment() {
+
+    const location = useLocation();
+    const { AddOrder, isLoading} = useAddOrder();
+    const {      
+        orderNumber,
+        productname,
+        price,
+        Quantity,
+        cusName,
+        email,
+        contactNumber,
+        Total } = location.state || {};
+        
+
+    console.log(productname)
+    console.log(price)
+    console.log(orderNumber)
+    console.log(Quantity)
+    console.log(cusName)
+    console.log(email)
+    console.log(contactNumber)
+    console.log(Total)
+
     const { formData, handleOnChange } = useFormState({
         c_name: "",
         email: "",
@@ -32,10 +57,11 @@ function AddPayment() {
 
             const response = await submitOrder(orderData);
             if (response.ok) {
-                console.log("Reservation added:", await response.json());
+                console.log("Payment Success:", await response.json());
+                await AddOrder( orderNumber,productname, Quantity, price, cusName, email, contactNumber,Total);
                 await sendThankYouEmail(email);
                 console.log("Thank you email sent to:", email);
-                alert("Reservation Complete!");
+                alert("Payment Success!");
                 
                 
             } else {

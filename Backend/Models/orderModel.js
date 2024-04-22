@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
+   orderNumber: {
+      type: String,
+      required: true
+   },
+
    productName: {
       type: String,
       required: true
@@ -31,6 +36,11 @@ const orderSchema = new Schema({
       type: Number,
       required: true
    },
+
+   Total:{
+      type:Number,
+      required:true
+   }
 
 });
 

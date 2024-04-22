@@ -1,33 +1,76 @@
-import React, { useState } from 'react';
-import useAddOrder from "../../../hooks/Client/restaurant/useAddOrder";
+import React, { useState ,useEffect} from 'react';
 import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 function AddNewOrder() {
-    const [Quantity, setQuantity] = useState("");
+    const [Quantity, setQuantity] = useState(1);
     const [cusName, setcusName] = useState("");
     const [email, setemail] = useState("");
     const [contactNumber, setcontactNumber] = useState("");
     const [formError, setFormError] = useState("");
-    const { AddOrder, isLoading, error } = useAddOrder();
+    const [Total, setTotal] = useState(0);
+    const navigate = useNavigate();
     
     const location = useLocation();
     const { productname, price } = location.state || {};
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) return; 
-        await AddOrder(productname, Quantity, price, cusName, email, contactNumber);
+    console.log(productname)
+    console.log(price)
+
+    const updateTotal = (quantity) => {
+        setTotal(quantity * price);
     };
+
+    function generateOrderNumber(prefix = 'FO', numDigits = 8) {
+        const randomNumber = Math.floor(Math.random() * Math.pow(10, numDigits));
+        const formattedNumber = String(randomNumber).padStart(numDigits, '0');
+        return prefix + formattedNumber;
+      }
+ 
+      const orderNumber = generateOrderNumber();
+
+
+    useEffect(() => {
+        updateTotal(Quantity);
+    }, [Quantity, price]); // Re-calculate when Quantity or price changes
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (!validateForm()) return; 
+    //     await AddOrder(productname, Quantity, price, cusName, email, contactNumber);
+    // };
 
     const validateForm = () => {
         if (!Quantity || !cusName || !email || !contactNumber) {
-            alert("All fields must be filled.");
-            return false;
+          alert("All fields must be filled.");
+          return false;
         } else {
-            setFormError("");
-            return true;
+          setFormError("");
+          return true; 
         }
-    };
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (validateForm()) {
+      
+          navigate('/AddPayment', {
+            state: {
+              orderNumber,
+              productname,
+              price,
+              Quantity,
+              cusName,
+              email,
+              contactNumber,
+              Total,
+            },
+          });
+        }
+      };
+
 
     return (
         <div className="row d-flex align-items-center justify-content-center">
@@ -50,7 +93,10 @@ function AddNewOrder() {
                     type="number"
                     className="form-control"
                     value={Quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => {
+                        setQuantity(e.target.value);
+                        updateTotal(e.target.value); 
+                    }}
                 />
                 
                 <label className="form-label mt-3">Price:</label>
@@ -83,6 +129,14 @@ function AddNewOrder() {
                     className="form-control"
                     value={contactNumber}
                     onChange={(e) => setcontactNumber(e.target.value)}
+                />
+
+               <label className="form-label mt-3">Total:</label>
+                <input
+                    type="number"
+                    className="form-control"
+                    value={Total}
+                    disabled
                 />
 
                 <button

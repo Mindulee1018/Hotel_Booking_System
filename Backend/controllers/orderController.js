@@ -11,17 +11,19 @@ const getAllOrders = async (req, res) => {
 
 //create a new reservation
 const createOrder = async (req, res) => {
-  const { productName,Quantity,Price,cusName,email, contactNumber } = req.body;
+  const { orderNumber, productName,Quantity,Price,cusName,email, contactNumber,Total } = req.body;
 
   //add doc to db
   try {
     const order = await Order.create({
+      orderNumber,
       productName,
       Quantity,
       Price,
       cusName,
       email,
       contactNumber,
+      Total
     });
     res.status(200).json(order);
   } catch (error) {
