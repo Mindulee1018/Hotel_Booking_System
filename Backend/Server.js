@@ -14,7 +14,7 @@ const tableRoutes = require("./Routes/table");
 const menuRoutes = require("./Routes/menu");
 const orderRoutes = require("./Routes/order");
 const buffetRoutes = require("./Routes/buffet");
-const RoomReservation = require("./Routes/RoomReservation");
+const RoomReservation = require("./Routes/roomReservation");
 const diningReservationRoutes = require("./Routes/DiningReservation");
 
 const room = require("./Routes/room");

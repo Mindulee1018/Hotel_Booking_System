@@ -52,6 +52,10 @@ import WatersportActivities from "../src/Pages/Client/WatersportActivities.js";
 //offers and packages
 import Offer from "./Pages/Client/offerPackage.js";
 
+
+
+
+
 ///////////manager side////////////
 import ManagerDash from "./Pages/Staff/ManagerDash";
 import Dashboard from "./Pages/Staff/ManagerDashboard";
@@ -119,6 +123,11 @@ import HotelView from "./Pages/Staff/RoomInventory/HotelView.js";
 //offers managemet
 import AddNewOffer from "./Pages/Staff/Offers/addOffer.js";
 
+
+
+
+
+
 const Layout = ({ children }) => (
   <div>
     <Header />
@@ -133,6 +142,10 @@ const Layout2 = ({ children }) => (
     <Footer />
   </div>
 );
+
+
+
+
 
 function App() {
   return (
@@ -155,10 +168,46 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/ForgotPwd" element={<ForgotPassword />} />
-          <Route
-            path="/user/resetPassword/:token"
-            element={<PasswordReset />}
-          />
+          <Route path="/user/resetPassword/:token" element={<PasswordReset />}/>
+
+          {/* waterpost page */}
+          <Route path="/Watersports" element={<WatersportActivities />} />
+
+          {/* offers page */}
+          <Route path="/offerPackage" element={<Offer />} />
+
+          {/* dining reservations */}
+          <Route path="/DiningDashboard" element={<Layout2> <DiningDash /></Layout2>}/>
+          <Route path="/TableReservations" element={<TableReservation />} />
+          <Route path="/AddReservations" element={<AddReservation />} />
+          <Route path="/displaymenu" element={<MenuByCategoryPage />} />
+          <Route path="/displayOrders" element={<DisplayOrders />} />
+          <Route path="/AddOrder" element={<AddNewOrder />} />
+          <Route path="/DisplayBuffet" element={<DisplayBuffet />} />
+          <Route path="/manageTables" element={<ManageTableReservation />} />
+          <Route path="/manageOrders" element={<ManageOrders />} />
+
+          {/* room reservations */}
+          <Route path="/rooms" element={ <Layout><Room /></Layout>}/>
+          <Route path="/reservation" element={<Layout><Reservation /></Layout>}/>
+          <Route path="/CustomerDetails" element={<Layout><ReservationDetails /></Layout>}/>
+          <Route path="/roomReservation" element={<AddRoomReserve />} />
+          <Route path="/MyBookings" element={<Mybookings />} />
+
+          {/* hall reservations */}
+          <Route path="/editBooking/:id" element={<EditBooking />} />
+          <Route path="/halls" element={<HallList />} />
+          <Route path="/ViewHall/:id" element={<ViewHall />} /> 
+          <Route path="/AllHalls" element={<AllHallList />} />
+          <Route path="/AddHall/:id" element={<HallReservationForm />} />
+          <Route path="/availability" element={<HallAvailability />} />
+          <Route path="/bookHall" element={<BookHall />} />
+          <Route path="/bookingdata/:id" element={<HallBookingData />} />
+
+
+
+
+          {/* admin side */}
 
           {/* user Management */}
           <Route path="/AdminDashbord" element={<AdminDash />} />
@@ -168,6 +217,16 @@ function App() {
           <Route path="/Usermanage" element={<Usermanage />} />
           <Route path="/Accountmanage" element={<AccountManage />} />
 
+          {/* reception */}
+          <Route path="/ManagerDashboard" element={<Dashboard />} />
+          <Route path="/reservationNavbar" element={<ReservationNavbar />} />
+          <Route path="/addWatersportsReservation" element={<AddReserv />} />
+          <Route path="/selectActivity" element={<SelectActivity />} />
+          <Route path="/watersportReservations" element={<WatersportReservations />}/>
+          <Route path="/PastReservations" element={<PastWatersportReservations />} />
+          <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
+          <Route path="/DiningReservations" element={<DiningReservations />} />
+
           {/* restaurant management */}
           <Route path="/menu" element={<MenuItems />} />
           <Route path="/addMenu" element={<AddNewMenu />} />
@@ -175,111 +234,47 @@ function App() {
           <Route path="/manageBuffet" element={<ManageBuffet />} />
           <Route path="/updateBuffet" element={<UpdateBuffet />} />
           <Route path="/addBuffet" element={<AddBuffet />} />
-          <Route
-            path="/displayReservations"
-            element={<ManageTableReservation />}
-          />
+          <Route path="/displayReservations" element={<ManageTableReservation />}/>
 
-          <Route
-            path="/DiningDashboard"
-            element={
-              <Layout2>
-                {" "}
-                <DiningDash />{" "}
-              </Layout2>
-            }
-          />
-          <Route path="/TableReservations" element={<TableReservation />} />
-          <Route path="/AddReservations" element={<AddReservation />} />
-
-          <Route path="/displaymenu" element={<MenuByCategoryPage />} />
-
-          <Route path="/displayOrders" element={<DisplayOrders />} />
-          <Route path="/AddOrder" element={<AddNewOrder />} />
-          <Route path="/DisplayBuffet" element={<DisplayBuffet />} />
-          <Route path="/manageTables" element={<ManageTableReservation />} />
-          <Route path="/manageOrders" element={<ManageOrders />} />
-
-          <Route path="/Watersports" element={<WatersportActivities />} />
-          <Route path="/ManagerDashboard" element={<Dashboard />} />
-          <Route path="/reservationNavbar" element={<ReservationNavbar />} />
-          <Route path="/AddActivity" element={<AddActivity />} />
-          <Route path="/WatersportsManagement" element={<WatersportManage />} />
-          <Route path="/addWatersportsReservation" element={<AddReserv />} />
-          <Route path="/selectActivity" element={<SelectActivity />} />
-          <Route
-            path="/watersportReservations"
-            element={<WatersportReservations />}
-          />
-          <Route
-            path="/PastReservations"
-            element={<PastWatersportReservations />}
-          />
-          <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
-          <Route path="/DiningReservations" element={<DiningReservations />} />
-
-          <Route
-            path="/rooms"
-            element={
-              <Layout>
-                <Room />
-              </Layout>
-            }
-          />
-          <Route
-            path="/reservation"
-            element={
-              <Layout>
-                {" "}
-                <Reservation />
-              </Layout>
-            }
-          />
-          <Route
-            path="/CustomerDetails"
-            element={
-              <Layout>
-                <ReservationDetails />
-              </Layout>
-            }
-          />
-          <Route path="/roomReservation" element={<AddRoomReserve />} />
+          {/* room management */}
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Bookings" element={<Bookings />} />
           <Route path="/AddRoom" element={<AddRoom />} />
-          <Route path="/MyBookings" element={<Mybookings />} />
           <Route path="/ManageRoom" element={<ManageRoom />} />
           <Route path="/addRoomType" element={<AddNewRoomType />} />
 
-          <Route path="/RoomManagerView" element={<RoomManagerView />} />
-          <Route path="/offerPackage" element={<Offer />} />
-          <Route path="/Addoffer" element={<AddNewOffer />} />
-          <Route path="/AddItem" element={<AddItem />} />
-          <Route path="/EditItem" element={<EditItem />} />
-          <Route path="/HotelView" element={<HotelView />} />
+          {/* watersport activity management */}
+          <Route path="/AddActivity" element={<AddActivity />} />
+          <Route path="/WatersportsManagement" element={<WatersportManage />} />
 
+          {/* event management */}
+          <Route path="/HallAdminDash" element={<HallAdminDash />} />
+          <Route path="/alldates" element={<Alldates />} />
+          <Route path="/AllReservations" element={<AdminBookHall />} />
+          <Route path="/EditHall/:id" element={<EditHall />} />
+          <Route path="/HallCalender" element={<HallCalendar />} />
+          <Route path="/HallResource" element={<HallResources />} />
+
+          {/* Kitchen Inventory */}
           <Route path="/AddStock" element={<AddStock />} />
           <Route path="/KitchenInventory" element={<KitchenInventory />} />
-          <Route path="/AddPayment" element={<AddPayment />} />
           <Route path="/AddBulkStock" element={<AddBulkStock />} />
           <Route path="/BulkStock" element={<BulkStock />} />
           <Route path="/CombinedInventory" element={<CombinedInventory />} />
 
-          <Route path="/editBooking/:id" element={<EditBooking />} />
+          {/* Room Inventory */}
+          <Route path="/RoomManagerView" element={<RoomManagerView />} />
+          <Route path="/AddItem" element={<AddItem />} />
+          <Route path="/EditItem" element={<EditItem />} />
+          <Route path="/HotelView" element={<HotelView />} />
 
-          <Route path="/halls" element={<HallList />} />
-          <Route path="/ViewHall/:id" element={<ViewHall />} />
-          <Route path="/EditHall/:id" element={<EditHall />} />
-          <Route path="/HallAdminDash" element={<HallAdminDash />} />
-          <Route path="/AllHalls" element={<AllHallList />} />
-          <Route path="/AddHall/:id" element={<HallReservationForm />} />
-          <Route path="/availability" element={<HallAvailability />} />
-          <Route path="/bookHall" element={<BookHall />} />
-          <Route path="/HallResource" element={<HallResources />} />
-          <Route path="/AllReservations" element={<AdminBookHall />} />
-          <Route path="/bookingdata/:id" element={<HallBookingData />} />
-          <Route path="/HallCalender" element={<HallCalendar />} />
-          <Route path="/alldates" element={<Alldates />} />
+          {/* offers managemet */}
+          <Route path="/Addoffer" element={<AddNewOffer />} />
+
+       
+          <Route path="/AddPayment" element={<AddPayment />} />
+          
+
         </Routes>
       </BrowserRouter>
     </div>
