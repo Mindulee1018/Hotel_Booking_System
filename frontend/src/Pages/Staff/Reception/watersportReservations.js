@@ -76,9 +76,7 @@ function WatersportReservations() {
     setNameToDelete("");
   };
 
-  const handleCheckoutReserv = async () => {
-   
-  }
+  
 
   // Handle search
   const handleSearchChange = (event) => {

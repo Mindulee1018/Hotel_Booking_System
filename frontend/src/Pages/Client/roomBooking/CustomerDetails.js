@@ -6,7 +6,15 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 function ReservationDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { Checkindate, Checkoutdate, NoOfGuests, Rid, price } = location.state;
+  const {
+    Checkindate,
+    Checkoutdate,
+    NoOfGuests,
+    Rtype,
+    RoomNumbers,
+    price,
+    noOfRooms,
+  } = location.state;
   const { user } = useAuthContext();
   const { addRoomReserve } = useAddRoomReserve();
 
@@ -15,41 +23,6 @@ function ReservationDetails() {
   const [Address, setAddress] = useState("");
   const [phoneno, setphoneno] = useState("");
   const [Email, setEmail] = useState("");
-
-  const handleSubmit = () => {
-    console.log("Submitting reservation details:", {
-      Checkindate,
-      Checkoutdate,
-      NoOfGuests,
-      firstName,
-      lastName,
-      Email,
-    });
-
-    addRoomReserve(
-      Checkindate,
-      Checkoutdate,
-      NoOfGuests,
-      Rid,
-      firstName,
-      lastName,
-      Email,
-      Address,
-      phoneno,
-      price
-    );
-  };
-
-  const RandomRoomResvID = () => {
-    const prefix = "RB";
-    const digits = Math.floor(Math.random() * 100000000); // Generate 8 digits
-    const paddedDigits = String(digits).padStart(8, "0");
-    return prefix + paddedDigits;
-  };
-
-  console.log(price);
-
-  const RoomResvID = RandomRoomResvID();
 
   useState(() => {
     if (user && user.email) {
@@ -64,16 +37,22 @@ function ReservationDetails() {
         Checkindate,
         Checkoutdate,
         NoOfGuests,
-        Rid,
+        Rtype,
         firstName,
         lastName,
         Email,
         Address,
         phoneno,
-        RoomResvID,
+        RoomNumbers,
         price,
+        noOfRooms
       },
     });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleNext();
   };
 
   return (
@@ -98,6 +77,17 @@ function ReservationDetails() {
           textAlign: "center",
         }}
       >
+        <div>
+          <h1>Reservation Details</h1>
+
+          <p>Room Type: {Rtype}</p>
+          <p>Room Numbers: {RoomNumbers.join(', ')}</p>
+          <p>Number of Rooms: {noOfRooms}</p>
+          <p>Check-in Date: {Checkindate}</p>
+          <p>Check-out Date: {Checkoutdate}</p>
+          <p>Number of Guests: {NoOfGuests}</p>
+          <p>Price per Night: {price}</p>
+        </div>
         <h1>Enter Customer Details</h1>
         <form
           onSubmit={handleNext}
@@ -108,10 +98,7 @@ function ReservationDetails() {
             justifyContent: "space-between",
           }}
         >
-          <p>Room:{Rid}</p>
-          <p>Check-in Date: {Checkindate}</p>
-          <p>Check-out Date: {Checkoutdate}</p>
-          <p>Number of Guests: {NoOfGuests}</p>
+         
 
           <label style={{ marginBottom: "10px" }}>
             First Name:
@@ -206,7 +193,7 @@ function ReservationDetails() {
               width: "100%",
             }}
           >
-            Submit
+            Proceed to Payment
           </button>
         </form>
       </div>

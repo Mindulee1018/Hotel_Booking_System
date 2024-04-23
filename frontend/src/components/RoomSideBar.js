@@ -31,26 +31,33 @@ function RoomSideBar(){
       newpwd.value =null;
     }
     return(
-        <div className="col-3 m-0 p-0">
+        <div className="col-2 m-0 p-0">
         <ul className="nav flex-column pe-1 vh-100" style={{ backgroundColor: "#1E3A8A" }}>
       
         <div className="d-flex justify-content-center align-items-center"><img src="Sunset Araliya horizontal.png" style={{width:"150px"}} className="mt-4 "></img></div>
         <div className="d-flex flex-column  mt-5 justify-content-around fs-5" style={{height:"250px"}}>
-          <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Staffmanage">Staff Management</a>
+          <li>
+          <a type="button" className="btn btn-primary position-relative" href="/notifications">
+            Notifications
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              99+
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Usermanage">User Management</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/Profile">Profile</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Accountmanage">Account Management</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/Bookings">Bookings</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/AdminDashbord">Home</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/addRoomType">Add Room Type</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/AdminDashbord" data-bs-toggle="modal" data-bs-target="#Modal2" >Profile</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/ManageRoom">Manage Room</a>
           </li>
+          
         </div>
         <div className=""><a href ="" id="userStatus" className="btn mt-5" sty onClick={handlelogout} style={{backgroundColor:"rgb(85, 180, 254)", position:"relative", top:"190px"}}>Logout</a></div>
         </ul>
