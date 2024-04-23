@@ -1,9 +1,8 @@
-const { default: mongoose } = require('mongoose')
-const User = require('../Models/userModel')
-const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
+const { default: mongoose } = require('mongoose');
+const User = require('../Models/userModel');
+const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../Utils/email');
-const Notification = require('../Models/MultipleLoginFailModel'); 
+const Notification = require('../Models/MultipleLoginFailModel');
 
 const failedLoginAttempts = {};
 
@@ -15,12 +14,20 @@ const sendAdminNotification = async (message) => {
   await Notification.create({ message });
 };
 
-// login a user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (failedLoginAttempts[email] >= 4) {
-    await sendAdminNotification(`Multiple failed logins for email:${email}`);
+    // Send an email notification to the admin if the account is locked
+    await sendAdminNotification(`Multiple failed logins for email: ${email}`);
+
+    //email to user
+    const subject = 'Account Locked';
+    const text = `The account associated with email ${email} has been locked due to multiple failed login attempts.\n\n`
+      + `Please use forgot password option to reset your password Quickly\n\n`;
+
+    await sendEmail(email, subject, text);
+
     return res.status(403).json({ error: 'Account locked due to multiple failed login attempts.' });
   }
 
@@ -39,13 +46,21 @@ const loginUser = async (req, res) => {
     res.status(200).json({ email, token, role });
   } catch (error) {
     if (error.message.includes("Incorrect")) {
+      // Increment failed login attempts upon incorrect password
       failedLoginAttempts[email] = (failedLoginAttempts[email] || 0) + 1;
 
       if (failedLoginAttempts[email] >= 4) {
+        // Notify admin and send email if there are multiple failed attempts
         await sendAdminNotification(`Multiple failed login attempts for email: ${email}`);
+        //email to user
+        const subject = 'Account Locked';
+        const text = `The account associated with email ${email} has been locked due to multiple failed login attempts.\n\n`
+          + `Please use forgot password option to reset your password Quickly\n\n`;
+
+        await sendEmail(email, subject, text);
       }
     }
-    
+
     res.status(400).json({ error: error.message });
   }
 };
@@ -65,19 +80,20 @@ const determineRole = (email) => {
 module.exports = {
   loginUser,
 };
+
 // signup a user
 const signupUser = async (req, res) => {
-  const {email, password,name,role,isAdminCreation} = req.body
+  const { email, password, name, role, isAdminCreation } = req.body
 
   try {
-    const user = await User.signup(email, password,name,role,isAdminCreation)
+    const user = await User.signup(email, password, name, role, isAdminCreation)
 
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({email, token,promoCode: user.promoCode,})
+    res.status(200).json({ email, token, promoCode: user.promoCode, })
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message })
   }
 }
 
@@ -86,7 +102,7 @@ const signupUser = async (req, res) => {
 
 //delete user
 const deleteuser = async (req, res) => {
-  const { email } = req.params; 
+  const { email } = req.params;
 
   if (!email) {
     return res.status(400).json({ error: 'Invalid email' });
@@ -169,7 +185,7 @@ const Updateuserpwd = async (req, res) => {
 
 
 
-const forgotpwd = async (req,res)=>{
+const forgotpwd = async (req, res) => {
 
   const { email } = req.body;
 
@@ -179,52 +195,52 @@ const forgotpwd = async (req,res)=>{
     return res.status(404).json({ error: 'No such user' });
   }
 
-  try{
-  const resettoken = crypto.randomBytes(32).toString('hex');//create random token
-  //hash
-  user.hashtoken= crypto.createHash('sha256').update(resettoken).digest('hex');
- 
-  user.hashtokenexpires =  Date.now() + 600000; 
-  await user.save()
- 
+  try {
+    const resettoken = crypto.randomBytes(32).toString('hex');//create random token
+    //hash
+    user.hashtoken = crypto.createHash('sha256').update(resettoken).digest('hex');
 
-   const subject= 'Password Reset';
-   const text= 'You are receiving this email because you (or someone else) have requested to reset the password for your account.\n\n'
-    + `Please click on the following link, or paste it into your browser to complete the process:\n\n`
-    + `http://localhost:3000/user/resetPassword/${resettoken}\n\n`
-    + `If you did not request this, please ignore this email and your password will remain unchanged.`;
-  
-  
-  
-    await sendEmail(email,subject,text);
+    user.hashtokenexpires = Date.now() + 600000;
+    await user.save()
+
+
+    const subject = 'Password Reset';
+    const text = 'You are receiving this email because you (or someone else) have requested to reset the password for your account.\n\n'
+      + `Please click on the following link, or paste it into your browser to complete the process:\n\n`
+      + `http://localhost:3000/user/resetPassword/${resettoken}\n\n`
+      + `If you did not request this, please ignore this email and your password will remain unchanged.`;
+
+
+
+    await sendEmail(email, subject, text);
     res.status(200).json({ status: 'Password reset link sent to your email' });
 
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 
-  
+
 }
 
 
-const resetpwd = async (req,res)=>{
+const resetpwd = async (req, res) => {
   const token = crypto.createHash('sha256').update(req.params.token).digest('hex')//hash reset token comming from parameter to match with db
-  
-  const user= await User.findOne({hashtoken:token,hashtokenexpires: { $gt: Date.now() }})
- 
-try{
-  if(!user){
-   
-    return res.status(400).json({ error: 'Incorrect token or invalid' });
-  }
 
-  const { password, repassword } = req.body;
+  const user = await User.findOne({ hashtoken: token, hashtokenexpires: { $gt: Date.now() } })
 
-  // Check if the current password and new password are empty
-  if (!password || !repassword) {
-    return res.status(400).json({ error: 'Both passwords are required' });
-  }
+  try {
+    if (!user) {
+
+      return res.status(400).json({ error: 'Incorrect token or invalid' });
+    }
+
+    const { password, repassword } = req.body;
+
+    // Check if the current password and new password are empty
+    if (!password || !repassword) {
+      return res.status(400).json({ error: 'Both passwords are required' });
+    }
 
 
 
@@ -252,89 +268,89 @@ try{
       },
       { new: true } // Return the updated user
     );
- 
-    return res.status(200).json({ status: 'User password updated'});
-  }catch (error) {
+
+    return res.status(200).json({ status: 'User password updated' });
+  } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 
-  }
+}
 
 
 
 
 
 
-  //get managers
-const getmanagers = async (req,res) =>{
+//get managers
+const getmanagers = async (req, res) => {
   try {
-      const selectedFields = ['name' ,'email', 'role'];
-      const staffMembers = await User.find({ role: 'manager' }).select(selectedFields);
-  
-      if (staffMembers.length === 0) {
-        return res.status(404).json({ message: 'No manager members found' });
-      }
-  
-      res.status(200).json(staffMembers);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+    const selectedFields = ['name', 'email', 'role'];
+    const staffMembers = await User.find({ role: 'manager' }).select(selectedFields);
+
+    if (staffMembers.length === 0) {
+      return res.status(404).json({ message: 'No manager members found' });
     }
-  };
-  
-  const getstaff = async (req,res) =>{
-    try {
-        const selectedFields = ['name' ,'email', 'role'];
-        const staffMembers = await User.find({ role: 'staff' }).select(selectedFields);
-  
-        if (staffMembers.length === 0) {
-          return res.status(404).json({ message: 'No staff members found' });
-        }
-    
-        res.status(200).json(staffMembers);
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-      }
-    };
-  
-  
-    const getusers = async (req,res) =>{
-      try {
-          const selectedFields = ['name' ,'email'];
-          const userMembers = await User.find({ role: 'user' }).select(selectedFields);
-    
-          if (userMembers.length === 0) {
-            return res.status(404).json({ message: 'No members found' });
-          }
-      
-          res.status(200).json(userMembers);
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: 'Internal server error' });
-        }
-      };
-    
-  
-  //get single user
-  const getsingleuser = async (req,res) =>{
-  
-    const {id} = req.params
-  
-    if(!mongoose.Types.ObjectId.isValid(id)){
-      res.status(404).json({error: 'invalid id'})
-    }
-  
-    const user = await User.findById(id)
-  
-    if(!user){
-      res.status(404).json({error: 'No such user'})
-    }
-  
-    res.status(200).json(user)
+
+    res.status(200).json(staffMembers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
+};
+
+const getstaff = async (req, res) => {
+  try {
+    const selectedFields = ['name', 'email', 'role'];
+    const staffMembers = await User.find({ role: 'staff' }).select(selectedFields);
+
+    if (staffMembers.length === 0) {
+      return res.status(404).json({ message: 'No staff members found' });
+    }
+
+    res.status(200).json(staffMembers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
-module.exports = { signupUser, loginUser, getmanagers ,getusers ,  getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd}
+const getusers = async (req, res) => {
+  try {
+    const selectedFields = ['name', 'email'];
+    const userMembers = await User.find({ role: 'user' }).select(selectedFields);
+
+    if (userMembers.length === 0) {
+      return res.status(404).json({ message: 'No members found' });
+    }
+
+    res.status(200).json(userMembers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+//get single user
+const getsingleuser = async (req, res) => {
+
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: 'invalid id' })
+  }
+
+  const user = await User.findById(id)
+
+  if (!user) {
+    res.status(404).json({ error: 'No such user' })
+  }
+
+  res.status(200).json(user)
+}
+
+
+
+module.exports = { signupUser, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd }
