@@ -7,10 +7,21 @@ const useAddRoomType = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const addRoomType = async (Rtype, description, capacity, NoOfBeds, price, ImageFile) => {
+  const addRoomType = async (
+    Rtype,
+    description,
+    capacity,
+    NoOfBeds,
+    price,
+    NoofRooms,
+    RoomNumbers,
+    ImageFile
+  ) => {
     setIsLoading(true);
     setError(null);
     setIsSuccess(false);
+
+    console.log(RoomNumbers, "nos");
 
     const formData = new FormData();
     formData.append("Rtype", Rtype);
@@ -18,6 +29,8 @@ const useAddRoomType = () => {
     formData.append("capacity", capacity);
     formData.append("NoOfBeds", NoOfBeds);
     formData.append("price", price);
+    formData.append("NoofRooms", NoofRooms);
+    formData.append("RoomNumbers", RoomNumbers);
     if (ImageFile) {
       formData.append("Image", ImageFile);
     }
@@ -30,7 +43,7 @@ const useAddRoomType = () => {
 
       if (!response.ok) {
         const json = await response.json();
-        setError(json.error || 'Something went wrong');
+        setError(json.error || "Something went wrong");
       } else {
         setIsSuccess(true);
         navigate("/"); // Adjust this if you want to navigate to a specific path

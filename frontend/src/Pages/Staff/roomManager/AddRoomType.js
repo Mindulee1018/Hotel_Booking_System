@@ -8,6 +8,8 @@ const AddNewRoomType = () => {
   const [capacity, setcapacity] = useState("");
   const [NoOfBeds, setNoOfBeds] = useState("");
   const [price, setprice] = useState("");
+  const [NoofRooms, setNoofRooms] = useState("");
+  const [RoomNumbers, setRoomNumbers] = useState("");
   const [Image, setImage] = useState(null);
 
   const { addRoomType, isLoading, error, isSuccess } = useAddRoomType();
@@ -15,12 +17,12 @@ const AddNewRoomType = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!Rtype || !description || !capacity || !NoOfBeds || !price) {
+    if (!Rtype || !description || !capacity || !NoOfBeds || !price || !NoofRooms || !RoomNumbers) {
       alert("All fields must be filled.");
       return;
     }
 
-    addRoomType(Rtype, description, capacity, NoOfBeds, price, Image);
+    addRoomType(Rtype, description, capacity, NoOfBeds, price, NoofRooms, RoomNumbers,  Image);
   };
 
   return (
@@ -96,6 +98,26 @@ const AddNewRoomType = () => {
                 id="roomPrice"
                 onChange={(e) => {
                   setprice(e.target.value);
+                }}
+              />
+
+              <label>No of Rooms:</label>
+              <input
+                type="number"
+                className=""
+                id="NoofRooms"
+                onChange={(e) => {
+                  setNoofRooms(e.target.value);
+                }}
+              />
+
+              <label>Room Numbers:</label>
+              <input
+                type="text"
+                className=""
+                id="roomNumbers"
+                onChange={(e) => {
+                  setRoomNumbers(e.target.value);
                 }}
               />
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const RoomList = () => {
-    const [rooms, setRoom] = useState([]);
+    const [roomList, setRoomList] = useState([]);
   
     useEffect(() => {
       const fetchRoom = async () => {
@@ -11,7 +11,7 @@ const RoomList = () => {
             throw new Error("Failed to fetch rooms");
           }
           const json = await response.json();
-          setRoom(json);
+          setRoomList(json);
         } catch (error) {
           console.error("Error fetching rooms data:", error);
         }
@@ -19,7 +19,7 @@ const RoomList = () => {
       fetchRoom();
     }, []);
 
-    return {rooms};
+    return {roomList};
 };
 
 export default RoomList;

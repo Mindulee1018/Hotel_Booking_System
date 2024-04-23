@@ -5,16 +5,24 @@ import { useNavigate } from "react-router-dom";
 import RoomTypeList from "../../../hooks/Client/roomBooking/useRoomTypeList";
 import RoomReservationList from "../../../hooks/Client/roomBooking/useRoomReservationList";
 
+import { checkRoomAvailability } from "../../../hooks/Client/roomBooking/checkRoomAvailability";
+
 const AddRoomReserve = () => {
+  const navigate = useNavigate();
+
   const [Checkindate, setCheckindate] = useState("");
   const [Checkoutdate, setCheckoutdate] = useState("");
   const [NoOfGuests, setNoOfGuests] = useState("");
+  const [noOfRooms, setnoOfRooms] = useState(0);
+  const [selectedRoomType, setSelectedRoomType] = useState("");
+  const [availableRooms, setAvailableRooms] = useState([]);
 
   const { roomTypes } = RoomTypeList();
+
   const { roomReservations } = RoomReservationList(); // Corrected this line
   console.log(roomReservations); // Now this should log the expected data
 
-  const navigate = useNavigate();
+  const format = (dateStr) => new Date(dateStr).getTime(); // Refactor to a single instance for reusability
 
   const bufferToBase64 = (buf) => {
     return btoa(
@@ -25,34 +33,69 @@ const AddRoomReserve = () => {
     );
   };
 
-  const checkAvailability = (roomId) => {
-    const format = (dateStr) => new Date(dateStr).getTime();
-    const selectedCheckIn = format(Checkindate);
-    const selectedCheckOut = format(Checkoutdate);
+  const checkAvailability = async (Rtype) => {
+    if (Checkindate && Checkoutdate && selectedRoomType) {
+      const response = await checkRoomAvailability(
+        Checkindate,
+        Checkoutdate,
+        Rtype
+      );
+      console.log(response, "checkavailability");
+      if (response) {
+        setAvailableRooms(response);
+      } else {
+        setAvailableRooms([]);
+        alert("No rooms available for the selected dates and room type.");
+      }
+    } else {
+      alert(
+        "Please make sure to select check-in and check-out dates and a room type."
+      );
+    }
+  };
 
-    const isAvailable = roomReservations.every((reservation) => {
-      if (reservation.roomId !== roomId) return true; // Skip other rooms
-      const reservationStart = format(reservation.checkInDate);
-      const reservationEnd = format(reservation.checkOutDate);
+  const assignRoomNumbers = (noOfRooms) => {
+    console.log(availableRooms.length, "availableRooms.length");
+    console.log(noOfRooms, "noOfRooms");
+    if (availableRooms.length >= noOfRooms) {
+      const assignedRooms = availableRooms.slice(0, noOfRooms);
+      console.log(assignedRooms, "assignedRooms");
 
-      return selectedCheckOut <= reservationStart || selectedCheckIn >= reservationEnd;
-    });
+      return assignedRooms;
+    } else {
+      // Not enough rooms available, handle this case appropriately
+      alert("Not enough rooms available to fulfill the reservation request.");
+      return [];
+    }
+  };
 
-    if (isAvailable) {
-      navigate('/CustomerDetails', {
+  const handleBookNow = (Rtype, price, noOfRooms) => {
+    
+
+    const assignedRoomNumbers = assignRoomNumbers(noOfRooms);
+
+    console.log(assignedRoomNumbers, "assignedRoomNumbers");
+
+    if (assignedRoomNumbers.length == noOfRooms) {
+      navigate("/CustomerDetails", {
         state: {
           Checkindate,
           Checkoutdate,
           NoOfGuests,
-          Rid: roomId,
-          price: roomTypes.price,
-          roomType: roomTypes.Rtype
-        }
+          Rtype,
+          RoomNumbers: assignedRoomNumbers,
+          price,
+          noOfRooms
+        },
       });
     } else {
-      alert("Room is not available!");
+      alert("No available rooms to book. Please check availability first.");
     }
   };
+
+  
+
+  
 
   return (
     <div>
@@ -99,6 +142,14 @@ const AddRoomReserve = () => {
                   value={NoOfGuests}
                   onChange={(e) => setNoOfGuests(e.target.value)}
                 />
+
+                <label htmlFor="noOfRooms">No of Rooms:</label>
+                <input
+                  type="number"
+                  id="noOfRooms"
+                  value={noOfRooms}
+                  onChange={(e) => setnoOfRooms(e.target.value)}
+                />
               </form>
             </div>
           </div>
@@ -106,7 +157,10 @@ const AddRoomReserve = () => {
 
         <div className="col-md-9 ">
           {roomTypes.map((roomtype) => (
-            <div key={roomtype._id}>
+            <div
+              key={roomtype._id}
+              onClick={() => setSelectedRoomType(roomtype.Rtype)}
+            >
               <table>
                 <tbody style={{ width: "100%" }}>
                   <tr>
@@ -121,7 +175,7 @@ const AddRoomReserve = () => {
                   </tr>
 
                   <tr>
-                    <td rowSpan={5}>
+                    <td rowSpan={6}>
                       {roomtype.Image && roomtype.Image.data && (
                         <img
                           style={{
@@ -153,7 +207,7 @@ const AddRoomReserve = () => {
                   </tr>
                   <tr>
                     <td className="text-start ps-5">
-                    ROOM FACILITIES
+                      ROOM FACILITIES
                       <ul>
                         <li>High Speed Internet</li>
                         <li>Wi Fi in all Rooms</li>
@@ -164,7 +218,34 @@ const AddRoomReserve = () => {
                   </tr>
                   <tr>
                     <td>
-                      <button className="btn btn-primary"  onClick={() => checkAvailability(roomtype._id)}>Search Room</button>
+                      {/* Button to check room availability */}
+                      <button
+                        type="button"
+                        onClick={() => checkAvailability(roomtype.Rtype)}
+                        style={{ marginTop: "10px" }}
+                      >
+                        Check Room Availability
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div>
+                        {availableRooms.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleBookNow(
+                                roomtype.Rtype,
+                                roomtype.price,
+                                noOfRooms
+                              )
+                            }
+                          >
+                            BOOK NOW
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 </tbody>
