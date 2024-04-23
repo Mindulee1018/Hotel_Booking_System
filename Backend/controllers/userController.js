@@ -3,17 +3,32 @@ const User = require('../Models/userModel')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const { sendEmail } = require('../Utils/email');
+const Notification = require('../Models/MultipleLoginFailModel'); 
+
+const failedLoginAttempts = {};
 
 const createToken = (_id) => {
-  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
-}
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+};
+
+const sendAdminNotification = async (message) => {
+  await Notification.create({ message });
+};
 
 // login a user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  if (failedLoginAttempts[email] >= 3) {
+    await sendAdminNotification(`Multiple failed login attempts for email: ${email}`);
+    return res.status(403).json({ error: 'Account locked due to multiple failed login attempts.' });
+  }
+
   try {
     const user = await User.login(email, password);
+
+    // Reset failed login attempts upon successful login
+    failedLoginAttempts[email] = 0;
 
     // Determine the user's role
     const role = determineRole(email);
@@ -23,23 +38,33 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({ email, token, role });
   } catch (error) {
+    if (error.message.includes("Incorrect")) {
+      failedLoginAttempts[email] = (failedLoginAttempts[email] || 0) + 1;
+
+      if (failedLoginAttempts[email] >= 3) {
+        await sendAdminNotification(`Multiple failed login attempts for email: ${email}`);
+      }
+    }
+    
     res.status(400).json({ error: error.message });
   }
 };
 
 const determineRole = (email) => {
-  // login based on the email
   if (email.includes('admin')) {
     return 'admin';
   } else if (email.includes('manager')) {
     return 'manager';
   } else if (email.includes('staff')) {
     return 'staff';
-  }else{
-    return 'user'
+  } else {
+    return 'user';
   }
 };
 
+module.exports = {
+  loginUser,
+};
 // signup a user
 const signupUser = async (req, res) => {
   const {email, password,name,role,isAdminCreation} = req.body

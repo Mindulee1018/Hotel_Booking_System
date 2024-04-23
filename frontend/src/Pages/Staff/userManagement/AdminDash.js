@@ -2,8 +2,10 @@ import { useState } from "react";
 import { FaUsers, FaUserCog } from 'react-icons/fa';
 import { IoMdCalendar, IoMdSettings } from 'react-icons/io';
 import Adminsidebar from "../../../components/AdminSidebar";
+import useAdminNotifications from "../../../hooks/Staff/userManagement/useMulLoginNoti";
 
 function AdminDash(){
+  const notifications = useAdminNotifications();
 
   return(
     <div className="container-fluid p-0">
@@ -15,6 +17,13 @@ function AdminDash(){
           <div className="row h4 mb-5" style={{height:"75px"}}>
             <div><p className="mt-5">Admin Dashboard</p></div>
           </div>
+          <ul>
+        {notifications.map((notification, index) => (
+          <li key={index}>
+            {notification.message} - {new Date(notification.createdAt).toLocaleString()} 
+          </li>
+        ))}
+      </ul>
           <div className="row d-flex justify-content-around h-25">
             <div className="card col-2 pt-4 d-flex justify-content-center align-items-center bg-dark opacity-75"><FaUsers size={50} color="white"/><a className="nav-link mt-5 fs-5 text-white" aria-current="page" href="/Staffmanage">Staff Management</a></div>
             <div className="card col-2  pt-4 d-flex justify-content-center align-items-center bg-dark opacity-75"><FaUserCog size={50} color="white"/><a className="nav-link mt-5 fs-5 text-white" aria-current="page" href="/Usermanage">User Management</a></div>
