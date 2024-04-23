@@ -23,7 +23,31 @@ const markNotificationsAsRead = async (req, res) => {
   }
 };
 
+// Get the count of unread notifications
+const getUnreadNotificationCount = async (req, res) => {
+  try {
+    const unreadCount = await Notification.countDocuments({ status: 'unread' });
+    res.json({ count: unreadCount });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get unread notification count' });
+  }
+};
+
+// Delete notifications by their IDs
+const deleteNotifications = async (req, res) => {
+  try {
+    const { notificationIds } = req.body;
+    await Notification.deleteMany({ _id: { $in: notificationIds } });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete notifications' });
+  }
+};
+
 module.exports = {
   getUnreadNotifications,
   markNotificationsAsRead,
+  getUnreadNotificationCount,
+  deleteNotifications
+
 };

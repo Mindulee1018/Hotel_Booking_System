@@ -19,8 +19,8 @@ const sendAdminNotification = async (message) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  if (failedLoginAttempts[email] >= 3) {
-    await sendAdminNotification(`Multiple failed login attempts for email: ${email}`);
+  if (failedLoginAttempts[email] >= 4) {
+    await sendAdminNotification(`Multiple failed logins for email:${email}`);
     return res.status(403).json({ error: 'Account locked due to multiple failed login attempts.' });
   }
 
@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
     if (error.message.includes("Incorrect")) {
       failedLoginAttempts[email] = (failedLoginAttempts[email] || 0) + 1;
 
-      if (failedLoginAttempts[email] >= 3) {
+      if (failedLoginAttempts[email] >= 4) {
         await sendAdminNotification(`Multiple failed login attempts for email: ${email}`);
       }
     }
