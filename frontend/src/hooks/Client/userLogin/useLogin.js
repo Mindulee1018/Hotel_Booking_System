@@ -9,6 +9,7 @@ export const useLogin = () => {
   const { dispatch } = useAuthContext();
   const navigation = useNavigate();
 
+  const previousPath = localStorage.getItem('prevPath');
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
@@ -55,10 +56,15 @@ export const useLogin = () => {
       case 'staff':
         navigation('/receptionDashboard')  
         break;
-      default:
-        navigation(-1);
-    }
-  };
+        default:
+          if (previousPath === '/Dashboard') {
+            navigation('/Dashboard');
+          } else {
+            
+            navigation(-1);
+          }
+      }
+    };
 
  
 
