@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const multer = require("multer");
+
 
 // controller functions
 const {
@@ -11,7 +11,7 @@ const {
   getsingleRoom,
   updateRoom,
 } = require("../controllers/roomController");
-const upload = multer({ storage: multer.memoryStorage() });
+
 
 //get all rooms
 router.get("/getRoom", getRoom);
@@ -20,7 +20,7 @@ router.get("/getRoom", getRoom);
 router.get("/getsingleRoom/:id", getsingleRoom);
 
 //add a room
-router.post("/roomAdd", upload.single("Image"), roomAdd);
+router.post("/add", roomAdd);
 
 //delete a room
 router.delete("/deleteRoom/:id", deleteRoom);

@@ -1,23 +1,30 @@
 const { default: mongoose } = require("mongoose");
-const room = require("../Models/roomTypeModel");
+const roomType = require("../Models/roomTypeModel");
 
 //get all room types
 const getRoomTypes = async (req, res) => {
-    try {
-      const rooms = await room.find({}); //get all data
-  
-      res.status(200).json(rooms); //send to browser
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+  try {
+    const rooms = await roomType.find({}); //get all data
+
+    res.status(200).json(rooms); //send to browser
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 //Add a new room type
 const addRoomType = async (req, res) => {
-  const { Rtype, description, capacity, NoOfBeds, price} =
-    req.body;
+  const {
+    Rtype,
+    description,
+    capacity,
+    NoOfBeds,
+    price,
+    NoofRooms,
+    RoomNumbers,
+  } = req.body;
   let imageData = {};
 
-  console.log(req.file, "fileee");
+  const rooms = RoomNumbers?.split(",");
 
   if (req.file) {
     imageData = {
@@ -29,12 +36,14 @@ const addRoomType = async (req, res) => {
   }
 
   try {
-    const newRoomType = await room.create({
+    const newRoomType = await roomType.create({
       Rtype,
       description,
       capacity,
       NoOfBeds,
       price,
+      NoofRooms,
+      RoomNumbers: rooms,
       Image: imageData,
     });
 
@@ -44,6 +53,4 @@ const addRoomType = async (req, res) => {
   }
 };
 
-  
-
-  module.exports = { getRoomTypes, addRoomType };
+module.exports = { getRoomTypes, addRoomType };

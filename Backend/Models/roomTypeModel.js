@@ -33,6 +33,16 @@ const roomSchema = new Schema({
     required: true,
   },
 
+  NoofRooms: {
+    type: Number,
+    required: true,
+  },
+
+  RoomNumbers: {
+    type: Array,
+    required: true,
+  },
+
   Image:imageSchema,
 
 });
