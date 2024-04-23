@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const paymentSchema = new Schema(
 {
+    reserveid:{
+        type: String,
+        required: true,
+    }, 
     c_name:{
         type: String,
         required: true,

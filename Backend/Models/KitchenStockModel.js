@@ -16,6 +16,10 @@ const stockSchema = new Schema(
       type: Number,
       required:true,
     },
+    reorderLevel: {
+      type: Number,
+      required:true,
+    },
     price: {
       type: Number,
       required: true,

@@ -6,11 +6,11 @@ const useUpdateStock = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const updateStock = async (id,name, category,quantity, price,description) => {
+  const updateStock = async (id,name, category,quantity,reorderLevel, price,description) => {
     console.log("updateStock");
 
     const stockDetails = {
-      name, category,quantity, price,description,
+      name, category,quantity,reorderLevel, price,description,
   };
 
     setIsLoading(true);
