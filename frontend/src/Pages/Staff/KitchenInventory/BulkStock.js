@@ -13,12 +13,14 @@ function BulkStock () {
   const [bname, setBName] = useState("");
   const [bcategory, setBCategory] = useState("");
   const [bquantity, setBQuantity] = useState("");
+  const [breorderLevel, setBReorderLevel] = useState('');
   const [bunits, setBUnits] = useState("");
   const [bprice, setBPrice] = useState("");
   const [bdescription, setBDescription] = useState("");
   const [searchkey,setsearchkey]=useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [sort, setSort] = useState('');
+  const [reorderNotification, setReorderNotification] = useState({});
 
   //display only unique categories in filter
   useEffect(() => {
@@ -48,13 +50,14 @@ function BulkStock () {
       setBName(BulkStock.bname);
       setBCategory(BulkStock.bcategory);
       setBQuantity(BulkStock.bquantity);
+      setBReorderLevel(BulkStock.breorderLevel);
       setBUnits(BulkStock.bunits);
       setBPrice(BulkStock.bprice);
       setBDescription(BulkStock.bdescription);
     };
 
     const updateDetails = async () => {
-      await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,bunits, bprice,bdescription );
+      await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,breorderLevel,bunits, bprice,bdescription );
     };
 
 
@@ -89,6 +92,17 @@ function BulkStock () {
         sortedList.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
       }
       return sortedList;
+    };
+     //check reorder level
+     const checkReorderLevel = (BulkStock) => {
+      if (BulkStock.bquantity === BulkStock.breorderLevel && !reorderNotification[BulkStock._id]) {
+        alert(`Alert: Quantity for ${BulkStock.bname} has reached its reorder level.`);
+        // Set the notification sent flag to true for this item
+        setReorderNotification((prev) => ({
+          ...prev,
+          [BulkStock._id]: true,
+        }));
+      }
     };
 
   
@@ -193,7 +207,10 @@ return (
         </thead>
 
         
-        {sortData().map((BulkStock) => (
+        {sortData().map((BulkStock) => {
+          // Check reorder level for each item
+          checkReorderLevel(BulkStock);
+          return(
           <tbody key={BulkStock._id}>
             <tr>
               <td>
@@ -334,7 +351,8 @@ return (
               </td>
             </tr>
           </tbody>
-        ))}
+          )
+})}
       </table>
     </div>
   </div>

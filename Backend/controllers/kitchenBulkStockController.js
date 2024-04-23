@@ -3,7 +3,7 @@ const BulkStock = require("../Models/KitchenBulkStockModel");
 
 // add a product
 const addBulkStock = async (req, res) => {
-  const { bname, bcategory, bquantity,bunits, bprice, bdescription } = req.body;
+  const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bdescription } = req.body;
 
   try {
       let existingBulkStock = await BulkStock.findOne({ bname });
@@ -16,7 +16,7 @@ const addBulkStock = async (req, res) => {
           res.status(200).json(existingBulkStock);
       } else {
           // If no record with the same name exists, create a new entry
-          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity, bprice,bunits, bdescription });
+          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity,breorderLevel, bprice,bunits, bdescription });
           res.status(201).json(bulkStock);
       }
   } catch (error) {
@@ -54,7 +54,7 @@ const getsingleBulkStock = async (req,res) =>{
 //update stocks
 const updateBulkStock = async (req, res) => {
 
-    const { bname, bcategory, bquantity,bunits, bprice, bdescription } = req.body;
+    const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bdescription } = req.body;
     const{id}  = req.params;
   
     try{
@@ -73,6 +73,7 @@ const updateBulkStock = async (req, res) => {
      if (bname) updateFields.bname = bname;
      if (bcategory) updateFields.bcategory = bcategory;
      if (bquantity) updateFields.bquantity = bquantity;
+     if (breorderLevel) updateFields.breorderLevel = breorderLevel;
      if (bunits) updateFields.bunits = bunits;
      if (bprice) updateFields.bprice = bprice;
      if (bdescription) updateFields.bdescription = bdescription;
