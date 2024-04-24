@@ -69,7 +69,7 @@ import SelectActivity from "./Pages/Staff/Reception/SelectActivity";
 import WatersportReservations from "./Pages/Staff/Reception/watersportReservations";
 import PastWatersportReservations from "./Pages/Staff/Reception/pastWatersportReserv";
 import DiningReservations from "./Pages/Staff/Reception/DiningReservations.js";
-import roomBookings from "./Pages/Staff/roomManager/Bookings.js";
+import RoomBookings from "./Pages/Staff/Reception/RoomReservations.js";
 
 //user management
 import StaffDash from "./Pages/Staff/userManagement/StaffDash.js";
@@ -229,7 +229,7 @@ function App() {
           <Route path="/PastReservations" element={<PastWatersportReservations />} />
           <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
           <Route path="/DiningReservations" element={<DiningReservations />} />
-          <Route path="/roomReservations" element={<roomBookings />} />
+          <Route path="/RoomBookings" element={<RoomBookings/>} />
 
           {/* restaurant management */}
           <Route path="/menu" element={<MenuItems />} />

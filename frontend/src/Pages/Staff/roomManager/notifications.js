@@ -21,7 +21,7 @@ function Notifications() {
         {Notifications && Notifications.length > 0 ? (
           <ul>
             {Notifications.map((notification, index) => (
-              <li key={index}>{notification.roomNumbers}</li> // Adjust based on your notification object structure
+              <li key={index}>{notification.roomNumbers}</li>
             ))}
           </ul>
         ) : (
