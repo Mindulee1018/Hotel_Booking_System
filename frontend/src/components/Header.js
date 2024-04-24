@@ -75,7 +75,7 @@ const Header = () => {
                 <a
                   className="nav-link active"
                   aria-current="page"
-                  href="/reservation"
+                  href="/roomReservation"
                 >
                   Accomadation
                 </a>
