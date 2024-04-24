@@ -10,6 +10,10 @@ const notificationSchema = new Schema({
     type: Array,
     required: true,
   },
+  Message: {
+    type: String,
+    required: true,
+  },
 });
 
 const Hotel = mongoose.model("notification", notificationSchema);

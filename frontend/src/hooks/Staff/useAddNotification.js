@@ -6,11 +6,12 @@ const useAddNotification = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const addNotification = async (email, roomNumbers) => {
+    const addNotification = async (email, roomNumbers, Message) => {
         
             const notification = {
                 email,
                 roomNumbers,
+                Message,
               
             };
         setIsLoading(true);
