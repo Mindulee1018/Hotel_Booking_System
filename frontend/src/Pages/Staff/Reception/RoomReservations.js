@@ -5,7 +5,7 @@ import useCheckoutRoomReserv from '../../../hooks/Staff/Reception/useCheckoutRoo
 import useAddNotification from '../../../hooks/Staff/useAddNotification';
 import useFetchUserEmails from '../../../hooks/Staff/useFetchUserEmails';
 
-function roomBookings() {
+function RoomBookings() {
   const { roomReservations = [], isLoading, error } = RoomReservationList();
   const { handleCheckOut } = useCheckoutRoomReserv();
   const { addNotification, isLoading: isNotifLoading, error: notifError } = useAddNotification();
@@ -32,11 +32,15 @@ function roomBookings() {
   }
 
   return (
-    <div>
-      < ReceptionNavbar />
-      <h2>Bookings</h2>
-      <div className="card">
-        <table className="table col p-0 m-0">
+    <div className="row">
+        <div className="col-2">
+        < ReceptionNavbar />
+
+        </div>
+        <div className="col-10">
+        <h2 className="my-5">Room Reservations</h2>
+      <div className="card me-5">
+        <table className="table" >
           <thead>
             <tr>
               <th>Check-in</th>
@@ -109,8 +113,12 @@ function roomBookings() {
             </div>
           </div>
       </div>
+
+        </div>
+      
+      
     </div>
   );
 }
 
-export default roomBookings;
+export default RoomBookings;
