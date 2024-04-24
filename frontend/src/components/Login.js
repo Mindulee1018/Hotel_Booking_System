@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
   const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {login, error, isLoading} = useLogin()
+    const {login, error, isLoading,isLoginDisabled} = useLogin()
     
     
   
@@ -42,7 +42,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
              <a href="/ForgotPwd" className="text-decoration-none">Forgot Password?</a>
            </div>
            <div className="d-flex align-items-center justify-content-center mb-2">
-           <button type="submit" className="btn btn-primary w-25" disabled={isLoading} >Login</button>
+           <button type="submit" className="btn btn-primary w-25" disabled={isLoginDisabled || isLoading} >Login</button>
            </div>
            {error && <div className="error bg-danger my-2" style={{color:"white"}}>{error}</div>}
           </form>

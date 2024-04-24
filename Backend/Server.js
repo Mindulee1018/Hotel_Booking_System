@@ -27,6 +27,8 @@ const kitchenBulkStockRoutes = require("./Routes/kitchenBulkStock");
 
 const notification = require("./Routes/notification");
 const userEmails = require("./Routes/userEmails");
+const notificationRoutes = require('./Routes/MulLoginFailNoti');
+
 //const combinedStockRoutes = require ('./Routes/combinedStock')
 // express app
 const app = express();
@@ -61,6 +63,7 @@ app.use("/payment", paymentRoutes);
 app.use("/kitchenBulkStock", kitchenBulkStockRoutes);
 app.use("/notification", notification);
 app.use("/userEmails", userEmails)
+app.use("/adminnotify",notificationRoutes)
 
 // connect to db
 mongoose

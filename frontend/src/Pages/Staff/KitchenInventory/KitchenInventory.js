@@ -14,11 +14,13 @@ function KitchenInventory () {
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [quantity, setQuantity] = useState("");
+    const [reorderLevel, setReorderLevel] = useState('');
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
     const [sort, setSort] = useState('');
+    const [reorderNotification, setReorderNotification] = useState({});
 
     //display only unique categories in filter
     useEffect(() => {
@@ -48,12 +50,13 @@ function KitchenInventory () {
         setName(Stock.name);
         setCategory(Stock.category);
         setQuantity(Stock.quantity);
+        setReorderLevel(Stock.reorderLevel);
         setPrice(Stock.price);
         setDescription(Stock.description);
       };
 
       const updateDetails = async () => {
-        await updateStock(nameToUpdate,name, category,quantity, price,description );
+        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,description );
       };
 
   
@@ -88,6 +91,18 @@ function KitchenInventory () {
           sortedList.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
         }
         return sortedList;
+      };
+
+      //check reorder level
+      const checkReorderLevel = (Stock) => {
+        if (Stock.quantity === Stock.reorderLevel && !reorderNotification[Stock._id]) {
+          alert(`Alert: Quantity for ${Stock.name} has reached its reorder level.`);
+          // Set the notification sent flag to true for this item
+          setReorderNotification((prev) => ({
+            ...prev,
+            [Stock._id]: true,
+          }));
+        }
       };
 
     
@@ -187,7 +202,12 @@ return (
           </tr>
 
           
-          {sortData().map((Stock) => (
+          {sortData().map((Stock) => {
+            // Check reorder level for each item
+            // Check reorder level for each item
+            checkReorderLevel(Stock);
+            return(
+            
             <tbody key={Stock._id}>
               <tr>
                 <td>
@@ -310,7 +330,8 @@ return (
                 </td>
               </tr>
             </tbody>
-          ))}
+            )
+})}
         </table>
       </div>
     </div>

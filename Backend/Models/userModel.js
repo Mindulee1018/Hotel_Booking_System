@@ -42,7 +42,9 @@ const userSchema = new Schema({
     isAdminCreation: {
       type: Boolean,
       default: false
-  }
+  },
+
+
 
 })
 
@@ -83,6 +85,7 @@ userSchema.statics.signup = async function(email, password,name,role,isAdminCrea
   
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
+
   
     const user = await this.create({ email, password: hash,name,role ,isAdminCreation})
   
