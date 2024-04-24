@@ -39,7 +39,7 @@ function Dashboard() {
       >
         <a
           href={
-            userEmail && userEmail.includes("roommanager") ? "/ManageRoom" : "#"
+            userEmail && userEmail.includes("roommanager") ? "/Bookings" : "#"
           }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("roommanager") ? "" : "disabled"
