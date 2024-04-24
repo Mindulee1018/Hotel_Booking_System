@@ -65,7 +65,8 @@ const useNotificationManager = (baseUrl) => {
 
       if (response.ok) {
         await fetchUnreadNotifications();
-        updateUnreadCount(); // Update the count of unread notifications
+        await fetchReadNotifications();
+        updateUnreadCount(); 
       } else {
         throw new Error('Failed to mark notifications as read');
       }
@@ -87,7 +88,8 @@ const useNotificationManager = (baseUrl) => {
 
       if (response.ok) {
         await fetchUnreadNotifications();
-        updateUnreadCount(); // Ensure count is updated after deletion
+        await fetchReadNotifications();
+        updateUnreadCount(); 
       } else {
         throw new Error('Failed to delete notifications');
       }
@@ -99,6 +101,7 @@ const useNotificationManager = (baseUrl) => {
   // Fetch notifications on mount
   useEffect(() => {
     fetchUnreadNotifications();
+    fetchReadNotifications();
   }, []);
 
   return {
