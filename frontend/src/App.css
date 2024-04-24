@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
@@ -56,7 +56,7 @@ body{
   margin-bottom: 20px; /* Add some space below the heading */
   text-transform: uppercase;
   position: absolute;
-  top:10% /* Convert text to uppercase */
+  top: 10%; /* Convert text to uppercase */
 }
 
 .add-paym form {
@@ -91,27 +91,18 @@ body{
   background-color: #0056b3;
 }
 
-
-
-
-
-
-
-
-
-lable,input{
+lable,
+input {
   display: block;
-  
 }
 
-.createReservation{
+.createReservation {
   margin-top: 2rem;
   margin-bottom: 10rem;
   margin-left: 15rem;
   margin-right: 15rem;
-  background-color:cadetblue;
+  background-color: cadetblue;
   padding: 20px;
   box-sizing: border-box;
   border-radius: 5px;
 }
-
