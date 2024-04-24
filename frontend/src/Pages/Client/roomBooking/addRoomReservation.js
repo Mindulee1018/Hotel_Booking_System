@@ -70,13 +70,13 @@ const AddRoomReserve = () => {
   };
 
   const handleBookNow = (Rtype, price, noOfRooms) => {
-    
-
     const assignedRoomNumbers = assignRoomNumbers(noOfRooms);
 
     console.log(assignedRoomNumbers, "assignedRoomNumbers");
 
     if (assignedRoomNumbers.length == noOfRooms) {
+
+      const totalPrice = price * noOfRooms;
       navigate("/CustomerDetails", {
         state: {
           Checkindate,
@@ -84,8 +84,8 @@ const AddRoomReserve = () => {
           NoOfGuests,
           Rtype,
           RoomNumbers: assignedRoomNumbers,
-          price,
-          noOfRooms
+          price: totalPrice,
+          noOfRooms,
         },
       });
     } else {
@@ -93,14 +93,10 @@ const AddRoomReserve = () => {
     }
   };
 
-  
-
-  
-
   return (
     <div>
-      <div className="row mt-4 d-flex">
-        <div className="col-2 ms-5 me-3 ">
+      <div className="row mt-4 ms-3 mb-5 d-flex">
+        <div className="col-3">
           <div
             className="card"
             style={{
@@ -155,13 +151,13 @@ const AddRoomReserve = () => {
           </div>
         </div>
 
-        <div className="col-md-9 ">
+        <div className="col-9 ">
           {roomTypes.map((roomtype) => (
             <div
               key={roomtype._id}
               onClick={() => setSelectedRoomType(roomtype.Rtype)}
             >
-              <table>
+              <table className="mt-3 mb-5">
                 <tbody style={{ width: "100%" }}>
                   <tr>
                     <td colSpan={2}>
@@ -221,6 +217,7 @@ const AddRoomReserve = () => {
                       {/* Button to check room availability */}
                       <button
                         type="button"
+                        className="btn btn-outline-primary"
                         onClick={() => checkAvailability(roomtype.Rtype)}
                         style={{ marginTop: "10px" }}
                       >
@@ -233,6 +230,7 @@ const AddRoomReserve = () => {
                       <div>
                         {availableRooms.length > 0 && (
                           <button
+                            className="btn btn-primary"
                             type="button"
                             onClick={() =>
                               handleBookNow(
