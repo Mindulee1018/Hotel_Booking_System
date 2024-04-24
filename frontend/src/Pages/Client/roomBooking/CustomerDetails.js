@@ -45,7 +45,7 @@ function ReservationDetails() {
         phoneno,
         RoomNumbers,
         price,
-        noOfRooms
+        noOfRooms,
       },
     });
   };
@@ -81,12 +81,12 @@ function ReservationDetails() {
           <h1>Reservation Details</h1>
 
           <p>Room Type: {Rtype}</p>
-          <p>Room Numbers: {RoomNumbers.join(', ')}</p>
+          <p>Room Numbers: {RoomNumbers.join(", ")}</p>
           <p>Number of Rooms: {noOfRooms}</p>
           <p>Check-in Date: {Checkindate}</p>
           <p>Check-out Date: {Checkoutdate}</p>
           <p>Number of Guests: {NoOfGuests}</p>
-          <p>Price per Night: {price}</p>
+          <p>Total Price: Rs.{price}.00</p>
         </div>
         <h1>Enter Customer Details</h1>
         <form
@@ -98,8 +98,6 @@ function ReservationDetails() {
             justifyContent: "space-between",
           }}
         >
-         
-
           <label style={{ marginBottom: "10px" }}>
             First Name:
             <input
