@@ -44,10 +44,7 @@ const userSchema = new Schema({
       default: false
   },
 
-  promoCode: {
-    type: String, 
-    default: null,
-  }
+
 
 })
 
