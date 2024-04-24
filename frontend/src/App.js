@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import DiningNavbar from "./components/DiningNavbar";
+import ManagerPanel from "./components/RoomManagerNavbar.js";
 
 //User login
 import Home from "./Pages/Client/userLogin/Home.js";
@@ -68,6 +69,7 @@ import SelectActivity from "./Pages/Staff/Reception/SelectActivity";
 import WatersportReservations from "./Pages/Staff/Reception/watersportReservations";
 import PastWatersportReservations from "./Pages/Staff/Reception/pastWatersportReserv";
 import DiningReservations from "./Pages/Staff/Reception/DiningReservations.js";
+import roomBookings from "./Pages/Staff/roomManager/Bookings.js";
 
 //user management
 import StaffDash from "./Pages/Staff/userManagement/StaffDash.js";
@@ -92,6 +94,7 @@ import Bookings from "./Pages/Staff/roomManager/Bookings.js";
 import AddRoom from "./Pages/Staff/roomManager/AddRoom.js";
 import ManageRoom from "./Pages/Staff/roomManager/ManageRoom.js";
 import AddNewRoomType from "./Pages/Staff/roomManager/AddRoomType.js";
+import Notifications from "./Pages/Staff/roomManager/notifications.js";
 
 //watersport activity management
 import AddActivity from "./Pages/Staff/Reception/AddActivity";
@@ -226,6 +229,7 @@ function App() {
           <Route path="/PastReservations" element={<PastWatersportReservations />} />
           <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
           <Route path="/DiningReservations" element={<DiningReservations />} />
+          <Route path="/roomReservations" element={<roomBookings />} />
 
           {/* restaurant management */}
           <Route path="/menu" element={<MenuItems />} />
@@ -237,11 +241,14 @@ function App() {
           <Route path="/displayReservations" element={<ManageTableReservation />}/>
 
           {/* room management */}
+          <Route path="/managerPanel" element={<ManagerPanel />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Bookings" element={<Bookings />} />
           <Route path="/AddRoom" element={<AddRoom />} />
           <Route path="/ManageRoom" element={<ManageRoom />} />
           <Route path="/addRoomType" element={<AddNewRoomType />} />
+          <Route path="/notifications" element={<Notifications />} />
+
 
           {/* watersport activity management */}
           <Route path="/AddActivity" element={<AddActivity />} />
