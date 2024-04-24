@@ -37,7 +37,6 @@ function Bookings() {
               <th>Address</th>
               <th>Contact No</th>
               <th>Total Price</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
