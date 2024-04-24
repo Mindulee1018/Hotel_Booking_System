@@ -1,8 +1,8 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+
 const userRoutes = require("./Routes/user");
 const roominventoryRoutes = require("./Routes/roominventory");
 const offerRoutes = require("./Routes/offers");
@@ -24,6 +24,9 @@ const hotelRoutes = require("./Routes/HotelSchema");
 const kitchenStockRoutes = require("./Routes/kitchenStock");
 const paymentRoutes = require("./Routes/payment");
 const kitchenBulkStockRoutes = require("./Routes/kitchenBulkStock");
+
+const notification = require("./Routes/notification");
+const userEmails = require("./Routes/userEmails");
 //const combinedStockRoutes = require ('./Routes/combinedStock')
 // express app
 const app = express();
@@ -56,6 +59,8 @@ app.use("/hotel", hotelRoutes);
 app.use("/kitchenStock", kitchenStockRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/kitchenBulkStock", kitchenBulkStockRoutes);
+app.use("/notification", notification);
+app.use("/userEmails", userEmails)
 
 // connect to db
 mongoose
