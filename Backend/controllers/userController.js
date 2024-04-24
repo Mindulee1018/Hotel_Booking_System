@@ -14,6 +14,8 @@ const sendAdminNotification = async (message) => {
   await Notification.create({ message });
 };
 
+
+//login controller
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -81,6 +83,7 @@ module.exports = {
   loginUser,
 };
 
+
 // signup a user
 const signupUser = async (req, res) => {
   const { email, password, name, role, isAdminCreation } = req.body
@@ -91,7 +94,7 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({ email, token, promoCode: user.promoCode, })
+    res.status(200).json({ email, token})
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
