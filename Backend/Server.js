@@ -24,6 +24,8 @@ const hotelRoutes = require("./Routes/HotelSchema");
 const kitchenStockRoutes = require("./Routes/kitchenStock");
 const paymentRoutes = require("./Routes/payment");
 const kitchenBulkStockRoutes = require("./Routes/kitchenBulkStock");
+const notificationRoutes = require('./Routes/MulLoginFailNoti');
+
 //const combinedStockRoutes = require ('./Routes/combinedStock')
 // express app
 const app = express();
@@ -56,6 +58,7 @@ app.use("/hotel", hotelRoutes);
 app.use("/kitchenStock", kitchenStockRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/kitchenBulkStock", kitchenBulkStockRoutes);
+app.use("/adminnotify",notificationRoutes)
 
 // connect to db
 mongoose
