@@ -7,25 +7,18 @@ const nodemailer = require("nodemailer");
 
 //get all reservations
 const getreservation = async (req, res) => {
-  const room = await roomreservation.find({checkout: false}); //get all data
-  res.status(200).json(room); //send to browser
+  const room = await roomreservation.find({checkout: false});
+  res.status(200).json(room); 
 };
 
-//get single reservation
-const getsinglereservation = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.status(404).json({ error: "invalid id" });
+// Function to get past reservations
+const getPastReservations = async (req, res) => {
+  try {
+    const room = await roomreservation.find({ checkout: true });
+    res.status(200).json(room);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  const room = await roomreservation.findById(id);
-
-  if (!room) {
-    res.status(404).json({ error: "No such reservation" });
-  }
-
-  res.status(200).json(room);
 };
 
 //make a room reservation
@@ -154,7 +147,7 @@ const checkoutRserv = async (req, res) => {
 
 module.exports = {
   getreservation,
-  getsinglereservation,
+  getPastReservations,
   getAvailableRooms,
   roomReservation,
   cancelreservation,
