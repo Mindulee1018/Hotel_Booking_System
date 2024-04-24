@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 const useNotificationManager = (baseUrl) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [readNotifications, setReadNotifications] = useState([]);
 
   // Function to fetch unread notifications
   const fetchUnreadNotifications = async () => {
@@ -15,6 +16,21 @@ const useNotificationManager = (baseUrl) => {
         updateUnreadCount();
       } else {
         throw new Error('Failed to fetch notifications');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    // Function to fetch read notifications
+  const fetchReadNotifications = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/adminnotify/notifications/read`);
+      if (response.ok) {
+        const data = await response.json();
+        setReadNotifications(data);
+      } else {
+        throw new Error('Failed to fetch read notifications');
       }
     } catch (error) {
       console.error(error);
@@ -90,6 +106,7 @@ const useNotificationManager = (baseUrl) => {
     unreadCount,
     markNotificationsAsRead,
     deleteNotifications,
+    readNotifications
   };
 };
 

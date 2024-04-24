@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaUsers, FaUserCog, FaBell } from 'react-icons/fa';
 import { IoMdSettings } from 'react-icons/io';
 import Adminsidebar from "../../../components/AdminSidebar";
-import useNotificationManager from '../../../hooks/Staff/userManagement/useMulLoginNoti'; // Custom hook for notifications
+import useNotificationManager from '../../../hooks/Staff/userManagement/useMulLoginNoti'; 
 
 function AdminDash() {
 
@@ -12,7 +12,8 @@ function AdminDash() {
     notifications,
     unreadCount,
     markNotificationsAsRead,
-    deleteNotifications
+    deleteNotifications,
+    readNotifications
   } = useNotificationManager();
 
   // State to keep track of selected notifications to mark as read or delete
@@ -36,11 +37,12 @@ function AdminDash() {
         <div className="col-md-10">
           <div className="row h4 mb-5" style={{ height: "75px" }}>
             <div>
-              <p className="mt-5">Admin Dashboard</p>
+              <p className="mt-4">Admin Dashboard</p>
               <div
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
+                
               >
                 <FaBell size={30} />
                 {unreadCount > 0 && (
@@ -100,6 +102,9 @@ function AdminDash() {
         </div>
       </div>
 
+
+      
+
       <div
         className="modal fade"
         id="exampleModal"
@@ -131,6 +136,22 @@ function AdminDash() {
                       type="checkbox"
                       checked={selectedNotifications.includes(notification._id)}
                       onChange={() => handleSelectNotification(notification._id)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div>
+            {readNotifications.map((readnotification) => (
+                <div key={readnotification._id} className="d-flex justify-content-between">
+                  <div>
+                    {readnotification.message}
+                  </div>
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={selectedNotifications.includes(readnotification._id)}
+                      onChange={() => handleSelectNotification(readnotification._id)}
                     />
                   </div>
                 </div>

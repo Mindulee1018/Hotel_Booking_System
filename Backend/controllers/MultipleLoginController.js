@@ -11,6 +11,16 @@ const getUnreadNotifications = async (req, res) => {
   }
 };
 
+// Get read notifications
+const getReadNotifications = async (req, res) => {
+  try {
+    const readNotifications = await Notification.find({ status: 'read' }).sort({ createdAt: -1 });
+    res.status(200).json(readNotifications);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching read notifications' });
+  }
+};
+
 // Mark notifications as read
 const markNotificationsAsRead = async (req, res) => {
   const { notificationIds } = req.body;
@@ -48,6 +58,7 @@ module.exports = {
   getUnreadNotifications,
   markNotificationsAsRead,
   getUnreadNotificationCount,
-  deleteNotifications
+  deleteNotifications,
+  getReadNotifications
 
 };
