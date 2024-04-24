@@ -70,6 +70,7 @@ import WatersportReservations from "./Pages/Staff/Reception/watersportReservatio
 import PastWatersportReservations from "./Pages/Staff/Reception/pastWatersportReserv";
 import DiningReservations from "./Pages/Staff/Reception/DiningReservations.js";
 import RoomBookings from "./Pages/Staff/Reception/RoomReservations.js";
+import PastRoomBookings from "./Pages/Staff/Reception/pastRoomReservations.js";
 
 //user management
 import StaffDash from "./Pages/Staff/userManagement/StaffDash.js";
@@ -194,8 +195,8 @@ function App() {
           <Route path="/rooms" element={ <Layout><Room /></Layout>}/>
           <Route path="/reservation" element={<Layout><Reservation /></Layout>}/>
           <Route path="/CustomerDetails" element={<Layout><ReservationDetails /></Layout>}/>
-          <Route path="/roomReservation" element={<AddRoomReserve />} />
-          <Route path="/MyBookings" element={<Mybookings />} />
+          <Route path="/roomReservation" element={<Layout><AddRoomReserve /></Layout>} />
+          <Route path="/MyBookings" element={<Layout><Mybookings /></Layout>} />
 
           {/* hall reservations */}
           <Route path="/editBooking/:id" element={<EditBooking />} />
@@ -229,7 +230,8 @@ function App() {
           <Route path="/PastReservations" element={<PastWatersportReservations />} />
           <Route path="/receptionDashboard" element={<ReceptionDashboard />} />
           <Route path="/DiningReservations" element={<DiningReservations />} />
-          <Route path="/RoomBookings" element={<RoomBookings/>} />
+          <Route path="/roomBookings" element={<RoomBookings/>} />
+          <Route path="/PastRoomBookings" element={<PastRoomBookings/>} />
 
           {/* restaurant management */}
           <Route path="/menu" element={<MenuItems />} />
