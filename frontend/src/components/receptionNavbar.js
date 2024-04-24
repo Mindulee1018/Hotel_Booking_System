@@ -14,6 +14,7 @@ function ReceptionNavbar() {
 
   const setSelectedId = (id) => {
     localStorage.setItem("selectedMenuId", id);
+    console.log(id, "id");
   };
 
   return (
@@ -101,6 +102,24 @@ function ReceptionNavbar() {
 
           <li
             className={`${
+              selectedId === "Room Reservations"
+                ? `bg-white`
+                : `nav-item border my-2`
+            }`}
+          >
+            <a
+              className={`nav-link fs-6 ${
+                selectedId !== "Room Reservations" ? "text-white" : ""
+              }`}
+              href="/roomBookings"
+              onClick={() => setSelectedId("Room Reservations")}
+            >
+              Room Reservations
+            </a>
+          </li>
+
+          <li
+            className={`${
               selectedId === "Dining Reservations"
                 ? `bg-white`
                 : `nav-item border my-2`
@@ -116,42 +135,24 @@ function ReceptionNavbar() {
               Dining Reservations
             </a>
           </li>
-
-          <li
-            className={`${
-              selectedId === "Room Reservations"
-                ? `bg-white`
-                : `nav-item border my-2`
-            }`}
-          >
-            <a
-              className={`nav-link fs-6 ${
-                selectedId !== "Room Reservations" ? "text-white" : ""
-              }`}
-              href="/RoomBookings"
-              onClick={() => setSelectedId("Room Reservations")}
-            >
-              Room Reservations
-            </a>
-          </li>
-        </div>
-        <div className="">
-          <a
-            href=""
-            id="userStatus"
-            className="btn mt-5"
-            sty
-            onClick={handlelogout}
-            style={{
-              backgroundColor: "rgb(85, 180, 254)",
-              position: "relative",
-              top: "190px",
-            }}
-          >
-            Logout
-          </a>
         </div>
       </ul>
+      <div className="">
+        <a
+          href=""
+          id="userStatus"
+          className="btn mt-5 position-fixed"
+          sty
+          onClick={() => handlelogout()}
+          style={{
+            backgroundColor: "rgb(85, 180, 254)",
+            position: "relative",
+            top: "500px",
+          }}
+        >
+          Logout
+        </a>
+      </div>
     </div>
   );
 }
