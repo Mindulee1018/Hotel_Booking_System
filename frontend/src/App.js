@@ -175,7 +175,7 @@ function App() {
           <Route path="/user/resetPassword/:token" element={<PasswordReset />}/>
 
           {/* waterpost page */}
-          <Route path="/Watersports" element={<WatersportActivities />} />
+          <Route path="/Watersports" element={<Layout><WatersportActivities /></Layout>} />
 
           {/* offers page */}
           <Route path="/offerPackage" element={<Offer />} />
