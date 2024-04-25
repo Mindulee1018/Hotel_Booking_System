@@ -97,6 +97,12 @@ const Header = () => {
                 </a>
               </li>
 
+              <li className="nav-item me-3">
+                <a className="nav-link active" aria-current="page" href="/Watersports">
+                  Watersports
+                </a>
+              </li>
+
               <li className="nav-item dropdown me-3">
                 <a
                   className="nav-link dropdown-toggle"
