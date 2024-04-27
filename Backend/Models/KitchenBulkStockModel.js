@@ -28,6 +28,10 @@ const bulkStockSchema = new Schema(
       type: Number,
       required: true,
     },
+    bexpiryDate: {
+      type: Date,
+      required: true,
+    },
     bdescription: {
       type: String,
       required: true,

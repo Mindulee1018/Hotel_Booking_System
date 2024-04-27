@@ -3,23 +3,15 @@ const BulkStock = require("../Models/KitchenBulkStockModel");
 
 // add a product
 const addBulkStock = async (req, res) => {
-  const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bdescription } = req.body;
+  const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bexpiryDate, bdescription } = req.body;
 
   try {
-      let existingBulkStock = await BulkStock.findOne({ bname });
-
-      if (existingBulkStock) {
-          // If a record with the same name exists, merge the data
-          existingBulkStock.bquantity += parseInt(bquantity);
-          existingBulkStock.bdescription += `\n${bdescription}`;
-          await existingBulkStock.save();
-          res.status(200).json(existingBulkStock);
-      } else {
+      
           // If no record with the same name exists, create a new entry
-          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity,breorderLevel, bprice,bunits, bdescription });
+          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity,breorderLevel,bunits, bprice,bexpiryDate, bdescription });
           res.status(201).json(bulkStock);
       }
-  } catch (error) {
+   catch (error) {
       res.status(400).json({ error: error.message });
   }
 };
@@ -54,7 +46,7 @@ const getsingleBulkStock = async (req,res) =>{
 //update stocks
 const updateBulkStock = async (req, res) => {
 
-    const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bdescription } = req.body;
+    const { bname, bcategory, bquantity,breorderLevel,bunits, bprice,bexpiryDate, bdescription } = req.body;
     const{id}  = req.params;
   
     try{
@@ -76,6 +68,7 @@ const updateBulkStock = async (req, res) => {
      if (breorderLevel) updateFields.breorderLevel = breorderLevel;
      if (bunits) updateFields.bunits = bunits;
      if (bprice) updateFields.bprice = bprice;
+     if (bexpiryDate) updateFields.bexpiryDate = bexpiryDate;
      if (bdescription) updateFields.bdescription = bdescription;
   
      

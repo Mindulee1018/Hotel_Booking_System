@@ -9,6 +9,7 @@ const AddStock = () => {
     const [quantity, setQuantity] = useState('');
     const [reorderLevel, setReorderLevel] = useState('');
     const [price, setPrice] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
     const [description, setDescription] = useState('');
 
     const { addStock } = useAddStock();
@@ -17,11 +18,11 @@ const AddStock = () => {
         e.preventDefault();
         if (!validate()) return;
     
-        await addStock(name, category, quantity,reorderLevel, price, description);
+        await addStock(name, category, quantity,reorderLevel, price,expiryDate, description);
     };
 
     const validate = () => {
-        const allFieldsFilled = name && category && quantity && reorderLevel && price && description;
+        const allFieldsFilled = name && category && quantity && reorderLevel && price && expiryDate && description;
         const errorElement = document.getElementById("Error");
         if (!allFieldsFilled) {
             errorElement.innerHTML = "All fields must be filled.";
@@ -67,6 +68,10 @@ const AddStock = () => {
                     <div className="mb-3">
                         <label htmlFor="productPrice" className="form-label">Latest Purchased Price at per 1kg</label>
                         <input type="number" className="form-control" id="productPrice" onChange={(e) => setPrice(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="expiryDate" className="form-label">Best Before Date</label>
+                        <input type="date" className="form-control" id="expiryDate" onChange={(e) => setExpiryDate(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Special Notes</label>

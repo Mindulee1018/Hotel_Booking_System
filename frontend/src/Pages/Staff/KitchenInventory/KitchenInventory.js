@@ -16,6 +16,7 @@ function KitchenInventory () {
     const [quantity, setQuantity] = useState("");
     const [reorderLevel, setReorderLevel] = useState('');
     const [price, setPrice] = useState("");
+    const [expiryDate, setExpiryDate] = useState("");
     const [description, setDescription] = useState("");
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
@@ -52,23 +53,42 @@ function KitchenInventory () {
         setQuantity(Stock.quantity);
         setReorderLevel(Stock.reorderLevel);
         setPrice(Stock.price);
+        setExpiryDate(Stock.expiryDate);
         setDescription(Stock.description);
       };
 
       const updateDetails = async () => {
-        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,description );
+        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,expiryDate,description );
       };
+
+      const aggregatedStockList = {};
+    StockList.forEach(Stock => {
+      const key = Stock.name.toLowerCase(); // Assuming bname identifies duplicate entries
+      if (!aggregatedStockList[key]) {
+        aggregatedStockList[key] = { ...Stock };
+      } else {
+        // Sum quantities for duplicates
+        aggregatedStockList[key].quantity += Stock.quantity;
+        
+     // Update price and description for latest duplicate
+     if (new Date(aggregatedStockList[key].createdAt) < new Date(Stock.createdAt)) {
+      aggregatedStockList[key].price = Stock.price;
+      aggregatedStockList[key].description = Stock.description;
+    }
+  }
+});
 
   
 
       //search and filter
-      const filteredStockList = StockList.filter(Stock => {
-        return(
+      const filteredStockList = Object.values(aggregatedStockList).filter(Stock => (
+        
           Stock.name.toLowerCase().includes(searchkey.toLowerCase()) &&
           (!filterCategory || Stock.category.toLowerCase() === filterCategory.toLowerCase())
+      )
         );
-      }
-      );
+      
+      
       // Sort data function
       const sortData = () => {
         const sortedList = [...filteredStockList];
@@ -202,7 +222,7 @@ return (
           </tr>
 
           
-          {sortData().map((Stock) => {
+          {sortData(filteredStockList).map((Stock) => {
             // Check reorder level for each item
             // Check reorder level for each item
             checkReorderLevel(Stock);

@@ -4,23 +4,15 @@ const Stock = require("../Models/KitchenStockModel");
 
 // add a product
 const addStock = async (req, res) => {
-  const { name, category, quantity,reorderLevel, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price, expiryDate, description } = req.body;
 
   try {
-      let existingStock = await Stock.findOne({ name });
-
-      if (existingStock) {
-          // If a record with the same name exists, merge the data
-          existingStock.quantity += parseInt(quantity);
-          existingStock.description += `\n${description}`;
-          await existingStock.save();
-          res.status(200).json(existingStock);
-      } else {
+     
           // If no record with the same name exists, create a new entry
-          const stock = await Stock.create({ name, category, quantity,reorderLevel, price, description });
+          const stock = await Stock.create({ name, category, quantity,reorderLevel, price,expiryDate, description });
           res.status(201).json(stock);
       }
-  } catch (error) {
+   catch (error) {
       res.status(400).json({ error: error.message });
   }
 };
@@ -55,7 +47,7 @@ const getsingleStock = async (req,res) =>{
 //update stocks
 const updateStock = async (req, res) => {
 
-  const { name, category, quantity,reorderLevel, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price,expiryDate, description } = req.body;
   const{id}  = req.params;
 
   try{
@@ -76,6 +68,7 @@ const updateStock = async (req, res) => {
    if (quantity) updateFields.quantity = quantity;
    if (reorderLevel) updateFields.reorderLevel = reorderLevel;
    if (price) updateFields.price = price;
+   if (expiryDate) updateFields.expiryDate = expiryDate;
    if (description) updateFields.description = description;
 
    
