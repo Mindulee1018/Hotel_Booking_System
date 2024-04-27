@@ -51,6 +51,7 @@ const HotelView = () => {
                   <th scope="col">Description</th>
                   <th scope="col">Unit_Price</th>
                   <th scope="col">Stock Count</th>
+                  <th scope="col">Reorder Point</th>
                  
                 </tr>
               </thead>
@@ -62,6 +63,7 @@ const HotelView = () => {
                     <td>{item.description}</td>
                     <td>{item.unit_price}</td>
                     <td>{item.stockCount}</td>
+                    <td>{inventory.reorderPoint}</td>
                     {/*<td>
                       <div className="d-grid gap-2">
                         <button type="button" className="btn btn-success btn-sm">
