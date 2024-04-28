@@ -3,6 +3,7 @@ const User = require('../Models/userModel');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../Utils/email');
 const Notification = require('../Models/MultipleLoginFailModel');
+const crypto = require('crypto');
 
 const failedLoginAttempts = {};
 
@@ -271,7 +272,8 @@ const resetpwd = async (req, res) => {
       },
       { new: true } // Return the updated user
     );
-
+    
+    failedLoginAttempts[user.email] = 0;
     return res.status(200).json({ status: 'User password updated' });
   } catch (error) {
     console.error(error);
