@@ -50,21 +50,15 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3 mb-2">
         <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+          <img src="hotellogo.png" style={{ width: "170px", height: "70px" }} ></img>
+
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-4 fs-6">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-4 fs-6 d-flex justify-content-around" style={{width:"78vw"}}>
               <li className="nav-item me-3">
                 <a className="nav-link active" aria-current="page" href="/">
                   Home
@@ -72,21 +66,13 @@ const Header = () => {
               </li>
 
               <li className="nav-item me-3">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/roomReservation"
-                >
+                <a className="nav-link active" aria-current="page" href="/roomReservation">
                   Accomadation
                 </a>
               </li>
 
               <li className="nav-item me-3">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/DiningDashboard"
-                >
+                <a className="nav-link active" aria-current="page" href="/DiningDashboard">
                   Dining
                 </a>
               </li>
@@ -104,13 +90,7 @@ const Header = () => {
               </li>
 
               <li className="nav-item dropdown me-3">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Offers and Packages
                 </a>
                 <ul className="dropdown-menu">
@@ -128,22 +108,10 @@ const Header = () => {
               </li>
             </ul>
 
-            <img
-              src="hotellogo.png"
-              style={{ width: "170px", height: "70px" }}
-              className="position-absolute top-50 start-50 translate-middle"
-            ></img>
 
             {user && (
               <div>
-                <a
-                  data-bs-toggle="offcanvas"
-                  href="#offcanvas"
-                  role="button"
-                  aria-controls="offcanvasExample"
-                  class="btn btn-outline-primary ms-5 me-3 btn-sm"
-                  style={{ position: "relative", top: "5px" }}
-                >
+                <a data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvasExample" class="btn btn-outline-primary ms-5 me-3 btn-sm" style={{ position: "relative", top: "5px" }}>
                   Profile
                 </a>
                 <a
@@ -151,8 +119,7 @@ const Header = () => {
                   id="userStatus"
                   className="btn ms-4 mt-2 btn-sm"
                   style={{ backgroundColor: "rgb(85, 180, 254)" }}
-                  onClick={handlelogout}
-                >
+                  onClick={handlelogout}>
                   Logout
                 </a>
               </div>
@@ -173,23 +140,15 @@ const Header = () => {
         </div>
       </nav>
 
-      <div
-        className="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="offcanvas"
-        aria-labelledby="offcanvasLabel"
-        data-bs-backdrop="static"
+
+
+      <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="static"
       >
         <div className="offcanvas-header">
           <h4 className="offcanvas-title" id="offcanvasLabel">
             Profile
           </h4>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-            onClick={resetfeilds}
+          <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={resetfeilds}
           ></button>
         </div>
         <div className="offcanvas-body">
@@ -204,13 +163,7 @@ const Header = () => {
             <hr></hr>
             <div style={{ position: "relative", top: "23px" }}>
               <h5 className="ps-1">Reservations History</h5>
-              <div
-                type="submit"
-                className="btn btn-danger btn-sm mt-3 mb-5"
-                id="submit"
-                data-bs-toggle="modal"
-                data-bs-target="#Modal"
-                style={{ backgroundColor: "rgb(85, 180, 254)" }}
+              <div type="submit" className="btn btn-danger btn-sm mt-3 mb-5" id="submit" data-bs-toggle="modal" data-bs-target="#Modal" style={{ backgroundColor: "rgb(85, 180, 254)" }}
               >
                 View
               </div>
