@@ -6,6 +6,7 @@ import RoomTypeList from "../../../hooks/Client/roomBooking/useRoomTypeList";
 import RoomReservationList from "../../../hooks/Client/roomBooking/useRoomReservationList";
 
 import { checkRoomAvailability } from "../../../hooks/Client/roomBooking/checkRoomAvailability";
+import { useLocation } from "react-router-dom";
 
 const AddRoomReserve = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const AddRoomReserve = () => {
 
   const { roomReservations } = RoomReservationList(); // Corrected this line
   console.log(roomReservations); // Now this should log the expected data
+  const location = useLocation();
 
   const format = (dateStr) => new Date(dateStr).getTime(); // Refactor to a single instance for reusability
 
@@ -77,6 +79,24 @@ const AddRoomReserve = () => {
     if (assignedRoomNumbers.length == noOfRooms) {
 
       const totalPrice = price * noOfRooms;
+
+      localStorage.removeItem('prevPath');
+      localStorage.setItem("prevPath", location.pathname);
+      const token = localStorage.getItem('user');
+      if (!token) {
+        navigate("/login", {
+          state: {
+            Checkindate,
+            Checkoutdate,
+            NoOfGuests,
+            Rtype,
+            RoomNumbers: assignedRoomNumbers,
+            price: totalPrice,
+            noOfRooms,
+          },
+        });
+      }
+      else{
       navigate("/CustomerDetails", {
         state: {
           Checkindate,
@@ -87,7 +107,7 @@ const AddRoomReserve = () => {
           price: totalPrice,
           noOfRooms,
         },
-      });
+      });}
     } else {
       alert("No available rooms to book. Please check availability first.");
     }
