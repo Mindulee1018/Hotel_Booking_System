@@ -105,7 +105,7 @@ function Home() {
 
       <div className="booknow d-flex justify-content-center mt-4 w-100">
         <a
-          href="/reservation"
+          href="/roomReservation"
           className="btn btn-outline-primary mb-5 mt-4 "
           
         >
@@ -329,7 +329,7 @@ function Home() {
             "Experience comfort beyond measure, book your stay today!"
           </h4>
           <a
-            href="/reservation"
+            href="/roomReservation"
             className="text-white fw-bold btn btn-outline-secondary mt-5"
           >
             Book Now
