@@ -58,7 +58,7 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-4 fs-6 d-flex justify-content-around" style={{width:"78vw"}}>
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-4 fs-6 d-flex justify-content-around ms-4" style={{width:"74vw"}}>
               <li className="nav-item me-3">
                 <a className="nav-link active" aria-current="page" href="/">
                   Home
@@ -111,13 +111,13 @@ const Header = () => {
 
             {user && (
               <div>
-                <a data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvasExample" class="btn btn-outline-primary ms-5 me-3 btn-sm" style={{ position: "relative", top: "5px" }}>
+                <a data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvasExample" class="btn btn-outline-primary ms-1 me-3 btn-sm" style={{ position: "relative", top: "5px" }}>
                   Profile
                 </a>
                 <a
                   href=""
                   id="userStatus"
-                  className="btn ms-4 mt-2 btn-sm"
+                  className="btn ms-1 mt-2 btn-sm"
                   style={{ backgroundColor: "rgb(85, 180, 254)" }}
                   onClick={handlelogout}>
                   Logout
@@ -129,7 +129,7 @@ const Header = () => {
                 <a
                   href="/Login"
                   id="userStatus"
-                  className="btn  ms-4 mt-2"
+                  className="btn  ms-1 mt-2"
                   style={{ backgroundColor: "rgb(85, 180, 254)" }}
                 >
                   Sign in
