@@ -74,7 +74,7 @@ const SearchHeader = ({ type }) => {
         {type !== "list" && (
           <>
             <h1 className="headerTitle serif">
-              Looking to host an unforgettable event?🎉
+              Looking to host an unforgettable event?🎉 
             </h1>
             <p>
               Look no further! Our stunning halls are the perfect backdrop for

@@ -19,6 +19,10 @@ const hotelRoutes = require('./Routes/HotelSchema')
 const kitchenStockRoutes = require ('./Routes/kitchenStock')
 const paymentRoutes = require ('./Routes/payment')
 const kitchenBulkStockRoutes = require('./Routes/kitchenBulkStock')
+const  hallRoutes  =require('./Routes/hallRoutes');
+
+const HallReservations =require('./Routes/hallReservations')
+
 //const combinedStockRoutes = require ('./Routes/combinedStock')
 // express app
 const app = express();
@@ -50,6 +54,10 @@ app.use('/hotel', hotelRoutes)
 app.use('/kitchenStock', kitchenStockRoutes)
 app.use('/payment', paymentRoutes)
 app.use('/kitchenBulkStock',kitchenBulkStockRoutes)
+
+app.use('/hall',hallRoutes)
+app.use('/hallR',HallReservations)
+
 //app.use("/combinedStock", combinedStockRoutes)
 
 // connect to db
