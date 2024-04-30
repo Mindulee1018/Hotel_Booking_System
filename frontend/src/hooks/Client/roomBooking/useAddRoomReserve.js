@@ -10,22 +10,30 @@ const useAddRoomReserve = () => {
         Checkindate,
         Checkoutdate,
         NoOfGuests,
+        RType,
+        noofRooms,
+        RoomNumbers,
         firstName,
         lastName,
         Email,
         Address,
-        phoneno
+        phoneno,
+        TotalPrice
 
     ) => {
         const reservationDetails = {
             Checkindate,
             Checkoutdate,
             NoOfGuests,
+            RType,
+            noofRooms,
+            RoomNumbers,
             firstName,
             lastName,
             Email,
             Address,
-            phoneno
+            phoneno,
+            TotalPrice
         };
 
         setIsLoading(true);
@@ -45,7 +53,7 @@ const useAddRoomReserve = () => {
                 const json = await response.json();
                 setError(json.error);
             } else {
-                navigate("/roomreservation");
+                navigate("/roomReservation");
             }
         } catch (error) {
             setError("An unexpected error occurred");

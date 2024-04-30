@@ -26,9 +26,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
     const handleSubmit = async (e) => {
       e.preventDefault();
   
-      const loginResult = await login(email, password);
-  
-      if (loginResult) {
+      await login(email, password);
+
         const prevPath = localStorage.getItem("prevPath");
   
         // Navigate to /CustomerDetails only if previous path is /roomReservation
@@ -44,10 +43,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
               noOfRooms,
             },
           });
-        } else {
-          console.warn("Navigation blocked: previous path is not /roomReservation.");
-        }
-      }
+        } 
+      
     };
 
 

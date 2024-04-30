@@ -194,7 +194,7 @@ function App() {
           {/* room reservations */}
           <Route path="/rooms" element={ <Layout><Room /></Layout>}/>
           <Route path="/reservation" element={<Layout><Reservation /></Layout>}/>
-          <Route path="/CustomerDetails" element={<Layout><ReservationDetails /></Layout>}/>
+          <Route path="/CustomerDetails" element={<ReservationDetails />}/>
           <Route path="/roomReservation" element={<Layout><AddRoomReserve /></Layout>} />
           <Route path="/MyBookings" element={<Layout><Mybookings /></Layout>} />
 
