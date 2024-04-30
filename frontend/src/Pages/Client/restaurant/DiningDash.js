@@ -192,7 +192,7 @@ const DiningDash = () => {
     { name: "Burgers & Sandwiches", imgSrc: "burger1.jpg" },
     { name: "Chinese", imgSrc: "chinese.jpg" },
     { name: "Cakes", imgSrc: "cakes.jpg" },
-    { name: "Pizzas & Pasta", imgSrc: "Pizzaedit.jpg" },
+    { name: "Pizzas and Pasta", imgSrc: "Pizzaedit.jpg" },
     { name: "Desserts", imgSrc: "desserts.jpg" },
   ];
 

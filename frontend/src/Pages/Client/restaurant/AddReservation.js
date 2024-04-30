@@ -81,12 +81,14 @@ function AddReservation() {
 
         <button
           type="submit"
-          className="btn btn-success m-4"
+          className="btn btn-success mt-4 mb-2"
           id="submit"
           onClick={validate}
         >
           Add Reservation
         </button>
+
+        <h6>15% extra charge PP</h6>
 
         {formError && <div id="Error" className="error">{formError}</div>}
 
