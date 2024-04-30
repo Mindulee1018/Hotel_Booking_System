@@ -7,6 +7,7 @@ const useAddRoomReserve = () => {
     const navigate = useNavigate();
 
     const addRoomReserve = async (
+        roomreservationID,
         Checkindate,
         Checkoutdate,
         NoOfGuests,
@@ -22,6 +23,7 @@ const useAddRoomReserve = () => {
 
     ) => {
         const reservationDetails = {
+            roomreservationID,
             Checkindate,
             Checkoutdate,
             NoOfGuests,
@@ -53,6 +55,7 @@ const useAddRoomReserve = () => {
                 const json = await response.json();
                 setError(json.error);
             } else {
+                alert("reservation Success!")
                 navigate("/roomReservation");
             }
         } catch (error) {

@@ -209,7 +209,7 @@ function AddPayment() {
           await AddOrder(orderNumber, productname, Quantity, price, cusName, emailState, contactNumber, Total);
         } else if (roomreservationNo) {
           // Call addRoomReserve for room reservations
-          await addRoomReserve(Checkindate, Checkoutdate, NoOfGuests, Rtype, noOfRooms, RoomNumbers, firstName, lastName, Email, Address, phoneno, price);
+          await addRoomReserve(roomreservationNo,Checkindate, Checkoutdate, NoOfGuests, Rtype, noOfRooms, RoomNumbers, firstName, lastName, Email, Address, phoneno, price);
         }
 
         await sendThankYouEmail(emailState); // Send thank you email

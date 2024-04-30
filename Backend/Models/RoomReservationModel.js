@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 
 const roomreservationSchema = new Schema({
 
+    roomreservationID:{
+        type:String,
+        require:true
+    },
+
     Checkindate:{
         type:Date,
         require:true
