@@ -189,7 +189,7 @@ function Home() {
                       "Elevate your events to unforgettable heights, where every
                       occasion becomes a memory."
                     </p>
-                    <a className="text-white fw-bold btn btn-outline-secondary mt-5">Explore</a>
+                    <a href="/AllHalls" className="text-white fw-bold btn btn-outline-secondary mt-5">Explore</a>
                   </div>
                 )}
               </div>
