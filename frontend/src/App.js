@@ -31,8 +31,6 @@ import DisplayBuffet from "./Pages/Client/restaurant/DisplayBuffet.js";
 import ManageOrders from "./Pages/Client/restaurant/DisplayOrders.js";
 
 //room
-import Room from "./Pages/Client/roomBooking/rooms.js";
-import Reservation from "./Pages/Client/roomBooking/reservation.js";
 import ReservationDetails from "./Pages/Client/roomBooking/CustomerDetails.js";
 import Mybookings from "./Pages/Client/roomBooking/MyBookings.js";
 import AddRoomReserve from "./Pages/Client/roomBooking/addRoomReservation.js";
@@ -192,8 +190,6 @@ function App() {
           <Route path="/manageOrders" element={<ManageOrders />} />
 
           {/* room reservations */}
-          <Route path="/rooms" element={ <Layout><Room /></Layout>}/>
-          <Route path="/reservation" element={<Layout><Reservation /></Layout>}/>
           <Route path="/CustomerDetails" element={<ReservationDetails />}/>
           <Route path="/roomReservation" element={<Layout><AddRoomReserve /></Layout>} />
           <Route path="/MyBookings" element={<Layout><Mybookings /></Layout>} />
