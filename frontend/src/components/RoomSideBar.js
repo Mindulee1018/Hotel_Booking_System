@@ -98,7 +98,7 @@ function RoomSideBar() {
               aria-current="page"
               href="/ManageRoom"
             >
-              Manage Room
+              Manage Room Type
             </a>
           </li>
         </div>

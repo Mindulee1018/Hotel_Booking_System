@@ -1,13 +1,8 @@
-import React from 'react';
-import RoomReservationList from '../../../hooks/Client/roomBooking/useRoomReservationList'
-import useDeleteRoomReserve from '../../../hooks/Client/roomBooking/useDeleteRoomReserve';
-import { useState } from "react"
+import React, { useState } from "react";
+import ReservationByEmail from "../../../hooks/Client/roomBooking/useReservationByEmail";
 
-function Mybookings () {
-  const { roomreservation, isLoading, error } = RoomReservationList();
-  const { deleteRoomReserve} = useDeleteRoomReserve();
-  const [reservationIdToDelete, setreservationId] = useState("");
-  
+function MyBookings() {
+  const { roomReservations = [], isLoading, error } = ReservationByEmail(); // Ensure default to []
 
   if (isLoading) {
     return (
@@ -21,56 +16,51 @@ function Mybookings () {
     return <div>Error: {error}</div>;
   }
 
-  const handleDelete = async (id) => {
-    await deleteRoomReserve(id);
-    console.log(reservationIdToDelete);
-    setreservationId('');
-  };
-
-
-
-
-    return (
-        <div className='vh-100'>
-            <h2>My Bookings</h2>
-           {roomreservation.map((reservation)=> (
-                <div className="card">
-                
-                <table className="table">
-                    <thead>
-                        <tr>
-                           
-                            <th>Booking ID</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{reservation._id}</td>
-                            <td>{reservation.Checkindate}</td>
-                            <td>{reservation.Checkoutdate}</td>
-                            {/* <td>{reservation.price}</td>
-                            <td>{reservation.status}</td> */}
-                            <td><button onClick={()=>{
-                              setreservationId(reservation._id);
-                              handleDelete();
-                              }}>Cancel</button></td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
-
-
-            )
-            
-            )
-}
-            
-        </div>
-    );
+  return (
+    <div>
+     
+      <h2>My Bookings</h2>
+      <div className="card">
+        <table className="table col p-0 m-0">
+          <thead>
+            <tr>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>No.of.Guests</th>
+              <th>Room Type</th>
+              <th>No.of.Rooms</th>
+              <th>Room Numbers</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Contact No</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {roomReservations.map((reservation) => (
+              <tr key={reservation._id}>
+                <td>{reservation.Checkindate}</td>
+                <td>{reservation.Checkoutdate}</td>
+                <td>{reservation.NoOfGuests}</td>
+                <td>{reservation.Rtype}</td>
+                <td>{reservation.noofRooms}</td>
+                <td>{reservation.RoomNumbers}</td>
+                <td>{reservation.firstName}</td>
+                <td>{reservation.lastName}</td>
+                <td>{reservation.Email}</td>
+                <td>{reservation.Address}</td>
+                <td>{reservation.phoneno}</td>
+                <td>{reservation.TotalPrice}</td>
+                <td></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
-export default Mybookings ;
+export default MyBookings;

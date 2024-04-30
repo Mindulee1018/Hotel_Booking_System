@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import RoomList from "../../../hooks/Client/roomBooking/useRoomList";
+import RoomTypeList from "../../../hooks/Client/roomBooking/useRoomTypeList";
 import useDeleteRoom from "../../../hooks/Staff/Rooms/useDeleteRoom";
 import useUpdateRoom from "../../../hooks/Staff/Rooms/useUpdateRoom";
 //import ManagerPanel from '../../components/RoomManagerNavbar';
 import RoomSideBar from "../../../components/RoomSideBar";
 
 function ManageRoom() {
-  const { rooms, isLoading, error } = RoomList();
+  const { roomTypes, isLoading, error } = RoomTypeList();
   const { deleteRoom } = useDeleteRoom();
   const { updateRoom } = useUpdateRoom();
 
@@ -29,7 +29,11 @@ function ManageRoom() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
   const handleDelete = async (id) => {
     await deleteRoom(id);
   };
@@ -64,10 +68,13 @@ function ManageRoom() {
   };
 
   return (
-    <div>
+    <div className="row p-0 m-0">
        <RoomSideBar/>
-      <div className="row bs">
-        {rooms.map((room) => (
+      <div className="col p-0 m-0">
+        <div className="col p-0 m-0">
+       
+              
+        {roomTypes.map((room) => (
           <div key={room._id} className="col-md-4 mb-3">
             <div className="card">
               <div className="card-body d-flex">
@@ -80,6 +87,7 @@ function ManageRoom() {
                       alt={room.Rtype}
                     />
                   )}
+                
                 </div>
 
                 <div className="ms-3">
@@ -97,18 +105,19 @@ function ManageRoom() {
                   className="btn btn-primary me-3"
                   onClick={() => handleDelete(room._id)}
                 >
-                  Delete Room
+                  Delete Room Type
                 </button>
                 <button
                   className="btn btn-primary"
                   onClick={() => setRoomIdToUpdate(room._id)}
                 >
-                  Update Room
+                  Update Room Type
                 </button>
               </div>
             </div>
           </div>
         ))}
+        </div>
       </div>
 
       {roomIdToUpdate && (
