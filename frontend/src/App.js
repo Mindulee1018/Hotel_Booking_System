@@ -123,6 +123,11 @@ import RoomManagerView from "./Pages/Staff/RoomInventory/RoomManagerView";
 import AddItem from "./Pages/Staff/RoomInventory/AddItem.js";
 import EditItem from "./Pages/Staff/RoomInventory/EditItem.js";
 import HotelView from "./Pages/Staff/RoomInventory/HotelView.js";
+import inventory_report from "./Pages/Staff/RoomInventory/inventory_report.js";
+import ManagerView from "./Pages/Staff/RoomInventory/ManagerView.js";
+import View from "./Pages/Staff/RoomInventory/View.js";
+import RoomItemRestock from "./Pages/Staff/RoomInventory/RoomRestock.js";
+
 
 //offers managemet
 import AddNewOffer from "./Pages/Staff/Offers/addOffer.js";
@@ -276,6 +281,9 @@ function App() {
           <Route path="/AddItem" element={<AddItem />} />
           <Route path="/EditItem" element={<EditItem />} />
           <Route path="/HotelView" element={<HotelView />} />
+          <Route path="/inventory_report" element={<inventory_report/>}/>
+          <Route path="/ManagerView" element={<ManagerView/>}/>
+          <Route path="/View" element={<View/>}/>
 
           {/* offers managemet */}
           <Route path="/Addoffer" element={<AddNewOffer />} />
