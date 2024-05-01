@@ -200,9 +200,9 @@ function App() {
           <Route path="/editBooking/:id" element={<EditBooking />} />
           <Route path="/halls" element={<HallList />} />
           <Route path="/ViewHall/:id" element={<ViewHall />} /> 
-          <Route path="/AllHalls" element={<AllHallList />} />
+          <Route path="/AllHalls" element={<Layout><AllHallList /></Layout>} />
           <Route path="/AddHall/:id" element={<HallReservationForm />} />
-          <Route path="/availability" element={<HallAvailability />} />
+          <Route path="/availability" element={<Layout><HallAvailability /></Layout>} />
           <Route path="/bookHall" element={<BookHall />} />
           <Route path="/bookingdata/:id" element={<HallBookingData />} />
 

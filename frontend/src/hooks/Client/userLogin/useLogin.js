@@ -68,6 +68,8 @@ export const useLogin = () => {
             navigation('/Dashboard');
           } else if (previousPath === '/roomReservation'){
             navigation('/CustomerDetails');
+          }else if(previousPath === '/AllHalls'){
+            navigation('/availability');
           }
           else{
             navigation(-1)
