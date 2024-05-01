@@ -19,6 +19,7 @@ import Home from "./Pages/Client/userLogin/Home.js";
 import Signup from "./Pages/Client/userLogin/signup.js";
 import PasswordReset from "./Pages/Client/userLogin/PasswordReset.js";
 import ForgotPassword from "./Pages/Client/userLogin/ForgotPwd.js";
+import VerifyEmail from "./Pages/Client/userLogin/VerifyEmail.js";
 
 //Restaurant
 import DiningDash from "./Pages/Client/restaurant/DiningDash.js";
@@ -171,6 +172,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/ForgotPwd" element={<ForgotPassword />} />
           <Route path="/user/resetPassword/:token" element={<PasswordReset />}/>
+          <Route path="/user/verify/:verifytoken" element={<VerifyEmail />}/>
 
           {/* waterpost page */}
           <Route path="/Watersports" element={<Layout><WatersportActivities /></Layout>} />
