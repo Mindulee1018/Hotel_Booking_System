@@ -24,6 +24,7 @@ const getPastReservations = async (req, res) => {
 //make a room reservation
 const roomReservation = async (req, res) => {
   const {
+    roomreservationID,
     Checkindate,
     Checkoutdate,
     NoOfGuests,
@@ -40,6 +41,7 @@ const roomReservation = async (req, res) => {
 
   try {
     const Reserv = await roomreservation.create({
+      roomreservationID,
       Checkindate,
       Checkoutdate,
       NoOfGuests,

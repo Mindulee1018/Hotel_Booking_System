@@ -123,12 +123,15 @@ const categories = [
   { name: "Desserts", image: "/path/to/desserts.jpg" },
 ];
 
+const defaultCategory = "srilankan";
+
 const MenuDisplay = () => {
   const location = useLocation();
-  const { category } = location.state || {};
-  
-  const [selectedCategory, setSelectedCategory] = useState(category); 
   const navigate = useNavigate();
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    location.state?.category || defaultCategory
+  );
 
   const { menuItems, isLoading, error } = useMenuByCategory(selectedCategory);
 

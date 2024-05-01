@@ -5,6 +5,8 @@ const { sendEmail } = require('../Utils/email');
 const Notification = require('../Models/MultipleLoginFailModel');
 const crypto = require('crypto');
 
+
+
 const failedLoginAttempts = {};
 
 const createToken = (_id) => {
@@ -85,6 +87,10 @@ module.exports = {
 };
 
 
+const generateVerificationToken = () => {
+  return crypto.randomBytes(32).toString('hex');
+};
+
 // signup a user
 const signupUser = async (req, res) => {
   const { email, password, name, role, isAdminCreation } = req.body
@@ -92,14 +98,57 @@ const signupUser = async (req, res) => {
   try {
     const user = await User.signup(email, password, name, role, isAdminCreation)
 
-    // create a token
-    const token = createToken(user._id)
+    //create verify token
+    const verifytoken = generateVerificationToken();
+    console.log(verifytoken)
+    user.hashtoken = verifytoken;
+    user.hashtokenexpires = new Date(Date.now() + 86400000);  // 1-hour expiration
+    await user.save();
+  
+    const subject = 'Please Verify Your Email Address';
+    const text = 'Thank you for signing up with Sunset Araliya! To complete your registration, we just need you to verify your email address. This helps us ensure the security of your account and provides a smoother experience for you during your stay.\n\n'
+      + `Please click the link below to verify your email::\n\n`
+      + `http://localhost:4000/user/verify-email/${verifytoken}\n\n`
+      + `This link will expire in 1 hour`;
 
-    res.status(200).json({ email, token})
+      await sendEmail(email,subject,text)
+      
+
+     // create a token
+     const token = createToken(user._id)
+
+    res.status(200).json({ email, token:token })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 }
+
+
+const verifyEmail = async (req, res) => {
+  const { verifytoken } = req.params;
+
+  try {
+    // Find the user by the verification token
+    const user = await User.findOne({
+      hashtoken: verifytoken,
+      hashtokenexpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid or expired token' });
+    }
+
+    // Mark the user's email as verified
+    user.verified = true;
+    user.hashtoken = null;
+    user.hashtokenexpires = null;
+    await user.save();
+
+    res.status(200).json({ message: 'Email verified successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while verifying the email' });
+  }
+};
 
 
 
@@ -272,7 +321,7 @@ const resetpwd = async (req, res) => {
       },
       { new: true } // Return the updated user
     );
-    
+
     failedLoginAttempts[user.email] = 0;
     return res.status(200).json({ status: 'User password updated' });
   } catch (error) {
@@ -358,4 +407,4 @@ const getsingleuser = async (req, res) => {
 
 
 
-module.exports = { signupUser, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd }
+module.exports = { signupUser,verifyEmail, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd }

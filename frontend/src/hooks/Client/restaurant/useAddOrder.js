@@ -32,7 +32,8 @@ const useAddOrder = () => {
                 const json = await response.json();
                 setError(json.error);
             } else {
-                // navigate("/displayOrders");
+                alert("order success!")
+                navigate("/DiningDashboard");
             }
         } catch (error) {
             console.log(error, "error");
