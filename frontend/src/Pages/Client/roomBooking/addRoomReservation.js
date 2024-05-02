@@ -70,12 +70,29 @@ const AddRoomReserve = () => {
   };
 
   const handleBookNow = (Rtype, price, noOfRooms) => {
+    // Validate check-in date should be less than check-out date
+    if (new Date(Checkindate) >= new Date(Checkoutdate)) {
+      alert("Check-out date should be after check-in date.");
+      return;
+    }
+
+    // Validate number of guests is positive
+    if (NoOfGuests <= 0 || isNaN(NoOfGuests)) {
+      alert("Number of guests must be a positive number.");
+      return;
+    }
+
+    // Validate number of rooms is positive
+    if (noOfRooms <= 0 || isNaN(noOfRooms)) {
+      alert("Number of rooms must be a positive number.");
+      return;
+    }
+
     const assignedRoomNumbers = assignRoomNumbers(noOfRooms);
 
     console.log(assignedRoomNumbers, "assignedRoomNumbers");
 
-    if (assignedRoomNumbers.length == noOfRooms) {
-
+    if (assignedRoomNumbers.length === noOfRooms) {
       const totalPrice = price * noOfRooms;
       navigate("/CustomerDetails", {
         state: {

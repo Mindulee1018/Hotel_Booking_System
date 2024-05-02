@@ -146,21 +146,28 @@ const checkoutRserv = async (req, res) => {
 };
 
 
-const getReservationByEmail = async (req, res) => {
-  const userEmail = req.params.email; // Assuming email is passed as a parameter in the request
-  
+
+
+
+
+
+//Get reservations by email
+const getReservationsByEmail = async (req, res) => {
   try {
-    const reservations = await roomreservation.find({ userEmail: userEmail, checkout: false });
-    
-    if (reservations.length === 0) {
-      return res.status(404).json({ message: 'No reservations found for the provided email.' });
-    }
-    
+    const { Email } = req.query;
+
+    // Query the database for reservations associated with the provided email
+    const reservations = await roomreservation.find({ Email: Email });
+
     res.status(200).json(reservations);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    console.error("Error fetching reservations by email:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
 
 
 
@@ -171,5 +178,5 @@ module.exports = {
   roomReservation,
   cancelreservation,
   checkoutRserv,
-  getReservationByEmail
+  getReservationsByEmail
 };

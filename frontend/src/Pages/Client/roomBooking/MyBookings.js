@@ -1,8 +1,22 @@
-import React, { useState } from "react";
-import ReservationByEmail from "../../../hooks/Client/roomBooking/useReservationByEmail";
+import React, { useState, useEffect } from "react";
+import RoomSideBar from "../../../components/RoomSideBar";
+import GetReservebyEmail from "../../../hooks/Client/roomBooking/useGetReservebyEmail";
+
 
 function MyBookings() {
-  const { roomReservations = [], isLoading, error } = ReservationByEmail(); // Ensure default to []
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState(""); // State to hold the logged-in user's email
+  const { roomReservations = [], isLoading, error } = GetReservebyEmail(loggedInUserEmail);
+
+  // Simulated function to fetch logged-in user's email
+  const fetchLoggedInUserEmail = async () => {
+    // Replace this with your actual logic to fetch the logged-in user's email
+    const userEmail = "user@example.com"; // Example email
+    setLoggedInUserEmail(userEmail);
+  };
+
+  useEffect(() => {
+    fetchLoggedInUserEmail();
+  }, []); // Run once on component mount to fetch user's email
 
   if (isLoading) {
     return (
@@ -18,8 +32,8 @@ function MyBookings() {
 
   return (
     <div>
-     
-      <h2>My Bookings</h2>
+
+      <h2>Bookings</h2>
       <div className="card">
         <table className="table col p-0 m-0">
           <thead>
