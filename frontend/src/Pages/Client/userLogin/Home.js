@@ -105,7 +105,7 @@ function Home() {
 
       <div className="booknow d-flex justify-content-center mt-4 w-100">
         <a
-          href="/reservation"
+          href="/roomReservation"
           className="btn btn-outline-primary mb-5 mt-4 "
           
         >
@@ -137,19 +137,19 @@ function Home() {
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
                 
-                <h3
+                <h4
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   COMFORTABLE
-                </h3>
+                </h4>
                 {hoveredElement === 1 && (
                   <div className="bg-dark bg-opacity-75 py-3">
                     <p className="card-description fs-6 fw-bold">
                       "Discover your sanctuary away from home, where tranquility
                       meets modern convenience."
                     </p>
-                    <a className="text-white fw-bold btn btn-outline-light mt-5">Explore</a>
+                    <a href="/roomReservation" className="text-white fw-bold btn btn-outline-secondary mt-5">Explore</a>
                   </div>
                 )}
               </div>
@@ -177,19 +177,19 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h3
+                <h4
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   ELEGANT
-                </h3>
+                </h4>
                 {hoveredElement === 2 && (
                   <div className="bg-dark bg-opacity-75 py-3">
                     <p className="card-description  fs-6 fw-bold">
                       "Elevate your events to unforgettable heights, where every
                       occasion becomes a memory."
                     </p>
-                    <a className="text-white fw-bold btn btn-outline-light mt-5">Explore</a>
+                    <a href="/AllHalls" className="text-white fw-bold btn btn-outline-secondary mt-5">Explore</a>
                   </div>
                 )}
               </div>
@@ -219,19 +219,19 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h3
+                <h4
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                   
                 >
                   UNMATCHED TASTE
-                </h3>
+                </h4>
                 {hoveredElement === 3 && (
                   <div className="bg-dark bg-opacity-75 py-3 px-2">
                     <p className="card-description fs-6 fw-bold">
                       "Savor every moment with our culinary delights, where
                       every dish is a journey of flavors."
                     </p>
-                    <a className="text-white fw-bold btn btn-outline-light mt-5">Explore</a>
+                    <a href="/DiningDashboard" className="text-white fw-bold btn btn-outline-secondary mt-5">Explore</a>
                   </div>
                 )}
               </div>
@@ -259,19 +259,19 @@ function Home() {
 
             <div className="card-img-overlay d-flex align-items-end">
               <div className="card-overlay-content text-light">
-                <h3
+                <h4
                   className="card-title bg-dark bg-opacity-50 m-2 p-3"
                  
                 >
                   ENTERTAINMENT
-                </h3>
+                </h4>
                 {hoveredElement === 4 && (
                   <div className="bg-dark bg-opacity-75 py-3 px-2">
                     <p className="card-description fs-6 fw-bold">
                       "Dive into adventure with watersports activities, where
                       every wave brings excitement."
                     </p>
-                    <a className="text-white fw-bold btn btn-outline-light mt-5" href="/Watersports">
+                    <a className="text-white fw-bold btn btn-outline-secondary mt-5" href="/Watersports">
                       Explore
                     </a>
                   </div>
@@ -329,8 +329,8 @@ function Home() {
             "Experience comfort beyond measure, book your stay today!"
           </h4>
           <a
-            href="/reservation"
-            className="text-white fw-bold btn btn-outline-light mt-5"
+            href="/roomReservation"
+            className="text-white fw-bold btn btn-outline-secondary mt-5"
           >
             Book Now
           </a>
