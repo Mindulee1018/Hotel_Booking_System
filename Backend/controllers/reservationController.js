@@ -147,11 +147,38 @@ const checkoutRserv = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+//Get reservations by email
+const getReservationsByEmail = async (req, res) => {
+  try {
+    const { Email } = req.query;
+
+    // Query the database for reservations associated with the provided email
+    const reservations = await roomreservation.find({ Email: Email });
+
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error("Error fetching reservations by email:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
+
+
 module.exports = {
   getreservation,
   getPastReservations,
   getAvailableRooms,
   roomReservation,
   cancelreservation,
-  checkoutRserv
+  checkoutRserv,
+  getReservationsByEmail
 };

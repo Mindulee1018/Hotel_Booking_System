@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import controller functions
-const { roomReservation, getreservation, getPastReservations, getAvailableRooms, cancelreservation,checkoutRserv } = require('../controllers/reservationController');
+const { roomReservation, getreservation, getPastReservations, getAvailableRooms, cancelreservation,checkoutRserv,getReservationsByEmail } = require('../controllers/reservationController');
 
 // Define routes using controller functions as middleware
 
@@ -23,5 +23,9 @@ router.delete('/cancelreservation/:id', cancelreservation);
 
 // checkout a reservation
 router.patch('/checkout/:id', checkoutRserv);
+
+
+//get reservation by email
+router.get('/reservations/:Email', getReservationsByEmail);
 
 module.exports = router;

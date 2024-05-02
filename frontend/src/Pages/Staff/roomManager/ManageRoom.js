@@ -1,41 +1,29 @@
 import React, { useState } from "react";
-import RoomList from "../../../hooks/Client/roomBooking/useRoomList";
+import RoomTypeList from "../../../hooks/Client/roomBooking/useRoomTypeList";
 import useDeleteRoom from "../../../hooks/Staff/Rooms/useDeleteRoom";
 import useUpdateRoom from "../../../hooks/Staff/Rooms/useUpdateRoom";
-//import ManagerPanel from '../../components/RoomManagerNavbar';
 import RoomSideBar from "../../../components/RoomSideBar";
 
 function ManageRoom() {
-  const { rooms, isLoading, error } = RoomList();
+  const { roomTypes, isLoading, error } = RoomTypeList();
   const { deleteRoom } = useDeleteRoom();
   const { updateRoom } = useUpdateRoom();
 
-  // State variables to hold the updated values
   const [updatedRtype, setUpdatedRtype] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
   const [updatedCapacity, setUpdatedCapacity] = useState("");
   const [updatedNoOfBeds, setUpdatedNoOfBeds] = useState("");
   const [updatedPrice, setUpdatedPrice] = useState("");
-  const [roomIdToUpdate, setRoomIdToUpdate] = useState(""); // Hold the id of the room to update
+  const [roomIdToUpdate, setRoomIdToUpdate] = useState(""); 
 
-  if (isLoading) {
-    return (
-      <div className="alert alert-primary" role="alert">
-        Loading...
-      </div>
-    );
+  const handleSubmit = (e) => {
+    e.preventDefault();
   }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   const handleDelete = async (id) => {
     await deleteRoom(id);
   };
 
   const handleUpdate = async () => {
-    // Call the updateRoom function with the updated values
     await updateRoom(
       roomIdToUpdate,
       updatedRtype,
@@ -63,54 +51,65 @@ function ManageRoom() {
     );
   };
 
-  return (
-    <div>
-       <RoomSideBar/>
-      <div className="row bs">
-        {rooms.map((room) => (
-          <div key={room._id} className="col-md-4 mb-3">
-            <div className="card">
-              <div className="card-body d-flex">
-                <div>
-                  {room.Image && room.Image.data && (
-                    <img
-                      style={{ width: "10rem" }}
-                      src={`data:${room.Image.contentType};base64,${bufferToBase64(room.Image.data.data)}`}
-                      className="card-img-top mb-1"
-                      alt={room.Rtype}
-                    />
-                  )}
-                </div>
+  if (isLoading) {
+    return (
+      <div className="alert alert-primary" role="alert">
+        Loading...
+      </div>
+    );
+  }
 
-                <div className="ms-3">
-                <p className="card-text">Room Id: {room.Rid}</p>
-                <p className="card-text">Room Type: {room.Rtype}</p>
-                <p className="card-text">{room.description}</p>
-                <p className="card-text">Capacity: {room.capacity}</p>
-                <p className="card-text">No.of.Beds: {room.NoOfBeds}</p>
-                <p className="card-text">Price: {room.price}</p>
-               
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div className="row p-0 m-0">
+      <RoomSideBar/>
+      <div className="col p-0 m-0">
+        <div className="col p-0 m-0">
+          {roomTypes.map((room) => (
+            <div key={room._id} className="col-md-4 mb-3">
+              <div className="card">
+                <div className="card-body d-flex">
+                  <div>
+                    {room.Image && room.Image.data && (
+                      <img
+                        style={{ width: "10rem" }}
+                        src={`data:${room.Image.contentType};base64,${bufferToBase64(room.Image.data.data)}`}
+                        className="card-img-top mb-1"
+                        alt={room.Rtype}
+                      />
+                    )}
+                  </div>
+                  <div className="ms-3">
+                    <p className="card-text">Room Id: {room.Rid}</p>
+                    <p className="card-text">Room Type: {room.Rtype}</p>
+                    <p className="card-text">{room.description}</p>
+                    <p className="card-text">Capacity: {room.capacity}</p>
+                    <p className="card-text">No.of.Beds: {room.NoOfBeds}</p>
+                    <p className="card-text">Price: {room.price}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="card-footer d-flex justify-content-center bg-secondary">
-                <button
-                  className="btn btn-primary me-3"
-                  onClick={() => handleDelete(room._id)}
-                >
-                  Delete Room
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setRoomIdToUpdate(room._id)}
-                >
-                  Update Room
-                </button>
+                <div className="card-footer d-flex justify-content-center bg-secondary">
+                  <button
+                    className="btn btn-primary me-3"
+                    onClick={() => handleDelete(room._id)}
+                  >
+                    Delete Room Type
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setRoomIdToUpdate(room._id)}
+                  >
+                    Update Room Type
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
       {roomIdToUpdate && (
         <div className="mt-3 p-3" style={{ backgroundColor: "white" }}>
           <h3>Update Room</h3>
