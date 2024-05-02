@@ -39,11 +39,16 @@ const roomReservation = async (req, res) => {
     TotalPrice,
   } = req.body;
 
+  // Function to format date to YYYY-MM-DD
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+  };
+
   try {
     const Reserv = await roomreservation.create({
-      roomreservationID,
-      Checkindate,
-      Checkoutdate,
+      Checkindate : formatDate(Checkindate),
+      Checkoutdate : formatDate(Checkoutdate),
       NoOfGuests,
       Rtype,
       noofRooms,
