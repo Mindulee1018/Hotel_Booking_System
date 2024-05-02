@@ -137,16 +137,15 @@ function ReceptionNavbar() {
           </li>
         </div>
       </ul>
-      <div className="">
+      <div className="justify-content-center ">
         <a
-          href=""
           id="userStatus"
-          className="btn mt-5 position-fixed"
+          className="btn mt-5  position-fixed"
           sty
           onClick={() => handlelogout()}
           style={{
             backgroundColor: "rgb(85, 180, 254)",
-            position: "relative",
+
             top: "500px",
           }}
         >
