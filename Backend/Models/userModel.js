@@ -54,7 +54,7 @@ const userSchema = new Schema({
 })
 
 // static signup method
-userSchema.statics.signup = async function (email, password, name, role, isAdminCreation = false) {
+userSchema.statics.signup = async function (email, password, name, role, isAdminCreation = false, verified = false) {
 
   // validation
 
@@ -89,7 +89,7 @@ userSchema.statics.signup = async function (email, password, name, role, isAdmin
   const hash = await bcrypt.hash(password, salt)
 
 
-  const user = await this.create({ email, password: hash, name, role, isAdminCreation })
+  const user = await this.create({ email, password: hash, name, role, isAdminCreation, verified})
 
   return user
 }

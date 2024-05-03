@@ -93,10 +93,10 @@ const generateVerificationToken = () => {
 
 // signup a user
 const signupUser = async (req, res) => {
-  const { email, password, name, role, isAdminCreation } = req.body
+  const { email, password, name, role, isAdminCreation ,verified} = req.body
 
   try {
-    const user = await User.signup(email, password, name, role, isAdminCreation)
+    const user = await User.signup(email, password, name, role, isAdminCreation,verified)
 
     //create verify token
     const verifytoken = generateVerificationToken();
