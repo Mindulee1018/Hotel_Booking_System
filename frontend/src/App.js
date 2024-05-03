@@ -284,6 +284,7 @@ function App() {
           <Route path="/inventory_report" element={<inventory_report/>}/>
           <Route path="/ManagerView" element={<ManagerView/>}/>
           <Route path="/View" element={<View/>}/>
+          <Route path="/restock" element={<RoomItemRestock/>}/>
 
           {/* offers managemet */}
           <Route path="/Addoffer" element={<AddNewOffer />} />
