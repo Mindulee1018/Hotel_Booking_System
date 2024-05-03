@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../component/Header';
+
 import View from './View';
 
 const Manager_view = () => {

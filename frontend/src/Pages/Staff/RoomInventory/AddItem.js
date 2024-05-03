@@ -5,6 +5,7 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 
 const AddItem = () => {
     const navigate = useNavigate();
+    const [setErrors,errors] =useState();
     const [state, setState] = useState({
         itemID: "",
         itemName: "",
@@ -22,7 +23,7 @@ const AddItem = () => {
     
       const onsubmit = (e) => {
       e.preventDefault();*/}
-      onst [errors, setErrors] = useState({});
+      
       const [submitting, setSubmitting] = useState(false);
     
       const validateValues = (inputValues) => {

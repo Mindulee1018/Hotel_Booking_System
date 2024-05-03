@@ -7,6 +7,7 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 export const EditItem = () => {
   const [inventory, setInventory] = useState([]);
   const navigate = useNavigate();
+  const errors =useState();
   const [state, setState] = useState({
     itemID: '',
     itemName: '',
@@ -55,7 +56,7 @@ export const EditItem = () => {
       description,
       unit_price,
       stockCount,
-      reorderPoint
+      // reorderPoint
     };
 
 

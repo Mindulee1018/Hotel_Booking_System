@@ -5,6 +5,7 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 const RoomManagerView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [state, setState] = useState();
 
   //message
   const message = state.roominventory.map((data, index) => {

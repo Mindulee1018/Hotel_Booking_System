@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../component/Header';
+
 
 const View = () => {
   const [state, setState] = useState({

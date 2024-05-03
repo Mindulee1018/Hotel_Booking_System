@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Header from '../../component/Header';
+
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -46,7 +46,7 @@ const Inventory_report = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard="Inventory Management System" />
+        <h1 dashboard="Inventory Management System" />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">

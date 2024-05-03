@@ -21,6 +21,5 @@ const roomRestockSchema = new mongoose.Schema({
   }]
 });
 
-const RoomRestock = mongoose.model('RoomRestock', roomRestockSchema);
 
-module.exports = RoomItems;
+module.exports = mongoose.model('RoomRestock', roomRestockSchema)
