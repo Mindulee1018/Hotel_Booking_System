@@ -57,7 +57,7 @@ import Offer from "./Pages/Client/offerPackage.js";
 
 
 ///////////manager side////////////
-import ManagerDash from "./Pages/Staff/ManagerDash";
+import ManagerDash from "./Pages/Staff/userManagement/ManagerDash.js";
 import Dashboard from "./Pages/Staff/ManagerDashboard";
 
 //reception
@@ -98,7 +98,7 @@ import Notifications from "./Pages/Staff/roomManager/notifications.js";
 
 //watersport activity management
 import AddActivity from "./Pages/Staff/Reception/AddActivity";
-import WatersportManage from "./Pages/Staff/Reception/WatersportManagement";
+import WatersportManage from "./Pages/Staff/ActivityManagement/WatersportManagement.js";
 
 //event management
 import Alldates from "../src/Pages/Staff/HallManagement/Alldates.js";

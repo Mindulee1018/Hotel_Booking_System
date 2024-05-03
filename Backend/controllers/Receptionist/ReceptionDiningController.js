@@ -1,4 +1,4 @@
-const diningReserv = require("../Models/receptionDiningModel");
+const diningReserv = require("../../Models/receptionDiningModel");
 
 //get all reservations
 const getAllReservations = async (req, res) => {

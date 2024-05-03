@@ -65,7 +65,7 @@ function Dashboard() {
           href={
             userEmail
               ? userEmail.includes("activitymanager")
-                ? "/receptionDashboard"
+                ? "/WatersportsManagement"
                 : userEmail.includes("eventmanager")
                 ? "/HallAdminDash"
                 : "#"
