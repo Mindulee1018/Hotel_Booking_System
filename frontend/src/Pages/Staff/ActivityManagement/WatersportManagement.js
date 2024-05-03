@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import useActivityList from "../../../hooks/Staff/Reception/useActivityList";
 import useActivityDelete from "../../../hooks/Staff/Reception/useDeleteActivity";
-import ReceptionNavbar from "../../../components/receptionNavbar";
+import ActivityManagerSideBar from "../../../components/activityManagerSideBar";
 
 function WatersportManage() {
   const { ActivityList, isLoading, error } = useActivityList();
@@ -28,8 +28,8 @@ function WatersportManage() {
   };
 
   return (
-    <div className="row p-0">
-      <ReceptionNavbar />
+    <div className="row">
+      <ActivityManagerSideBar />
       <div className="col">
         <div>
           <h1 className="mb-4 mt-5">Watersport Activities</h1>
