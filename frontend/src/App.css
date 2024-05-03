@@ -91,10 +91,10 @@ body {
   background-color: #0056b3;
 }
 
-lable,
+/* lable,
 input {
   display: block;
-}
+} */
 
 .createReservation {
   margin-top: 2rem;
