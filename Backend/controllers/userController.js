@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../Utils/email');
 const Notification = require('../Models/MultipleLoginFailModel');
 const crypto = require('crypto');
-
+const cron = require('node-cron');
 
 
 const failedLoginAttempts = {};
@@ -38,6 +38,34 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
+
+    if (!user.verified) {
+      if (Date.now() > user.hashtokenexpires) {
+        if (user.verificationAttempts < 2) { 
+          const newToken = generateVerificationToken();
+          user.hashtoken = crypto.createHash('sha256').update(newToken).digest('hex');
+          user.hashtokenexpires = new Date(Date.now() + 600000); 
+          user.verificationAttempts += 1; 
+          await user.save(); 
+    
+          const subject = 'Email Verification Required';
+          const text = `Your email verification link has expired.\n\n`
+            + `Please click the link below to verify your email:\n\n`
+            + `http://localhost:4000/user/verify-email/${newToken}\n\n`
+            + `This link will expire in 10 minutes.`;
+    
+          await sendEmail(email, subject, text); // Send new verification email
+    
+          return res.status(401).json({ error: 'Account not verified. New verification email sent.' });
+        } else {
+          await User.findOneAndDelete({ email }); 
+          return res.status(429).json({ error: 'Verification attempt limit reached. Create a new account.' });
+        }
+      } else {
+        return res.status(401).json({ error: 'Account not verified. Please check your email for the verification link.' });
+      }
+    }
+    
 
     // Reset failed login attempts upon successful login
     failedLoginAttempts[email] = 0;
@@ -102,7 +130,7 @@ const signupUser = async (req, res) => {
     const verifytoken = generateVerificationToken();
     console.log(verifytoken)
     user.hashtoken = verifytoken;
-    user.hashtokenexpires = new Date(Date.now() + 86400000);  // 1-hour expiration
+    user.hashtokenexpires = new Date(Date.now() +  3600000);  // 1-hour expiration
     await user.save();
   
     const subject = 'Please Verify Your Email Address';
@@ -149,7 +177,6 @@ const verifyEmail = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while verifying the email' });
   }
 };
-
 
 
 
@@ -372,7 +399,7 @@ const getstaff = async (req, res) => {
 
 const getusers = async (req, res) => {
   try {
-    const selectedFields = ['name', 'email'];
+    const selectedFields = ['name', 'email','verified'];
     const userMembers = await User.find({ role: 'user' }).select(selectedFields);
 
     if (userMembers.length === 0) {
