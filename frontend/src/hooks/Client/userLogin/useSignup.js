@@ -40,7 +40,7 @@ export const useSignup = () => {
       // update loading state
       setIsLoading(false)
       alert("Thank you for signing up! To complete your registration, we've sent a verification email")
-      navigation('/Login')
+      navigation('/')
       window.location.reload()
       
     }
