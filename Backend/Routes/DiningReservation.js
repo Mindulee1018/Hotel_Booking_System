@@ -4,7 +4,7 @@ const router = express.Router();
 
 const {
   getAllReservations,
-} = require("../controllers/ReceptionDiningController");
+} = require("../controllers/Receptionist/ReceptionDiningController");
 
 //get all reservations
 router.get("/", getAllReservations);
