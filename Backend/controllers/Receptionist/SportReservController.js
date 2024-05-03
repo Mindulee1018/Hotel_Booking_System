@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const watersportReservModel = require("../Models/watersportReservModel");
+const watersportReservModel = require("../../Models/watersportReservModel");
 
 
 // Function to add a new reservation

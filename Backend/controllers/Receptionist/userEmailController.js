@@ -1,4 +1,4 @@
-const User = require('../Models/userModel')
+const User = require('../../Models/userModel')
 const { default: mongoose } = require('mongoose')
 
 const getUserEmails = async (req, res) => {
