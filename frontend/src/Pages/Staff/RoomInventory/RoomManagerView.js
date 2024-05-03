@@ -8,7 +8,7 @@ const RoomManagerView = () => {
   const [state, setState] = useState();
 
   //message
-  const message = state.roominventory.map((data, index) => {
+  const message = inventory.map((data, index) => {
     if(data.stockCount < data.reorderPoint ){ 
       return (
         <div class="alert alert-warning mb-5" role="alert">
