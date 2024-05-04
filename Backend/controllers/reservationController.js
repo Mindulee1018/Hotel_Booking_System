@@ -47,6 +47,7 @@ const roomReservation = async (req, res) => {
 
   try {
     const Reserv = await roomreservation.create({
+      roomreservationID,
       Checkindate : formatDate(Checkindate),
       Checkoutdate : formatDate(Checkoutdate),
       NoOfGuests,
