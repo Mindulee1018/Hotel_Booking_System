@@ -1,23 +1,19 @@
-import React, { useState, useEffect,useContext } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
+
 
 const BookHall = () => {
   const [hallReserves, setHallReserves] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
-  const { user } = useContext(AuthContext)
-  
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
       fetchBookings();
-      return
-    } 
-    else if(!user){
-     
     }
   }, [user]);
-  const [alerted, setAlerted] = useState(false);
 
   const fetchBookings = async () => {
     try {
@@ -52,14 +48,23 @@ const BookHall = () => {
     }
   };
 
+  const currentDate = new Date();
+
+  const futureBookings = hallReserves ? hallReserves.filter(booking => new Date(booking.selectdate) >= currentDate) : [];
+  const pastBookings = hallReserves ? hallReserves.filter(booking => new Date(booking.selectdate) < currentDate) : [];
+
   return (
-    <div className="container mt-5">
+    <div>
+    <div className="container mt-5 serif">
       <div className="mb-4">
         <h1 className="fw-bold display-4">Hall Bookings</h1>
       </div>
-      <div className="row">
-        {hallReserves ? (
-          hallReserves.map((hallReserve) => (
+      
+      {/* Future Bookings */}
+      <div className="mb-4">
+        <h2 className="fw-bold">Future Bookings</h2>
+        <div className="row">
+          {futureBookings.map((hallReserve) => (
             <div key={hallReserve._id} className="col-md-4 mb-4">
               <div className="card rounded h-100 bg-light-blue hover-bg-light-blue serif">
                 <div className="card-body d-flex flex-column">
@@ -96,10 +101,55 @@ const BookHall = () => {
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="fs-5 fw-light italic">Loading...</p>
-        )}
+          ))}
+        </div>
+      </div>
+
+      {/* Past Bookings */}
+      <div>
+        <h2 className="fw-bold">Past Bookings</h2>
+        <div className="row">
+          {pastBookings.map((hallReserve) => (
+            <div key={hallReserve._id} className="col-md-4 mb-4">
+              <div className="card rounded h-100 bg-light-blue hover-bg-light-blue serif">
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title fw-bold">{hallReserve.hall}</h5>
+                  <p className="card-text">Event Type: {hallReserve.eventtype}</p>
+                  <p className="card-text">Capacity: {hallReserve.capacity}</p>
+                  <p className="card-text">Selected Date: {hallReserve.selectdate}</p>
+                  <p className="card-text"> Time: {hallReserve.fromTime}-{hallReserve.toTime}</p>
+                  
+                  {hallReserve.Resources && hallReserve.Resources.length > 0 ? (
+                    <div>
+                      <p className="card-text">Resources:</p>
+                      <ul>
+                        {hallReserve.Resources.map((resource, index) => (
+                          <li key={index}>{resource.arrangementStyle}, {resource.foodArrangement}, {resource.barArrangement}, {resource.decorArrangement}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p>No resources picked</p>
+                  )}
+                  <div className="mt-auto d-flex justify-content-end">
+                    <Link to={`/bookingdata/${hallReserve._id}`} className="btn btn-primary me-2">View</Link>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(hallReserve._id)}
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteConfirmationModal"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      
+      </div>
+  
       </div>
 
       {/* Delete Confirmation Modal */}
