@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 const reservationSchema = new Schema({
-  tableId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'table', 
-    required: true,
-  },
+
   date: {
     type: Date,
     required: true,
@@ -20,7 +16,7 @@ const reservationSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    
   },
   contactNumber: {
     type: Number,

@@ -6,8 +6,10 @@ const {
   getSingleReservation,
   deleteReservation,
   updateReservation,
-  getAvailableTables,
-  addTable
+  // getAvailableTables,
+  // addTable
+  checkAvailability,
+ 
 } = require("../controllers/tableController");
 const router = express.Router();
 
@@ -27,9 +29,9 @@ router.delete("/:id", deleteReservation);
 router.patch("/:id", updateReservation);
 
 //get availability of tables
-router.get("/availability/:date/:timeSlot", getAvailableTables);
+router.get("/availability/:date/:timeSlot", checkAvailability);
 
 //add tables
-router.post("/add-tables", addTable);
+// router.post("/add-tables", addTable);
 
 module.exports = router;
