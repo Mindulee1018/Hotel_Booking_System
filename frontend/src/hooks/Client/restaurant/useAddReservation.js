@@ -32,6 +32,7 @@ const useAddReservation = () => {
       );
 
       const data = await response.json();
+      alert("Table reservation success")
       setReservationMessage(data.message);
     } catch (error) {
       setReservationMessage('Error making reservation.');

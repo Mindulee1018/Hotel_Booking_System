@@ -117,11 +117,13 @@ import { useFormState } from '../hooks/usePayment';
 import { useLocation } from 'react-router-dom';
 import useAddOrder from '../hooks/Client/restaurant/useAddOrder';
 import useAddRoomReserve from '../hooks/Client/roomBooking/useAddRoomReserve';
+import useAddReservation from '../hooks/Client/restaurant/useAddReservation';
 
 function AddPayment() {
   const location = useLocation();
   const { AddOrder } = useAddOrder();
   const { addRoomReserve } = useAddRoomReserve();
+  const { availabilityMessage, reservationMessage,checkAvailability, makeReservation, } = useAddReservation();
 
   const {
     orderNumber,
@@ -144,6 +146,11 @@ function AddPayment() {
     Address,
     phoneno,
     roomreservationNo,
+    tableReservationNo,
+    date,
+    timeSlot,
+    customerName,
+    Noofguests,
   } = location.state || {};
 
   const { formData, handleOnChange } = useFormState({
@@ -174,6 +181,13 @@ function AddPayment() {
 //     console.log(Address)
 //     console.log(phoneno)
 //     console.log(roomreservationNo)
+    // console.log(tableReservationNo)
+    // console.log(date)
+    // console.log(timeSlot)
+    // console.log(customerName)
+    // console.log(Noofguests)
+    // console.log(email)
+    // console.log(contactNumber)
 
   const [emailState, setEmailState] = useState(Email || email); 
   const [error, setError] = useState(null);
@@ -196,7 +210,7 @@ function AddPayment() {
 
     try {
       const { c_name, card_number, card_expiration } = formData;
-      const reserveid = roomreservationNo || orderNumber;
+      const reserveid = roomreservationNo || orderNumber || tableReservationNo;
       const orderData = { reserveid, c_name, email: emailState, card_number, card_expiration };
 
       const response = await submitOrder(orderData);
@@ -210,6 +224,18 @@ function AddPayment() {
         } else if (roomreservationNo) {
           // Call addRoomReserve for room reservations
           await addRoomReserve(roomreservationNo,Checkindate, Checkoutdate, NoOfGuests, Rtype, noOfRooms, RoomNumbers, firstName, lastName, Email, Address, phoneno, price);
+        } else if (tableReservationNo){
+          // Call makeReservation for table reservations
+          const reservationData = {
+            tableReservationNo,
+            date,
+            timeSlot,
+            customerName,
+            Noofguests,
+            email,
+            contactNumber,
+          };
+          makeReservation(reservationData);
         }
 
         await sendThankYouEmail(emailState); // Send thank you email
