@@ -105,7 +105,9 @@ const AllHallList = () => {
         {/* Reserve Now Button */}
         <div className="row justify-content-center mt-5">
           <div className="col-md-6">
-            <button className="btn btn-primary" onClick={handleReserveNow}>Reserve Now</button>
+          <Link to='/' className='btn btn-primary'>
+                       Back to home
+                      </Link>
           </div>
         </div>
       </div>
