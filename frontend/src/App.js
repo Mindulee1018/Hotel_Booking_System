@@ -276,7 +276,7 @@ function App() {
           {/* Room Inventory */}
           <Route path="/RoomManagerView" element={<RoomManagerView />} />
           <Route path="/AddItem" element={<AddItem />} />
-          <Route path="/EditItem" element={<EditItem />} />
+          <Route path="/EditItem/:id" element={<EditItem />} />
           <Route path="/HotelView" element={<HotelView />} />
           <Route path="/View" element={<View />} />
           <Route path="/Inventory_report" element={<inventory_report/>} />

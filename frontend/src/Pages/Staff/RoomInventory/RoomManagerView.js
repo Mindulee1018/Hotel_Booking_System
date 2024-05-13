@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Inventorysidebar from '../../../components/InventoryManagerSideBar';
-
+import { useNavigate } from "react-router-dom";
 
 const RoomManagerView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [state, setState] = useState();
+  const navigate = useNavigate();
 
   //message
   const message = inventory.map((data, index) => {
@@ -95,10 +96,10 @@ const RoomManagerView = () => {
                     <td>{item.reorderPoint}</td>
                     <td>
                       <div className="d-grid gap-2">
-                        <button type="button" className="btn btn-success btn-sm">
-                          <a href={`/EditItem`} style={{ textDecoration: 'none', color: 'white' }}>
+                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={(e) =>navigate(`/EditItem/${e.target.id}`)}>
+  
                             update
-                          </a>
+                          
                         </button>
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(item._id)}>Delete</button>
                       </div>

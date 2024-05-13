@@ -10,7 +10,7 @@ const RoomItemRestock = () => {
 
   const fetchRooms = async () => {
     try {
-      const response = await axios.get('/api/rooms');
+      const response = await axios.get('http://localhost:4000/roominventory');
       setRooms(response.data);
     } catch (error) {
       console.error('Error fetching rooms:', error);

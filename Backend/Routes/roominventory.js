@@ -38,6 +38,15 @@ router.route("/").get((req, res) => {
     })
 })
 
+router.route("/:id").get((req, res) => {
+    const {id}= req.params;
+    roominventory.findOne({itemID:id}).then((inventory) => {
+        res.json(inventory)
+    }).catch((err) => {
+        console.log(err)
+    })
+})
+
 
 //updating data
 router.route('/update/:ID').patch(async (req, res) => {

@@ -217,7 +217,7 @@ const AddItem = () => {
           )}
     </div>
 
-  <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+  <button className='btn btn-success mt-5' type='submit' onClick={(e)=>handleSubmit(e)}>
          Save
       </button>
 </div>

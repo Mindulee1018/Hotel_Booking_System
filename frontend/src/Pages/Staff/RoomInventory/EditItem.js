@@ -3,11 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 
 
-
 export const EditItem = () => {
   const [inventory, setInventory] = useState([]);
   const navigate = useNavigate();
   const errors =useState();
+  const { id } = useParams();
   const [state, setState] = useState({
     itemID: '',
     itemName: '',
@@ -37,13 +37,33 @@ export const EditItem = () => {
     if (inputValues.reorderPoint.length < 1) {
       errors.reorderPoint = "reorderPoint is too short";
     }
-    return errors;
+    return errors
   };*/}
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/roominventory/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setInventory(data);
+          console.log(state)
+        
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    fetchData();
+  },[])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -59,22 +79,8 @@ export const EditItem = () => {
       // reorderPoint
     };
 
-
-      const fetchData = async () => {
-        try {
-          const response = await fetch('http://localhost:4000/roominventory/');
-          if (response.ok) {
-            const data = await response.json();
-            setInventory(data);
-          } else {
-            throw new Error('Failed to fetch data');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
     
-      fetchData();
+      
   
 
     try {
@@ -121,7 +127,7 @@ export const EditItem = () => {
                   placeholder="Enter itemID"
                   value={state.itemID}
                   onChange={handleChange}
-                />
+                /> 
                 {errors.itemID && (
                 <div class="text-danger mt-2">
                     ItemID should have 4 characters

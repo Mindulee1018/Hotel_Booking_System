@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const RoomRestock= require('../Models/RoomRestockModel')
-const roominventory = require('../models/roominventoryModel');
+const roominventory = require('../Models/roominventoryModel');
 
 router.put('/:Rid', async (req, res) => {
   const { Rid } = req.params;
