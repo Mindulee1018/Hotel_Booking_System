@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 
 const roomreservationSchema = new Schema({
 
+    roomreservationID:{
+        type:String,
+        require:true
+    },
+
     Checkindate:{
         type:Date,
         require:true
@@ -16,14 +21,23 @@ const roomreservationSchema = new Schema({
       require:true
     },
 
-
     NoOfGuests:{
         type:Number,
         require:true
     },
 
-    Rid:{
+    Rtype:{
         type:String,
+        require:true
+    },
+
+    noofRooms:{
+        type:Number,
+        require:true
+    },
+
+    RoomNumbers:{
+        type: Array,
         require:true
     },
 
@@ -52,19 +66,16 @@ const roomreservationSchema = new Schema({
         require:true
     },
 
-    RoomResvID:{
-        type:String,
+    TotalPrice:{
+        type:Number,
         require:true
     },
 
-    price:{
-        type:Number,
-        require:true
-    }
-
-
-
-
+    checkout: { // Adding this new field
+        type: Boolean,
+        required: true,
+        default: false // Set default value to false
+      }
 
     
 })

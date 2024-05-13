@@ -1,7 +1,4 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const validator = require('validator')
-const { Double } = require("mongodb");
 
 const Schema = mongoose.Schema;
 
@@ -11,13 +8,6 @@ const imageSchema = new Schema({
 });
 
 const roomSchema = new Schema({
-
-
-  Rid: {
-    type: String,
-    required: true,
-  },
-
   Rtype: {
     type: String,
     required: true,
@@ -43,13 +33,19 @@ const roomSchema = new Schema({
     required: true,
   },
 
-  status: {
-    type: String,
-    required: true
+  NoofRooms: {
+    type: Number,
+    required: true,
   },
+
+  RoomNumbers: {
+    type: Array,
+    required: true,
+  },
+
   Image:imageSchema,
 
 });
 
-module.exports = mongoose.model('room', roomSchema)
+module.exports = mongoose.model('roomType', roomSchema)
 

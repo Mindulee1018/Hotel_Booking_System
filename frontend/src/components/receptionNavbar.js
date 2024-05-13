@@ -14,22 +14,28 @@ function ReceptionNavbar() {
 
   const setSelectedId = (id) => {
     localStorage.setItem("selectedMenuId", id);
+    console.log(id, "id");
   };
 
   return (
     <div className="col-2">
-      <ul className="nav flex-column bg-black pe-1 vh-100 position-fixed">
+      <ul
+        className="nav flex-column pe-1 vh-100 position-fixed"
+        style={{ backgroundColor: "#1E3A8A" }}
+      >
         <div
           className="d-flex flex-column  mt-5 justify-content-around fs-5"
           style={{ height: "250px" }}
         >
           <li
             className={`${
-              selectedId === "Home" ? `bg-secondary` : `nav-item border`
+              selectedId === "Home" ? `bg-white` : `nav-item border my-2`
             }`}
           >
             <a
-              className="nav-link text-white fs-6"
+              className={`nav-link fs-6 ${
+                selectedId !== "Home" ? "text-white" : ""
+              }`}
               aria-current="page"
               href="/ReceptionDashboard"
               onClick={() => setSelectedId("Home")}
@@ -40,31 +46,15 @@ function ReceptionNavbar() {
 
           <li
             className={`${
-              selectedId === "Watersports Management"
-                ? `bg-secondary`
-                : `nav-item border my-2`
-            }`}
-          >
-            <a
-              className="nav-link text-white fs-6"
-             
-              href="/WatersportsManagement"
-              onClick={() => setSelectedId("Watersports Management")}
-            >
-              Watersports Management
-            </a>
-          </li>
-
-          <li
-            className={`${
               selectedId === "Watersports Reservations"
-                ? `bg-secondary`
+                ? `bg-white`
                 : `nav-item border my-2`
             }`}
           >
             <a
-              className="nav-link text-white fs-6"
-              
+              className={`nav-link fs-6 ${
+                selectedId !== "Watersports Reservations" ? "text-white" : ""
+              }`}
               href="/watersportReservations"
               onClick={() => setSelectedId("Watersports Reservations")}
             >
@@ -75,13 +65,16 @@ function ReceptionNavbar() {
           <li
             className={`${
               selectedId === "Add a Watersport Reservation"
-                ? `bg-secondary`
+                ? `bg-white`
                 : `nav-item border my-2`
             }`}
           >
             <a
-              className="nav-link text-white fs-6"
-              
+              className={`nav-link fs-6 ${
+                selectedId !== "Add a Watersport Reservation"
+                  ? "text-white"
+                  : ""
+              }`}
               href="/selectActivity"
               onClick={() => setSelectedId("Add a Watersport Reservation")}
             >
@@ -91,14 +84,33 @@ function ReceptionNavbar() {
 
           <li
             className={`${
-              selectedId === "Dining Reservations"
-                ? `bg-secondary`
+              selectedId === "Room Reservations"
+                ? `bg-white`
                 : `nav-item border my-2`
             }`}
           >
             <a
-              className="nav-link text-white fs-6"
-              
+              className={`nav-link fs-6 ${
+                selectedId !== "Room Reservations" ? "text-white" : ""
+              }`}
+              href="/roomBookings"
+              onClick={() => setSelectedId("Room Reservations")}
+            >
+              Room Reservations
+            </a>
+          </li>
+
+          <li
+            className={`${
+              selectedId === "Dining Reservations"
+                ? `bg-white`
+                : `nav-item border my-2`
+            }`}
+          >
+            <a
+              className={`nav-link fs-6 ${
+                selectedId !== "Dining Reservations" ? "text-white" : ""
+              }`}
               href="/DiningReservations"
               onClick={() => setSelectedId("Dining Reservations")}
             >
@@ -106,23 +118,22 @@ function ReceptionNavbar() {
             </a>
           </li>
         </div>
-        <div className="">
-          <a
-            href=""
-            id="userStatus"
-            className="btn mt-5"
-            sty
-            onClick={handlelogout}
-            style={{
-              backgroundColor: "rgb(85, 180, 254)",
-              position: "relative",
-              top: "190px",
-            }}
-          >
-            Logout
-          </a>
-        </div>
       </ul>
+      <div className="justify-content-center ">
+        <a
+          id="userStatus"
+          className="btn mt-5  position-fixed"
+          sty
+          onClick={() => handlelogout()}
+          style={{
+            backgroundColor: "rgb(85, 180, 254)",
+
+            top: "500px",
+          }}
+        >
+          Logout
+        </a>
+      </div>
     </div>
   );
 }

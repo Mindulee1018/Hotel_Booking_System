@@ -6,14 +6,16 @@ const useAddOrder = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const AddOrder = async (productName, Quantity, Price, cusName, email, contactNumber) => {
+    const AddOrder = async (orderNumber, productName, Quantity, Price, cusName, email, contactNumber, Total) => {
         const orderDetails = {
+            orderNumber,
             productName,
             Quantity,
             Price,
             cusName,
             email,
             contactNumber,
+            Total
         };
 
         setIsLoading(true);
@@ -30,10 +32,11 @@ const useAddOrder = () => {
                 const json = await response.json();
                 setError(json.error);
             } else {
-                navigate("/displayOrders");
+                alert("Order success!");
+                navigate("/DiningDashboard");
             }
         } catch (error) {
-            console.log(error, "error");
+            console.error("An unexpected error occurred:", error);
             setError("An unexpected error occurred");
         } finally {
             setIsLoading(false);
@@ -44,3 +47,4 @@ const useAddOrder = () => {
 };
 
 export default useAddOrder;
+

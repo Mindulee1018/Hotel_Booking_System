@@ -10,26 +10,17 @@ const DiningDash= () => {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav w-100 mx-5 d-flex justify-content-around">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/DiningDashboard">Home</a>
+              <a class="nav-link active" aria-current="page" href="/Dashboard">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/DisplayBuffet">Buffets</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/displaymenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Food & Beverages
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/displaymenu">Srilankan</a></li>
-                <li><a class="dropdown-item" href="/displaymenu">Chinese</a></li>
-                <li><a class="dropdown-item" href="/displaymenu">Indian</a></li>
-                <li><a class="dropdown-item" href="/displaymenu">Pizzas & Pasta</a></li>
-                <li><a class="dropdown-item" href="/displaymenu">Cakes</a></li>
-                <li><a class="dropdown-item" href="/displaymenu">Desserts</a></li>
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="/displaymenu">Food & Desserts</a>
             </li>
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                Table Reservations

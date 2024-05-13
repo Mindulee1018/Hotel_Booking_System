@@ -57,6 +57,7 @@ function WatersportReservations() {
       setOtherReservations(remainingActivities);
     }
   }, [reservationList]);
+  
   if (isLoading) {
     return (
       <div className="alert alert-primary" role="alert">
@@ -75,9 +76,7 @@ function WatersportReservations() {
     setNameToDelete("");
   };
 
-  const handleCheckoutReserv = async () => {
-   
-  }
+  
 
   // Handle search
   const handleSearchChange = (event) => {
@@ -144,7 +143,7 @@ function WatersportReservations() {
               <h2>Today's Reservations</h2>
               <div className="d-flex justify-content-around mb-3">
                 <table
-                  className="table table-dark table-striped"
+                  className="table table-striped"
                   style={{ width: "75rem" }}
                 >
                   {filteredReservationsToday.length > 0 ? (
@@ -342,7 +341,7 @@ function WatersportReservations() {
               <h2>Other Reservations</h2>
               <div className="d-flex justify-content-around mb-3">
                 <table
-                  className="table table-dark table-striped"
+                  className="table table-striped"
                   style={{ width: "75rem" }}
                 >
                   {filteredReservationsOther.length > 0 ? (

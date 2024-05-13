@@ -32,19 +32,19 @@ function UserManage(){
         <div className="col-md-3 m-0 p-0">
           <Adminsidebar />
         </div>
-       <div className="col">
+       <div className="col-md-8">
          <div className="row">
       <h2 className="mb-3 mt-3">User Accounts</h2>
-      <div><input
+      <div className='d-flex justify-content-center align-items-center mb-4'><input
                 type="search"
                 placeholder="Search by name..."
-                className="form-control"
+                className="form-control w-50"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               /></div>
            <div className="col d-flex justify-content-center align-items-center mt-4">
             {filteredusers.map(user => (
-              <div className="card pt-3 w-50 bg-dark text-white ">
+              <div className="card pt-3 w-50 bg-white text-black border-primary mb-2">
                 <div>
                   <div>Name: {user.name}</div>
                   <div>Email: {user.email}</div>

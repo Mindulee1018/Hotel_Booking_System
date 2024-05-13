@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import moment from 'moment';
 import { AuthContext } from '../../../context/AuthContext';
 
@@ -106,8 +106,13 @@ const HallAvailability = ({ halls }) => {
 const AllHallList = () => {
   const [halls, setHalls] = useState(null);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return; 
+    }
     const fetchHall = async () => {
       try {
         const response = await fetch("http://localhost:4000/hall/");

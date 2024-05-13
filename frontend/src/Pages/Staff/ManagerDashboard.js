@@ -11,7 +11,7 @@ function Dashboard() {
   return (
     <div>
       <div
-        className="border border-3 pb-3"
+        className="border border-3 pb-3 mb-4"
         style={{ backgroundColor: " #f8f9fa" }}
       >
         <h3 className="my-5">Welcome to Manager Dashboard!</h3>
@@ -34,12 +34,12 @@ function Dashboard() {
       </div>
 
       <div
-        class="d-grid gap-4 col-3 mx-auto"
-        style={{ position: "relative", top: "60px" }}
+        className="d-grid gap-4 col-3 mx-auto"
+        
       >
         <a
           href={
-            userEmail && userEmail.includes("roommanager") ? "/ManageRoom" : "#"
+            userEmail && userEmail.includes("roommanager") ? "/Bookings" : "#"
           }
           className={`btn btn-outline-primary mb-3 lh-lg fs-5 ${
             userEmail && userEmail.includes("roommanager") ? "" : "disabled"
@@ -65,7 +65,7 @@ function Dashboard() {
           href={
             userEmail
               ? userEmail.includes("activitymanager")
-                ? "/receptionDashboard"
+                ? "/WatersportsManagement"
                 : userEmail.includes("eventmanager")
                 ? "/HallAdminDash"
                 : "#"

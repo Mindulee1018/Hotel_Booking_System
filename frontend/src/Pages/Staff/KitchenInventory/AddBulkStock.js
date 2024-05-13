@@ -7,8 +7,10 @@ const AddBulkStock = () => {
     const [bname, setBName] = useState('');
     const [bcategory, setBCategory] = useState('');
     const [bquantity, setBQuantity] = useState('');
+    const [breorderLevel, setBReorderLevel] = useState('');
     const [bunits, setBUnits] = useState('');
     const [bprice, setBPrice] = useState('');
+    const [bexpiryDate,setBExpiryDate] = useState('');
     const [bdescription, setBDescription] = useState('');
 
     const { addBulkStock } = useAddBulkStock();
@@ -17,11 +19,11 @@ const AddBulkStock = () => {
         e.preventDefault();
         if (!validate()) return;
     
-        await addBulkStock(bname, bcategory, bquantity,bunits, bprice, bdescription);
+        await addBulkStock(bname, bcategory, bquantity,breorderLevel,bunits, bprice,bexpiryDate, bdescription);
     };
 
     const validate = () => {
-        const allFieldsFilled = bname && bcategory && bquantity && bunits && bprice && bdescription;
+        const allFieldsFilled = bname && bcategory && bquantity && breorderLevel && bunits && bprice &&bexpiryDate && bdescription;
         const errorElement = document.getElementById("Error");
         if (!allFieldsFilled) {
             errorElement.innerHTML = "All fields must be filled.";
@@ -66,12 +68,20 @@ const AddBulkStock = () => {
                         <input type="number" className="form-control" id="productQuantity" onChange={(e) => setBQuantity(e.target.value)} />
                     </div>
                     <div className="mb-3">
+                        <label htmlFor="productReorderLevel" className="form-label">Reorder Level </label>
+                        <input type="number" className="form-control" id="productReorderLevel" onChange={(e) => setBReorderLevel(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
                         <label htmlFor="productUnits" className="form-label">No. of Units available</label>
                         <input type="number" className="form-control" id="productUnits" onChange={(e) => setBUnits(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="productPrice" className="form-label">Latest Purchased Price per unit</label>
                         <input type="number" className="form-control" id="productPrice" onChange={(e) => setBPrice(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="expiryDate" className="form-label">Best Before Date</label>
+                        <input type="date" className="form-control" id="expiryDate" onChange={(e) => setBExpiryDate(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Special Notes</label>

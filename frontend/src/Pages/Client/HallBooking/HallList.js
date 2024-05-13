@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; // Import useState and useEffect from react
-import "../../Staff/halllist.css"; // Import custom CSS file for additional styling
+
 import { Link } from "react-router-dom";
 
 import SearchHeader from '../../../components/SearchHeader';

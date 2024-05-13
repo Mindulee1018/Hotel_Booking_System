@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const room = require("../Models/roomModel");
+const room = require("../Models/roomTypeModel");
 
 //get all rooms
 const getRoom = async (req, res) => {

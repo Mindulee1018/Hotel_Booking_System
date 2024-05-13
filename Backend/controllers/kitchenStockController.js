@@ -4,23 +4,15 @@ const Stock = require("../Models/KitchenStockModel");
 
 // add a product
 const addStock = async (req, res) => {
-  const { name, category, quantity, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price, expiryDate, description } = req.body;
 
   try {
-      let existingStock = await Stock.findOne({ name });
-
-      if (existingStock) {
-          // If a record with the same name exists, merge the data
-          existingStock.quantity += parseInt(quantity);
-          existingStock.description += `\n${description}`;
-          await existingStock.save();
-          res.status(200).json(existingStock);
-      } else {
+     
           // If no record with the same name exists, create a new entry
-          const stock = await Stock.create({ name, category, quantity, price, description });
+          const stock = await Stock.create({ name, category, quantity,reorderLevel, price,expiryDate, description });
           res.status(201).json(stock);
       }
-  } catch (error) {
+   catch (error) {
       res.status(400).json({ error: error.message });
   }
 };
@@ -55,7 +47,7 @@ const getsingleStock = async (req,res) =>{
 //update stocks
 const updateStock = async (req, res) => {
 
-  const { name, category, quantity, price, description } = req.body;
+  const { name, category, quantity,reorderLevel, price,expiryDate, description } = req.body;
   const{id}  = req.params;
 
   try{
@@ -74,7 +66,9 @@ const updateStock = async (req, res) => {
    if (name) updateFields.name = name;
    if (category) updateFields.category = category;
    if (quantity) updateFields.quantity = quantity;
+   if (reorderLevel) updateFields.reorderLevel = reorderLevel;
    if (price) updateFields.price = price;
+   if (expiryDate) updateFields.expiryDate = expiryDate;
    if (description) updateFields.description = description;
 
    
@@ -109,4 +103,19 @@ const deleteStock = async (req, res) => {
     }
 };
 
-module.exports = { addStock, getStocks,getsingleStock,updateStock,deleteStock };
+// get a single stock by name
+const getsingleName = async (req, res) => {
+    const { stockname } = req.params;
+
+    try {
+        const stock = await Stock.find({ name:stockname });
+        if (!stock) {
+            return res.status(404).json({ error: 'No such product' });
+        }
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { addStock, getStocks,getsingleStock,updateStock,deleteStock,getsingleName };

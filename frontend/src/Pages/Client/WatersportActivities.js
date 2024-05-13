@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import useActivityList from "../hooks/Staff/Reception/useActivityList";
+import useActivityList from "../../hooks/Staff/Reception/useActivityList";
 
 function WatersportActivities() {
   const { ActivityList, isLoading, error } = useActivityList();
@@ -18,10 +18,16 @@ function WatersportActivities() {
   }
 
   return (
-    <div className="row p-0">
+    <div className="row mx-5">
       <div className="col">
         <div>
           <h1 className="mb-4 mt-5">Watersport Activities</h1>
+
+          <p className="fs-5 fw-bold">
+            Dive into the essence of adventure at Sunset Araliya Hotel, where
+            the river whispers ancient secrets and each day offers a new tide of
+            excitement and discovery.
+          </p>
 
           <div className="row d-flex align-items-center justify-content-around mb-3">
             {/* <div className="row"> */}

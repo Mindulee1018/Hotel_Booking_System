@@ -18,17 +18,18 @@ function RestaurantNavbar() {
 
   return (
     <div className="col-2 pe-2">
-      <ul className="nav flex-column bg-black vh-100 position-fixed ">
+      <ul className="nav flex-column vh-100 position-fixed " style={{ backgroundColor: "#1E3A8A" }}>
         <div className="d-flex flex-column  mt-5 justify-content-around fs-5"
           >
+            <div className="d-flex justify-content-center align-items-center">
           <img
             src="Sunset Araliya horizontal.png"
             style={{ width: "150px" }}
-            className="mt-4 justify-content-center"
-          ></img>
+            className="mt-4 d-flex justify-content-center align-items-center"
+          ></img></div>
         </div>
         <div
-          className="d-flex flex-column  mt-5 justify-content-around fs-5"
+          className="d-flex flex-column  mt-5 justify-content-around fs-5 p-1"
           style={{ height: "250px" }}
         >
           <li className="nav-item border">
@@ -78,7 +79,7 @@ function RestaurantNavbar() {
             style={{
               backgroundColor: "rgb(85, 180, 254)",
               position: "relative",
-              top: "190px",
+              top: "150px",
             }}
           >
             Logout

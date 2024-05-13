@@ -5,11 +5,11 @@ const useUpdateBulkStock = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
   
-    const updateBulkStock = async (id,bname, bcategory,bquantity,bunits, bprice,bdescription) => {
+    const updateBulkStock = async (id,bname, bcategory,bquantity,breorderLevel,bunits, bprice,bexpiryDate,bdescription) => {
       console.log("updateBulkStock");
   
       const bulkStockDetails = {
-        bname, bcategory,bquantity,bunits, bprice,bdescription,
+        bname, bcategory,bquantity,breorderLevel,bunits, bprice,bexpiryDate,bdescription,
     };
   
       setIsLoading(true);

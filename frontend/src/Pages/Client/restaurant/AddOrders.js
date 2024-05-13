@@ -1,41 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import useAddOrder from "../../../hooks/Client/restaurant/useAddOrder";
-import { useLocation } from "react-router-dom"; // Correct import statement
+import React, { useState ,useEffect} from 'react';
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 function AddNewOrder() {
-    const [productName, setproductName] = useState("");
-    const [Quantity, setQuantity] = useState("");
-    const [Price, setPrice] = useState("");
+    const [Quantity, setQuantity] = useState(1);
     const [cusName, setcusName] = useState("");
     const [email, setemail] = useState("");
     const [contactNumber, setcontactNumber] = useState("");
     const [formError, setFormError] = useState("");
-    const { AddOrder, isLoading, error } = useAddOrder();
+    const [Total, setTotal] = useState(0);
+    const navigate = useNavigate();
     
-    const location = useLocation(); // Correct usage
-
+    const location = useLocation();
     const { productname, price } = location.state || {};
 
-    const handleSubmit = async (e) => {
-        //await AddResev(Date, Name, Capacity, email, ContactNumber);
-        e.preventDefault();
-        if (!validate()) return;
+    console.log(productname)
+    console.log(price)
 
-        await AddOrder(productName, Quantity, Price, cusName, email, contactNumber);
+    const updateTotal = (quantity) => {
+        setTotal(quantity * price);
     };
 
-    const validate = () => {
-        const allFieldsFilled = productName && Quantity && Price && cusName && email && contactNumber;
+    function generateOrderNumber(prefix = 'FO', numDigits = 8) {
+        const randomNumber = Math.floor(Math.random() * Math.pow(10, numDigits));
+        const formattedNumber = String(randomNumber).padStart(numDigits, '0');
+        return prefix + formattedNumber;
+      }
+ 
+      const orderNumber = generateOrderNumber();
 
-        //const errorElement = document.getElementById("Error");
-        if (!allFieldsFilled) {
-            setFormError("All fields must be filled."); // using React state for error message
-            return false;
+
+    useEffect(() => {
+        updateTotal(Quantity);
+    }, [Quantity, price]); // Re-calculate when Quantity or price changes
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (!validateForm()) return; 
+    //     await AddOrder(productname, Quantity, price, cusName, email, contactNumber);
+    // };
+
+    const validateForm = () => {
+        if (!Quantity || !cusName || !email || !contactNumber) {
+          alert("All fields must be filled.");
+          return false;
         } else {
-            setFormError(""); // clear error message
-            return true;
+          setFormError("");
+          return true; 
         }
-    };
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (validateForm()) {
+      
+          navigate('/AddPayment', {
+            state: {
+              orderNumber,
+              productname,
+              price,
+              Quantity,
+              cusName,
+              email,
+              contactNumber,
+              Total,
+            },
+          });
+        }
+      };
+
 
     return (
         <div className="row d-flex align-items-center justify-content-center">
@@ -48,46 +83,43 @@ function AddNewOrder() {
                 <label className="form-label mt-3">Enter productName:</label>
                 <input
                     type="text"
-                    id="productName"
-                    name="productName"
                     className="form-control"
                     value={productname}
-                    onChange={(e) => setproductName(e.target.value)}
+                    disabled 
                 />
 
                 <label className="form-label mt-3">Quantity:</label>
                 <input
                     type="number"
                     className="form-control"
-                    value={1}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    value={Quantity}
+                    onChange={(e) => {
+                        setQuantity(e.target.value);
+                        updateTotal(e.target.value); 
+                    }}
                 />
+                
                 <label className="form-label mt-3">Price:</label>
                 <input
                     type="number"
                     className="form-control"
-                    id="Price"
                     value={price}
-                    onChange={(e) => {
-                        setPrice(e.target.value);
-                    }}
+                    disabled 
                 />
 
                 <label className="form-label mt-3">Enter Customer Name:</label>
                 <input
                     type="text"
                     className="form-control"
+                    value={cusName}
                     onChange={(e) => setcusName(e.target.value)}
                 />
-
-
 
                 <label className="form-label mt-3">Email:</label>
                 <input
                     type="email"
-                    id="email"
-                    name="email"
                     className="form-control"
+                    value={email}
                     onChange={(e) => setemail(e.target.value)}
                 />
 
@@ -95,23 +127,29 @@ function AddNewOrder() {
                 <input
                     type="number"
                     className="form-control"
+                    value={contactNumber}
                     onChange={(e) => setcontactNumber(e.target.value)}
+                />
+
+               <label className="form-label mt-3">Total:</label>
+                <input
+                    type="number"
+                    className="form-control"
+                    value={Total}
+                    disabled
                 />
 
                 <button
                     type="submit"
                     className="btn btn-success m-4"
-                    id="submit"
-                    onClick={validate}
                 >
                   Proceed to Checkout
                 </button>
 
                 {formError && <div id="Error" className="error">{formError}</div>}
-
-                {/* {error && <div className="error">{error}</div>} */}
             </form>
         </div>
     );
 }
+
 export default AddNewOrder;

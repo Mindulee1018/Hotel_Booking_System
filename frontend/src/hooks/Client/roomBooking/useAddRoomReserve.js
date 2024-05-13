@@ -7,25 +7,35 @@ const useAddRoomReserve = () => {
     const navigate = useNavigate();
 
     const addRoomReserve = async (
+        roomreservationID,
         Checkindate,
         Checkoutdate,
         NoOfGuests,
+        RType,
+        noofRooms,
+        RoomNumbers,
         firstName,
         lastName,
         Email,
         Address,
-        phoneno
+        phoneno,
+        TotalPrice
 
     ) => {
         const reservationDetails = {
+            roomreservationID,
             Checkindate,
             Checkoutdate,
             NoOfGuests,
+            RType,
+            noofRooms,
+            RoomNumbers,
             firstName,
             lastName,
             Email,
             Address,
-            phoneno
+            phoneno,
+            TotalPrice
         };
 
         setIsLoading(true);
@@ -33,7 +43,7 @@ const useAddRoomReserve = () => {
 
         try {
             const response = await fetch(
-                "http://localhost:4000/roomreservation/roomReservation",
+                "http://localhost:4000/roomreservation/add",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -45,7 +55,8 @@ const useAddRoomReserve = () => {
                 const json = await response.json();
                 setError(json.error);
             } else {
-                navigate("/roomreservation");
+                alert("reservation Success!")
+                navigate("/roomReservation");
             }
         } catch (error) {
             setError("An unexpected error occurred");

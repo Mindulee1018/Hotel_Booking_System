@@ -48,20 +48,20 @@ function Staffmanage() {
       <div className="col-md-3 m-0 p-0">
         <Adminsidebar />
       </div>
-      <div className="col-md-9">
+      <div className="col-md-8">
         <div className="row">
           <h2 className="mb-3 mt-3">Staff Accounts</h2>
-          <div><input
+          <div className='d-flex justify-content-center align-items-center mb-4'><input
                 type="search"
                 placeholder="Search by name..."
-                className="form-control"
+                className="form-control w-50 "
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               /></div>
           <div className="col">
             <h5 className="mb-4">Managers</h5>
             {filteredManagers.map(manager => (
-              <div className="card pt-3 bg-dark text-white mb-2" key={manager.email}>
+              <div className="card pt-3 text-black border-primary mb-2" key={manager.email}>
                 <div>
                   <div>Name: {manager.name}</div>
                   <div>Email: {manager.email}</div>
@@ -77,7 +77,7 @@ function Staffmanage() {
           <div className="col">
             <h5 className="mb-4">Staff</h5>
             {filteredStaff.map(staff => (
-              <div className='card pt-3 mb-4 bg-dark text-white' key={staff.email}>
+              <div className='card pt-3 text-black border-primary mb-2' key={staff.email}>
                 <div>
                   <div>Name: {staff.name}</div>
                   <div>Email: {staff.email}</div>

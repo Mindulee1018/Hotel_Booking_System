@@ -3,23 +3,15 @@ const BulkStock = require("../Models/KitchenBulkStockModel");
 
 // add a product
 const addBulkStock = async (req, res) => {
-  const { bname, bcategory, bquantity,bunits, bprice, bdescription } = req.body;
+  const { bname, bcategory, bquantity,breorderLevel,bunits, bprice, bexpiryDate, bdescription } = req.body;
 
   try {
-      let existingBulkStock = await BulkStock.findOne({ bname });
-
-      if (existingBulkStock) {
-          // If a record with the same name exists, merge the data
-          existingBulkStock.bquantity += parseInt(bquantity);
-          existingBulkStock.bdescription += `\n${bdescription}`;
-          await existingBulkStock.save();
-          res.status(200).json(existingBulkStock);
-      } else {
+      
           // If no record with the same name exists, create a new entry
-          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity, bprice,bunits, bdescription });
+          const bulkStock = await BulkStock.create({ bname, bcategory, bquantity,breorderLevel,bunits, bprice,bexpiryDate, bdescription });
           res.status(201).json(bulkStock);
       }
-  } catch (error) {
+   catch (error) {
       res.status(400).json({ error: error.message });
   }
 };
@@ -54,42 +46,44 @@ const getsingleBulkStock = async (req,res) =>{
 //update stocks
 const updateBulkStock = async (req, res) => {
 
-  const { bname, bcategory, bquantity,bunits, bprice, bdescription } = req.body;
-  const{id}  = req.params;
-
-  try{
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ error: 'Invalid ID' });
-        }
-
-  const update = await BulkStock.findById(id)
-
-   if(!update){
-    return res.status(404).json({ message: "Product not found" });
-   }
-
-   const updateFields = {};
-   if (bname) updateFields.bname = name;
-   if (bcategory) updateFields.bcategory = bcategory;
-   if (bquantity) updateFields.bquantity = bquantity;
-   if (bunits) updateFields.bunits = bunits;
-   if (bprice) updateFields.bprice = bprice;
-   if (bdescription) updateFields.bdescription = bdescription;
-
-   
-   if (Object.keys(updateFields).length > 0) {
-       const updatedBulkStocks = await BulkStock.findByIdAndUpdate(id, { $set: updateFields }, { new: true });
-       res.json(updatedBulkStocks);
-   } else {
-       res.json({ message: 'No changes detected' });
-   }
+    const { bname, bcategory, bquantity,breorderLevel,bunits, bprice,bexpiryDate, bdescription } = req.body;
+    const{id}  = req.params;
+  
+    try{
+  
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+              return res.status(400).json({ error: 'Invalid ID' });
+          }
+  
+    const update = await BulkStock.findById(id)
+  
+     if(!update){
+      return res.status(404).json({ message: "Product not found" });
+     }
+  
+     const updateFields = {};
+     if (bname) updateFields.bname = bname;
+     if (bcategory) updateFields.bcategory = bcategory;
+     if (bquantity) updateFields.bquantity = bquantity;
+     if (breorderLevel) updateFields.breorderLevel = breorderLevel;
+     if (bunits) updateFields.bunits = bunits;
+     if (bprice) updateFields.bprice = bprice;
+     if (bexpiryDate) updateFields.bexpiryDate = bexpiryDate;
+     if (bdescription) updateFields.bdescription = bdescription;
+  
+     
+     if (Object.keys(updateFields).length > 0) {
+         const updatedBulkStocks = await BulkStock.findByIdAndUpdate(id, { $set: updateFields }, { new: true });
+         res.json(updatedBulkStocks);
+     } else {
+         res.json({ message: 'No changes detected' });
+     }
+    }
+    catch(error){
+        res.status(500).json({error:error.message});
+    }
+  
   }
-  catch(error){
-      res.status(500).json({error:error.message});
-  }
-
-}
 
 
 

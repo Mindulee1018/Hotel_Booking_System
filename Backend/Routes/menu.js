@@ -28,7 +28,7 @@ router.get("/get/:category", getCategoryByName);
 router.delete("/:id", deleteMenuItem);
 
 //UPDATE reservation
-router.patch("/:id", updateMenuItem);
+router.patch("/update/:id", updateMenuItem);
 
 //get by category
 router.get('/:category', getMenuItemsByCategory)

@@ -16,12 +16,20 @@ const bulkStockSchema = new Schema(
       type: Number,
       required:true,
     },
+    breorderLevel: {
+      type: Number,
+      required:true,
+    },
     bunits: {
         type: Number,
         required:true,
     },
     bprice: {
       type: Number,
+      required: true,
+    },
+    bexpiryDate: {
+      type: Date,
       required: true,
     },
     bdescription: {

@@ -20,7 +20,8 @@ const DiningReservations = () => {
     <div className="row p-0">
       <ReceptionNavbar />
       <div className="col">
-        <h1 className="mb-4 mt-5">Watersport Reservations</h1>
+        
+        <h1 className="mb-4 mt-5">Dining Reservations</h1>
 
         <div className="d-flex justify-content-around mb-3">
           <table
