@@ -434,4 +434,33 @@ const getsingleuser = async (req, res) => {
 
 
 
-module.exports = { signupUser,verifyEmail, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd }
+const getRegistrationTrend = async (req, res) => {
+    try {
+        const trendData = await User.aggregate([
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" },
+                        day: { $dayOfMonth: "$createdAt" },
+                    },
+                    registrations: { $sum: 1 }
+                }
+            },
+            {
+                $sort: {
+                    "_id.year": 1,
+                    "_id.month": 1,
+                    "_id.day": 1
+                }
+            }
+        ]);
+        res.json(trendData); // Send the resolved trendData
+    } catch (error) {
+        console.error('Error fetching registration trend:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+module.exports = { signupUser,verifyEmail, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd,getRegistrationTrend }

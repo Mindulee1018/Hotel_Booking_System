@@ -77,6 +77,7 @@ import AdminDash from "./Pages/Staff/userManagement/AdminDash.js";
 import Staffmanage from "./Pages/Staff/userManagement/staffManage.js";
 import Usermanage from "./Pages/Staff/userManagement/UserManage.js";
 import AccountManage from "./Pages/Staff/userManagement/AccountManage.js";
+import RegistrationTrendPage from "./Pages/Staff/userManagement/userRegTrend.js"
 
 //restaurant management
 import RestaurantNavbar from "./components/RestaurantManagerNavbar";
@@ -219,6 +220,7 @@ function App() {
           <Route path="/Staffmanage" element={<Staffmanage />} />
           <Route path="/Usermanage" element={<Usermanage />} />
           <Route path="/Accountmanage" element={<AccountManage />} />
+          <Route path="/userRegTrend" element={<RegistrationTrendPage />} />
 
           {/* reception */}
           <Route path="/ManagerDashboard" element={<Dashboard />} />
