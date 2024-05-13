@@ -2,52 +2,42 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useUpdateMenu = () => {
-  const [error, setError] = useState(null);
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const updateMenuItem = async (
-    id,
-    category,
-    productName,
-    Price,
-    // Image
-  ) => {
-    console.log("updateMenuItem");
-
-    const menuItemDetails = {
-      category,
-      productName,
-      Price,
-      // Image
-    };
-
+  const updateMenuItem = async (itemId, updatedProductName, updatedPrice) => {
     setIsLoading(true);
     setError(null);
-    window.location.reload();
 
     try {
-      const response = await fetch(`http://localhost:4000/menu/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(menuItemDetails),
+      const response = await fetch(`http://localhost:4000/menu/update/${itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productName: updatedProductName,
+          Price: updatedPrice,
+        }),
       });
 
       if (!response.ok) {
-        const json = await response.json();
-        setError(json.error);
-      } else {
-        navigate("/menu");
-        alert("Reservation details successfully!");
+        const errorMessage = await response.json();
+        throw new Error(errorMessage);
       }
+
+      // Update local state if the update was successful
+      setProductName(updatedProductName);
+      setPrice(updatedPrice);
     } catch (error) {
-      setError("An unexpected error occurred");
+      setError(error.message || 'Failed to update menu item');
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { updateMenuItem, isLoading, error };
-};
-
+  return { productName, setProductName, price, setPrice, isLoading, error, updateMenuItem };
+}
 export default useUpdateMenu;
