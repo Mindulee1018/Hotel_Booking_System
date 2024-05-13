@@ -20,11 +20,11 @@ const AddRoomReserve = () => {
 
   const { roomTypes } = RoomTypeList();
 
-  const { roomReservations } = RoomReservationList(); 
-  console.log(roomReservations); 
+  const { roomReservations } = RoomReservationList();
+  console.log(roomReservations);
   const location = useLocation();
 
-  const format = (dateStr) => new Date(dateStr).getTime(); 
+  const format = (dateStr) => new Date(dateStr).getTime();
 
   const bufferToBase64 = (buf) => {
     return btoa(
@@ -72,6 +72,7 @@ const AddRoomReserve = () => {
   };
 
   const handleBookNow = (Rtype, price, noOfRooms) => {
+    console.log("Handling booking now...");
     // Validate check-in date should be less than check-out date
     if (new Date(Checkindate) >= new Date(Checkoutdate)) {
       alert("Check-out date should be after check-in date.");
@@ -93,13 +94,17 @@ const AddRoomReserve = () => {
     const assignedRoomNumbers = assignRoomNumbers(noOfRooms);
 
     console.log(assignedRoomNumbers, "assignedRoomNumbers");
+    console.log(
+      `Assigned Rooms: ${assignedRoomNumbers.length} requested: ${noOfRooms}`
+    );
 
-    if (assignedRoomNumbers.length === noOfRooms) {
+    if (assignedRoomNumbers.length == noOfRooms) {
       const totalPrice = price * noOfRooms;
+      console.log("All conditions met, navigating to CustomerDetails...");
 
-      localStorage.removeItem('prevPath');
+      localStorage.removeItem("prevPath");
       localStorage.setItem("prevPath", location.pathname);
-      const token = localStorage.getItem('user');
+      const token = localStorage.getItem("user");
       if (!token) {
         navigate("/login", {
           state: {
@@ -112,19 +117,20 @@ const AddRoomReserve = () => {
             noOfRooms,
           },
         });
+      } else {
+        console.log("Navigating to CustomerDetails");
+        navigate("/CustomerDetails", {
+          state: {
+            Checkindate,
+            Checkoutdate,
+            NoOfGuests,
+            Rtype,
+            noOfRooms,
+            RoomNumbers: assignedRoomNumbers,
+            price: totalPrice,
+          },
+        });
       }
-      else{
-      navigate("/CustomerDetails", {
-        state: {
-          Checkindate,
-          Checkoutdate,
-          NoOfGuests,
-          Rtype,
-          RoomNumbers: assignedRoomNumbers,
-          price: totalPrice,
-          noOfRooms,
-        },
-      });}
     } else {
       alert("No available rooms to book. Please check availability first.");
     }
