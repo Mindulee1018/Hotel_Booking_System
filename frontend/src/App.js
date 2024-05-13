@@ -182,10 +182,10 @@ function App() {
 
           {/* dining reservations */}
           <Route path="/DiningDashboard" element={<Layout2> <DiningDash /></Layout2>}/>
-          <Route path="/TableReservations" element={<TableReservation />} />
+          <Route path="/TableReservations" element={<Layout2><TableReservation /></Layout2>} />
           <Route path="/AddReservations" element={<AddReservation />} />
           <Route path="/displaymenu" element={<Layout2><MenuByCategoryPage /></Layout2>} />
-          <Route path="/displayOrders" element={<DisplayOrders />} />
+          <Route path="/displayOrders" element={<Layout2><DisplayOrders /></Layout2>} />
           <Route path="/AddOrder" element={<AddNewOrder />} />
           <Route path="/DisplayBuffet" element={<Layout2><DisplayBuffet /></Layout2>} />
           <Route path="/manageTables" element={<ManageTableReservation />} />

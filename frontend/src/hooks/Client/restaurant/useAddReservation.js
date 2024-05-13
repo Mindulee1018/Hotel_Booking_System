@@ -2,44 +2,51 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useAddReservation = () => {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [availabilityMessage, setAvailabilityMessage] = useState('');
+  const [reservationMessage, setReservationMessage] = useState('');
+  const navigation = useNavigate();
 
-  const AddResev = async (Date, Name, Capacity, email, contactNumber) => {
-    const reservDetails = {
-      Date,
-      Name,
-      Capacity,
-      email,
-      contactNumber,
-    };
-
-    setIsLoading(true);
-    setError(null);
-
+  const checkAvailability = async (date, timeSlot) => {
     try {
-      const response = await fetch("http://localhost:4000/table/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reservDetails),
-      });
+      const response = await fetch(
+        `http://localhost:4000/table/availability/${date}/${timeSlot}`
+      );
 
-      if (!response.ok) {
-        const json = await response.json();
-        setError(json.error);
-      } else {
-        navigate("/TableReservations");
-      }
+      const data = await response.json();
+      setAvailabilityMessage(data.message);
     } catch (error) {
-      console.log(error, "error");
-      setError("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
+      setAvailabilityMessage('Error checking availability.');
     }
   };
 
-  return { AddResev, isLoading, error };
+  const makeReservation = async (reservationData) => {
+    try {
+      const response = await fetch(
+        'http://localhost:4000/table/add',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reservationData),
+        }
+      );
+
+      const data = await response.json();
+      alert("Table reservation success")
+      navigation('/DiningDashboard')
+      setReservationMessage(data.message);
+    } catch (error) {
+      setReservationMessage('Error making reservation.');
+    }
+  };
+
+  return {
+    availabilityMessage,
+    reservationMessage,
+    checkAvailability,
+    makeReservation,
+  };
 };
 
-export default useAddReservation;
+export default useAddReservation

@@ -40,7 +40,8 @@ const orderSchema = new Schema({
    Total:{
       type:Number,
       required:true
-   }
+   },
+
 
 });
 

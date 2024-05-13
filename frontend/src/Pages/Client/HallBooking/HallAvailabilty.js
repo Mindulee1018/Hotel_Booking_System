@@ -79,7 +79,7 @@ const AllHallList = () => {
   useEffect(() => {
     if (!user) {
       navigate("/login");
-      return; // Stop further execution
+      return; 
     }
     const fetchHall = async () => {
       try {

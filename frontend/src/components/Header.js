@@ -50,8 +50,8 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3 mb-2">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary mb-2">
+        <div className="container-fluid bg-primary bg-opacity-25">
           <img src="hotellogo.png" style={{ width: "170px", height: "70px" }} ></img>
 
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

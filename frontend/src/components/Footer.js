@@ -19,10 +19,10 @@ function Footer(){
                  <div className="col-md-4">
                    <h2 className="mb-4">Explore</h2>
                    <ul className="list-unstyled">
-                     <li><a href="#">Accomadation</a></li>
-                     <li><a href="#">Dining</a></li>
-                     <li><a href="#">Gallery</a></li>
-                     <li><a href="#">Offers and Packages</a></li>
+                     <li><a href="/roomReservation">Accomadation</a></li>
+                     <li><a href="/DiningDashboard">Dining</a></li>
+                     <li><a href="/AllHalls">Events</a></li>
+                     <li><a href="/Watersports">Watersports</a></li>
                    </ul>
                  </div>
                  <div className="col-md-4">
@@ -35,10 +35,7 @@ function Footer(){
                    </ul>
                    ))}
                    <div className="social-links">
-                     <a href="#"><i className="fab fa-facebook-f"></i></a>
-                     <a href="#"><i className="fab fa-twitter"></i></a>
-                     <a href="#"><i className="fab fa-instagram"></i></a>
-                     <a href="#"><i className="fab fa-linkedin-in"></i></a>
+                     <a href="https://www.facebook.com/sunsetaraliyahotel/"><i className="fab fa-facebook-f">Facebook Page</i></a>
                    </div>
                  </div>
                </div>

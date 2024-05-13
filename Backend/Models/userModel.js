@@ -47,8 +47,12 @@ const userSchema = new Schema({
   verified: {
     type: Boolean,
     default: false
-  }
+  },
 
+  verificationAttempts: {
+    type: Number,
+    default: 0,
+  },
 
 
 })
@@ -89,7 +93,7 @@ userSchema.statics.signup = async function (email, password, name, role, isAdmin
   const hash = await bcrypt.hash(password, salt)
 
 
-  const user = await this.create({ email, password: hash, name, role, isAdminCreation, verified})
+  const user = await this.create({ email, password: hash, name, role, isAdminCreation, verified,verificationAttempts: 0,})
 
   return user
 }
@@ -107,9 +111,9 @@ userSchema.statics.login = async function (email, password) {
     throw Error('Incorrect email')
   }
 
-  if (!user.verified) {
-    throw Error('Email not verified. Please check your email to complete the verification.')
-  }
+  // if (!user.verified) {
+  //   throw Error('Email not verified. Please check your email to complete the verification.')
+  // }
 
   const match = await bcrypt.compare(password, user.password)
   if (!match) {

@@ -1,34 +1,40 @@
 import { useState, useEffect } from 'react';
 
-const useTableList = () => {
-  const [TableList, setTableList] = useState([]);
-  
-  const [isLoading, setIsLoading] = useState(false);
+const useTableReservationsByEmail = (email) => {
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTable = async () => {
-      setIsLoading(true);
+    const fetchReservations = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        // Fetch Table list
-        const Response = await fetch("http://localhost:4000/table/");
-        if (!Response.ok) {
-          throw new Error('Failed to fetch Table list');
+        const response = await fetch(`http://localhost:4000/table/${email}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch reservations");
         }
-        let Data = await Response.json();
-        setTableList(Data);
- 
+        const data = await response.json();
+        setReservations(data);
       } catch (error) {
         setError(error.message);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
-    fetchTable();
-  }, []);
+    if (email) {
+      fetchReservations();
+    }
 
-  return { TableList, isLoading, error };
+   
+    return () => {
+      
+    };
+  }, [email]);
+
+  return { reservations, loading, error };
 };
 
-export default useTableList;
+export default useTableReservationsByEmail

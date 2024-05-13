@@ -20,11 +20,11 @@ const AddRoomReserve = () => {
 
   const { roomTypes } = RoomTypeList();
 
-  const { roomReservations } = RoomReservationList(); // Corrected this line
-  console.log(roomReservations); // Now this should log the expected data
+  const { roomReservations } = RoomReservationList(); 
+  console.log(roomReservations); 
   const location = useLocation();
 
-  const format = (dateStr) => new Date(dateStr).getTime(); // Refactor to a single instance for reusability
+  const format = (dateStr) => new Date(dateStr).getTime(); 
 
   const bufferToBase64 = (buf) => {
     return btoa(

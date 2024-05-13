@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const cron = require("node-cron");
 
 const userRoutes = require("./Routes/user");
 const roominventoryRoutes = require("./Routes/roominventory");
@@ -32,6 +33,8 @@ const notificationRoutes = require('./Routes/MulLoginFailNoti');
 const  hallRoutes  =require('./Routes/hallRoutes');
 
 const HallReservations =require('./Routes/hallReservations')
+
+const deleteUnverifiedAccounts = require('./controllers/deleteUnverifiedAcc')
 
 //const combinedStockRoutes = require ('./Routes/combinedStock')
 // express app
@@ -70,6 +73,10 @@ app.use("/userEmails", userEmails)
 app.use("/adminnotify",notificationRoutes)
 app.use('/hall',hallRoutes)
 app.use('/hallR',HallReservations)
+
+// Start the scheduled task for deleting unverified accounts
+deleteUnverifiedAccounts(); 
+cron.schedule('0 0 * * *', deleteUnverifiedAccounts);
 
 // connect to db
 mongoose

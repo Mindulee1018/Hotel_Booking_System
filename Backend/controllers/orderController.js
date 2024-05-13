@@ -9,6 +9,21 @@ const getAllOrders = async (req, res) => {
   res.status(200).json(order);
 };
 
+//get orders by email
+const getOrdersByEmail = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    // Find orders by email
+    const orders = await Order.find({ email }).sort({ createdAt: -1 });
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving orders by email", error: error.message });
+  }
+};
+
+
 //create a new reservation
 const createOrder = async (req, res) => {
   const { orderNumber, productName,Quantity,Price,cusName,email, contactNumber,Total } = req.body;
@@ -23,7 +38,7 @@ const createOrder = async (req, res) => {
       cusName,
       email,
       contactNumber,
-      Total
+      Total,
     });
     res.status(200).json(order);
   } catch (error) {
@@ -53,4 +68,5 @@ module.exports = {
   createOrder,
   getAllOrders,
   deleteOrder,
+  getOrdersByEmail
 };
