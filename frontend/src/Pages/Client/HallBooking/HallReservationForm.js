@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../../../context/AuthContext';
+import Footer from '../../../components/Footer';
+import Header from '../../../components/Header';
+import SearchHeader from '../../../components/SearchHeader';
 
 const HallReservationForm = () => {
   const { user } = useContext(AuthContext);
@@ -59,6 +62,7 @@ const HallReservationForm = () => {
   const fromTime = searchParams.get('fromTime');
   const toTime = searchParams.get('toTime');
   const hallName = searchParams.get('hallName');
+  
 
   let maxCapacity = hallName === 'Hall pearl' ? 199 : 499;
 
@@ -158,6 +162,10 @@ const HallReservationForm = () => {
       const data = await response.json();
       console.log('Reservation created:', data);
       alert('reservation added successfully')
+      selectedDate='none'
+      fromTime='none'
+      toTime='none';
+  
       setShowSuccessToast(true); // Show success toast
     } catch (error) {
       console.error('Error creating reservation:', error.message);
@@ -166,12 +174,12 @@ const HallReservationForm = () => {
   };
 
   return (
+    <div>
+      <SearchHeader />
     <div className="container mt-5 serif bold">
       <h2>Reservation Form</h2>
       <form onSubmit={handleSubmit}>
         <h3>Booking Details For {hallName}</h3>
-        <p>From Time: {fromTime}</p>
-        <p>To Time: {toTime}</p>
 
         <div className="mb-3">
           <input
@@ -359,6 +367,7 @@ const HallReservationForm = () => {
           Submit
         </button>
       </form>
+      
       <p>For further details please email or contact us</p>
        {/* Success Toast */}
        <div className={`toast align-items-center text-white bg-success ${showSuccessToast ? 'show' : ''}`} role="alert">
@@ -371,7 +380,18 @@ const HallReservationForm = () => {
           ></button>
         </div>
       </div>
+      
+      
     </div>
+    <Link to='/Addpayment' className='btn btn-primary'>
+                       pay now 
+                      </Link>
+    <Link to='/availability' className='btn btn-primary'>
+                       Back 
+                      </Link>
+    <Footer />
+    </div>
+    
   );
 };
 
