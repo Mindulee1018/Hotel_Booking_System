@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKitchenStockDisplay';
 import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
 import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
@@ -10,12 +11,12 @@ function KitchenInventory () {
     const { updateStock } = useUpdateStock();
     const [nameToDelete, setNameToDelete] = useState("");
     const [nameToUpdate, setNameToUpdate] = useState("");
-    const [saveUpdate, setSaveUpdate] = useState("");
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [quantity, setQuantity] = useState("");
     const [reorderLevel, setReorderLevel] = useState('');
     const [price, setPrice] = useState("");
+    const [expiryDate, setExpiryDate] = useState("");
     const [description, setDescription] = useState("");
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
@@ -52,23 +53,42 @@ function KitchenInventory () {
         setQuantity(Stock.quantity);
         setReorderLevel(Stock.reorderLevel);
         setPrice(Stock.price);
+        setExpiryDate(Stock.expiryDate);
         setDescription(Stock.description);
       };
 
       const updateDetails = async () => {
-        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,description );
+        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,expiryDate,description );
       };
+
+      const aggregatedStockList = {};
+    StockList.forEach(Stock => {
+      const key = Stock.name.toLowerCase(); // Assuming bname identifies duplicate entries
+      if (!aggregatedStockList[key]) {
+        aggregatedStockList[key] = { ...Stock };
+      } else {
+        // Sum quantities for duplicates
+        aggregatedStockList[key].quantity += Stock.quantity;
+        
+     // Update price and description for latest duplicate
+     if (new Date(aggregatedStockList[key].createdAt) < new Date(Stock.createdAt)) {
+      aggregatedStockList[key].price = Stock.price;
+      aggregatedStockList[key].description = Stock.description;
+    }
+  }
+});
 
   
 
       //search and filter
-      const filteredStockList = StockList.filter(Stock => {
-        return(
+      const filteredStockList = Object.values(aggregatedStockList).filter(Stock => (
+        
           Stock.name.toLowerCase().includes(searchkey.toLowerCase()) &&
           (!filterCategory || Stock.category.toLowerCase() === filterCategory.toLowerCase())
+      )
         );
-      }
-      );
+      
+      
       // Sort data function
       const sortData = () => {
         const sortedList = [...filteredStockList];
@@ -202,7 +222,7 @@ return (
           </tr>
 
           
-          {sortData().map((Stock) => {
+          {sortData(filteredStockList).map((Stock) => {
             // Check reorder level for each item
             // Check reorder level for each item
             checkReorderLevel(Stock);
@@ -223,7 +243,7 @@ return (
                       }}
                     ></input>
                   ) : (
-                    <td>{Stock.name}</td>
+                    <td><Link to={`/kitchenStock/${Stock.name}`} className="btn btn-link">{Stock.name}</Link></td>
                   )}
                 </td>
 
@@ -297,88 +317,13 @@ return (
                 <td>{new Date(Stock.createdAt).toLocaleString()}</td>
                 <td>{new Date(Stock.updatedAt).toLocaleString()}</td>
 
-                <td>
-                  <a
-                    href="#"
-                    className="btn btn-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#Modal"
-                    onClick={() => setNameToDelete(Stock.name)}
-                  >
-                    DELETE
-                  </a>
-                </td>
 
-                <td>
-                  {nameToUpdate === Stock._id ? (
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => updateDetails()}
-                    >
-                      Save
-                    </a>
-                  ) : (
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => getUpdateStock(Stock)}
-                    >
-                      Update
-                    </a>
-                  )}
-                </td>
+               
               </tr>
             </tbody>
             )
 })}
         </table>
-      </div>
-    </div>
-
-    {/* model  */}
-    <div
-      className="modal fade"
-      id="Modal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">
-              CAUTION
-            </h1>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            Are you sure you want to delete?
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-
-            <form action="" method="delete">
-              <button
-                className="btn btn-outline-danger"
-                onClick={handleDelete}
-              >
-                DELETE
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
     </div>

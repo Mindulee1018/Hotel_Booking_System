@@ -16,6 +16,7 @@ function BulkStock () {
   const [breorderLevel, setBReorderLevel] = useState('');
   const [bunits, setBUnits] = useState("");
   const [bprice, setBPrice] = useState("");
+  const [bexpiryDate, setBExpiryDate] = useState("");
   const [bdescription, setBDescription] = useState("");
   const [searchkey,setsearchkey]=useState('');
   const [filterCategory, setFilterCategory] = useState('');
@@ -53,22 +54,42 @@ function BulkStock () {
       setBReorderLevel(BulkStock.breorderLevel);
       setBUnits(BulkStock.bunits);
       setBPrice(BulkStock.bprice);
+      setBExpiryDate(BulkStock.bexpiryDate);
       setBDescription(BulkStock.bdescription);
     };
 
     const updateDetails = async () => {
-      await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,breorderLevel,bunits, bprice,bdescription );
+      await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,breorderLevel,bunits, bprice,bexpiryDate,bdescription );
     };
+
+    const aggregatedStockList = {};
+    BStockList.forEach(BulkStock => {
+      const key = BulkStock.bname.toLowerCase(); // Assuming bname identifies duplicate entries
+      if (!aggregatedStockList[key]) {
+        aggregatedStockList[key] = { ...BulkStock };
+      } else {
+        // Sum quantities for duplicates
+        aggregatedStockList[key].bquantity += BulkStock.bquantity;
+        aggregatedStockList[key].bunits += BulkStock.bunits;
+     // Update price and description for latest duplicate
+     if (new Date(aggregatedStockList[key].createdAt) < new Date(BulkStock.createdAt)) {
+      aggregatedStockList[key].bprice = BulkStock.bprice;
+      aggregatedStockList[key].bdescription = BulkStock.bdescription;
+    }
+  }
+});
+
+     
 
 
 
     //search and filter
-    const filteredStockList = BStockList.filter(BulkStock => {
-      return(
+    const filteredStockList = Object.values(aggregatedStockList).filter(BulkStock => (
+      
         BulkStock.bname.toLowerCase().includes(searchkey.toLowerCase()) &&
         (!filterCategory || BulkStock.bcategory.toLowerCase() === filterCategory.toLowerCase())
-      );
-    }
+      
+    )
     );
     // Sort data function
     const sortData = () => {
@@ -105,6 +126,8 @@ function BulkStock () {
       }
     };
 
+    
+
   
   
 return (
@@ -135,7 +158,7 @@ return (
             onChange={(e) => setFilterCategory(e.target.value)}
           >
             <option value="">All Categories</option>
-            {BStockList.map(BulkStock => BulkStock.bcategory).filter((value, index, self) => self.indexOf(value) === index).map(bcategory => (
+            {[...new Set(filteredStockList.map(BulkStock => BulkStock.bcategory))].map(bcategory => (
               <option key={bcategory} value={bcategory}>{bcategory}</option>
             ))}
           </select>
@@ -206,8 +229,7 @@ return (
         </tr>
         </thead>
 
-        
-        {sortData().map((BulkStock) => {
+        {sortData(filteredStockList).map((BulkStock) => {
           // Check reorder level for each item
           checkReorderLevel(BulkStock);
           return(

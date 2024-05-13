@@ -116,6 +116,7 @@ import KitchenInventory from "./Pages/Staff/KitchenInventory/KitchenInventory.js
 import AddBulkStock from "./Pages/Staff/KitchenInventory/AddBulkStock.js";
 import BulkStock from "./Pages/Staff/KitchenInventory/BulkStock.js";
 import CombinedInventory from "./Pages/Staff/KitchenInventory/CombinedInventory.js";
+import StockDetails from "./Pages/Staff/KitchenInventory/StockDetails.js";
 
 //Room Inventory
 import RoomManagerView from "./Pages/Staff/RoomInventory/RoomManagerView";
@@ -268,6 +269,7 @@ function App() {
           <Route path="/AddBulkStock" element={<AddBulkStock />} />
           <Route path="/BulkStock" element={<BulkStock />} />
           <Route path="/CombinedInventory" element={<CombinedInventory />} />
+          <Route path="//kitchenStock/:stockName" element={<StockDetails />} />
 
           {/* Room Inventory */}
           <Route path="/RoomManagerView" element={<RoomManagerView />} />
