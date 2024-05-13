@@ -4,19 +4,21 @@ import GetReservebyEmail from "../../../hooks/Client/roomBooking/useGetReserveby
 
 
 function MyBookings() {
-  const [loggedInUserEmail, setLoggedInUserEmail] = useState(""); // State to hold the logged-in user's email
-  const { roomReservations = [], isLoading, error } = GetReservebyEmail(loggedInUserEmail);
+  const Email = localStorage.getItem("email")
+  //const [loggedInUserEmail, setLoggedInUserEmail] = useState(""); // State to hold the logged-in user's email
+  const { roomReservations = [], isLoading, error } = GetReservebyEmail(Email);
+ 
 
   // Simulated function to fetch logged-in user's email
-  const fetchLoggedInUserEmail = async () => {
+ // const fetchLoggedInUserEmail = async () => {
     // Replace this with your actual logic to fetch the logged-in user's email
-    const userEmail = "user@example.com"; // Example email
-    setLoggedInUserEmail(userEmail);
-  };
+    //const userEmail = "user@example.com"; // Example email
+    //setLoggedInUserEmail(userEmail);
+  //};
 
-  useEffect(() => {
-    fetchLoggedInUserEmail();
-  }, []); // Run once on component mount to fetch user's email
+ // useEffect(() => {
+   // fetchLoggedInUserEmail();
+  //}, []); // Run once on component mount to fetch user's email
 
   if (isLoading) {
     return (

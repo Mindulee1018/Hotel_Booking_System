@@ -161,10 +161,10 @@ const checkoutRserv = async (req, res) => {
 //Get reservations by email
 const getReservationsByEmail = async (req, res) => {
   try {
-    const { Email } = req.query;
+    const { Email } = req.params;
 
     // Query the database for reservations associated with the provided email
-    const reservations = await roomreservation.find({ Email: Email });
+    const reservations = await roomreservation.find({ Email });
 
     res.status(200).json(reservations);
   } catch (error) {
