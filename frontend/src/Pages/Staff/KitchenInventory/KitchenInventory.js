@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKitchenStockDisplay';
 import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
 import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
@@ -243,7 +244,7 @@ return (
                       }}
                     ></input>
                   ) : (
-                    <td>{Stock.name}</td>
+                    <td><Link to={`/kitchenStock/${Stock.name}`} className="btn btn-link">{Stock.name}</Link></td>
                   )}
                 </td>
 

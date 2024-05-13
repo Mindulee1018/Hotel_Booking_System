@@ -103,4 +103,19 @@ const deleteStock = async (req, res) => {
     }
 };
 
-module.exports = { addStock, getStocks,getsingleStock,updateStock,deleteStock };
+// get a single stock by name
+const getsingleName = async (req, res) => {
+    const { stockname } = req.params;
+
+    try {
+        const stock = await Stock.find({ name:stockname });
+        if (!stock) {
+            return res.status(404).json({ error: 'No such product' });
+        }
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { addStock, getStocks,getsingleStock,updateStock,deleteStock,getsingleName };
