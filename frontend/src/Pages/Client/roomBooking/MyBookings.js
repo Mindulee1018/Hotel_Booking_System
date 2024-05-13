@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import RoomSideBar from "../../../components/RoomSideBar";
 import GetReservebyEmail from "../../../hooks/Client/roomBooking/useGetReservebyEmail";
 
-
 function MyBookings() {
-  const Email = localStorage.getItem("email")
-  //const [loggedInUserEmail, setLoggedInUserEmail] = useState(""); // State to hold the logged-in user's email
+  const Email = localStorage.getItem("email");
   const { roomReservations = [], isLoading, error } = GetReservebyEmail(Email);
- 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Splits the ISO string on 'T' and returns only the date part
+  };
 
   // Simulated function to fetch logged-in user's email
- // const fetchLoggedInUserEmail = async () => {
-    // Replace this with your actual logic to fetch the logged-in user's email
-    //const userEmail = "user@example.com"; // Example email
-    //setLoggedInUserEmail(userEmail);
+  // const fetchLoggedInUserEmail = async () => {
+  // Replace this with your actual logic to fetch the logged-in user's email
+  //const userEmail = "user@example.com"; // Example email
+  //setLoggedInUserEmail(userEmail);
   //};
 
- // useEffect(() => {
-   // fetchLoggedInUserEmail();
+  // useEffect(() => {
+  // fetchLoggedInUserEmail();
   //}, []); // Run once on component mount to fetch user's email
 
   if (isLoading) {
@@ -34,7 +36,6 @@ function MyBookings() {
 
   return (
     <div>
-
       <h2>Bookings</h2>
       <div className="card">
         <table className="table col p-0 m-0">
@@ -57,8 +58,8 @@ function MyBookings() {
           <tbody>
             {roomReservations.map((reservation) => (
               <tr key={reservation._id}>
-                <td>{reservation.Checkindate}</td>
-                <td>{reservation.Checkoutdate}</td>
+                <td>{formatDate(reservation.Checkindate)}</td>
+                <td>{formatDate(reservation.Checkoutdate)}</td>
                 <td>{reservation.NoOfGuests}</td>
                 <td>{reservation.Rtype}</td>
                 <td>{reservation.noofRooms}</td>
