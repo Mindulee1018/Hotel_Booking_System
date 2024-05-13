@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const {
   createReservation,
   getAllReservations,
-  getSingleReservation,
+  getReservationsByEmail,
   deleteReservation,
   updateReservation,
   // getAvailableTables,
@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/", getAllReservations);
 
 //get a single reservation
-router.get("/:id", getSingleReservation);
+router.get("/:email", getReservationsByEmail);
 
 //Create a new reservation
 router.post("/add", createReservation);

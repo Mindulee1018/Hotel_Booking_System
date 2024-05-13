@@ -5,21 +5,42 @@ const mongoose = require("mongoose");
 
 
 //get a single reservation
-const getSingleReservation = async (req, res) => {
-  const { id } = req.params;
+const getReservationsByEmail = async (req, res) => {
+  const { email } = req.params;
 
-  if (!mongoose.Types > ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such ID!" });
+  try {
+    const reservations = await Reservation.aggregate([
+      {
+        $match: { email: { $regex: new RegExp(email, "i") } }
+      },
+      {
+        $project: {
+          tableReservationNo: 1,
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          timeSlot: 1,
+          customerName: 1,
+          Noofguests: 1,
+          email: 1,
+          contactNumber: 1
+        }
+      }
+    ]);
+
+    if (reservations.length === 0) {
+      return res.status(404).json({ error: "No reservations found for this email." });
+    }
+
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-
-  const table = await Table.findById(id);
-
-  if (!table) {
-    return res.status(404).json({ error: "No Reservation Details!" });
-  }
-
-  res.status(200).json(table);
 };
+
+module.exports = {
+  getReservationsByEmail
+};
+
 
 
 
@@ -164,7 +185,7 @@ const updateReservation = async (req, res) => {
 module.exports = {
   createReservation,
   getAllReservations,
-  getSingleReservation,
+  getReservationsByEmail,
   deleteReservation,
   updateReservation,
   createReservation,

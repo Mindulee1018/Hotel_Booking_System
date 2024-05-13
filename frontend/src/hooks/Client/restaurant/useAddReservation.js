@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const useAddReservation = () => {
   const [availabilityMessage, setAvailabilityMessage] = useState('');
   const [reservationMessage, setReservationMessage] = useState('');
+  const navigation = useNavigate();
 
   const checkAvailability = async (date, timeSlot) => {
     try {
@@ -33,6 +34,7 @@ const useAddReservation = () => {
 
       const data = await response.json();
       alert("Table reservation success")
+      navigation('/DiningDashboard')
       setReservationMessage(data.message);
     } catch (error) {
       setReservationMessage('Error making reservation.');

@@ -161,26 +161,26 @@ function AddPayment() {
     card_expiration: "",
   });
 
-  //     console.log(productname)
-//     console.log(price)
-//     console.log(orderNumber)
-//     console.log(Quantity)
-//     console.log(cusName)
-//     console.log(email)
-//     console.log(contactNumber)
-//     console.log(Total)
-//     console.log(Checkindate)
-//     console.log(Checkoutdate)
-//     console.log(NoOfGuests)
-//     console.log(Rtype)
-//     console.log(noOfRooms)
-//     console.log(RoomNumbers)
-//     console.log(firstName)
-//     console.log(lastName)
-//     console.log(Email)
-//     console.log(Address)
-//     console.log(phoneno)
-//     console.log(roomreservationNo)
+      console.log(productname)
+    console.log(price)
+    console.log(orderNumber)
+    console.log(Quantity)
+    console.log(cusName)
+    console.log(email)
+    console.log(contactNumber)
+    console.log(Total)
+    // console.log(Checkindate)
+    // console.log(Checkoutdate)
+    // console.log(NoOfGuests)
+    // console.log(Rtype)
+    // console.log(noOfRooms)
+    // console.log(RoomNumbers)
+    // console.log(firstName)
+    // console.log(lastName)
+    // console.log(Email)
+    // console.log(Address)
+    // console.log(phoneno)
+    // console.log(roomreservationNo)
     // console.log(tableReservationNo)
     // console.log(date)
     // console.log(timeSlot)
@@ -220,7 +220,7 @@ function AddPayment() {
 
         if (orderNumber) {
           // Call AddOrder for orders
-          await AddOrder(orderNumber, productname, Quantity, price, cusName, emailState, contactNumber, Total);
+          await AddOrder(orderNumber, productname, Quantity, price, cusName, email, contactNumber, Total);
         } else if (roomreservationNo) {
           // Call addRoomReserve for room reservations
           await addRoomReserve(roomreservationNo,Checkindate, Checkoutdate, NoOfGuests, Rtype, noOfRooms, RoomNumbers, firstName, lastName, Email, Address, phoneno, price);

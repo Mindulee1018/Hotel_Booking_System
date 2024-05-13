@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const {
     createOrder,
     getAllOrders,
-    deleteOrder
+    deleteOrder,
+    getOrdersByEmail
 } = require("../controllers/orderController");
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.post("/add", createOrder);
 
 //DELETE reservation
 router.delete("/:id",  deleteOrder);
+
+router.get("/:email",getOrdersByEmail)
 
 module.exports = router;
