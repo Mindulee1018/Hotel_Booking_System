@@ -51,12 +51,12 @@ const AddItem = () => {
 
       const handleChange = (e) =>{
         setState({ ...state, [e.target.name]: e.target.value });
-        setErrors(validateValues(state));
+        //setErrors(validateValues(state));
       }
       
       const handleSubmit = (event) =>{
         event.preventDefault();
-        setErrors(validateValues(state));
+        //setErrors(validateValues(state));
         setSubmitting(true);
 
         if(Object.keys(errors).length === 0 && submitting){

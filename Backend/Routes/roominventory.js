@@ -10,13 +10,15 @@ router.route("/add").post((req, res) => {
     const description = req.body.description;
     const unit_price = req.body.unit_price;
     const stockCount = req.body.stockCount;
+    const reorderPoint = req.body.reorderPoint;
 
     const newRoomInventory = new roominventory({
         itemID,
         itemName,
         description,
         unit_price,
-        stockCount
+        stockCount,
+        reorderPoint
     })
 
     newRoomInventory.save().then(() =>{
@@ -40,7 +42,7 @@ router.route("/").get((req, res) => {
 //updating data
 router.route('/update/:ID').patch(async (req, res) => {
     const {ID}= req.params;
-    const {itemID,itemName,description,unit_price,stockCount
+    const {itemID,itemName,description,unit_price,stockCount,reorderPoint
     } = req.body;
 
     try{
@@ -49,7 +51,8 @@ router.route('/update/:ID').patch(async (req, res) => {
         itemName,
         description,
         unit_price,
-        stockCount
+        stockCount,
+        reorderPoint
     }
 
     const update = await roominventory.findOneAndUpdate(

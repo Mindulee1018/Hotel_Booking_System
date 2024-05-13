@@ -22,6 +22,10 @@ const roominventorySchema = new mongoose.Schema({
     stockCount: {
         type: Number,
         required: true
+    },
+    reorderPoint:{
+        type: Number,
+        required: true
     }
 })
 
