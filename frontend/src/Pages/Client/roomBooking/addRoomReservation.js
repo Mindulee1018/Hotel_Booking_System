@@ -10,6 +10,18 @@ import { useLocation } from "react-router-dom";
 
 const AddRoomReserve = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Helper to format the date to YYYY-MM-DD
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = `0${d.getMonth() + 1}`.slice(-2); // months are 0-indexed
+    const day = `0${d.getDate()}`.slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
+  const today = formatDate(new Date());
 
   const [Checkindate, setCheckindate] = useState("");
   const [Checkoutdate, setCheckoutdate] = useState("");
@@ -19,12 +31,7 @@ const AddRoomReserve = () => {
   const [availableRooms, setAvailableRooms] = useState([]);
 
   const { roomTypes } = RoomTypeList();
-
   const { roomReservations } = RoomReservationList();
-  console.log(roomReservations);
-  const location = useLocation();
-
-  const format = (dateStr) => new Date(dateStr).getTime();
 
   const bufferToBase64 = (buf) => {
     return btoa(
@@ -57,12 +64,8 @@ const AddRoomReserve = () => {
   };
 
   const assignRoomNumbers = (noOfRooms) => {
-    console.log(availableRooms.length, "availableRooms.length");
-    console.log(noOfRooms, "noOfRooms");
     if (availableRooms.length >= noOfRooms) {
       const assignedRooms = availableRooms.slice(0, noOfRooms);
-      console.log(assignedRooms, "assignedRooms");
-
       return assignedRooms;
     } else {
       // Not enough rooms available, handle this case appropriately
@@ -72,7 +75,6 @@ const AddRoomReserve = () => {
   };
 
   const handleBookNow = (Rtype, price, noOfRooms) => {
-    console.log("Handling booking now...");
     // Validate check-in date should be less than check-out date
     if (new Date(Checkindate) >= new Date(Checkoutdate)) {
       alert("Check-out date should be after check-in date.");
@@ -93,14 +95,8 @@ const AddRoomReserve = () => {
 
     const assignedRoomNumbers = assignRoomNumbers(noOfRooms);
 
-    console.log(assignedRoomNumbers, "assignedRoomNumbers");
-    console.log(
-      `Assigned Rooms: ${assignedRoomNumbers.length} requested: ${noOfRooms}`
-    );
-
     if (assignedRoomNumbers.length == noOfRooms) {
       const totalPrice = price * noOfRooms;
-      console.log("All conditions met, navigating to CustomerDetails...");
 
       localStorage.removeItem("prevPath");
       localStorage.setItem("prevPath", location.pathname);
@@ -161,8 +157,8 @@ const AddRoomReserve = () => {
                   type="date"
                   id="checkindate"
                   value={Checkindate}
-                  onChange={(e) => setCheckindate(e.target.value)}
-                  min={new Date().toISOString().split("T")[0]}
+                  onChange={(e) => setCheckindate(formatDate(e.target.value))}
+                  min={today}
                 />
 
                 <label htmlFor="checkoutdate">Check-out Date:</label>
@@ -170,8 +166,8 @@ const AddRoomReserve = () => {
                   type="date"
                   id="checkoutdate"
                   value={Checkoutdate}
-                  onChange={(e) => setCheckoutdate(e.target.value)}
-                  min={new Date().toISOString().split("T")[0]}
+                  onChange={(e) => setCheckoutdate(formatDate(e.target.value))}
+                  min={today}
                 />
 
                 <label htmlFor="NoOfGuests">Number of Guests:</label>
