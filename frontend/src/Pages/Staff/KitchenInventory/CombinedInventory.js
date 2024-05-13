@@ -123,7 +123,7 @@ function CombinedInventory() {
 
                     {/* Inventory Table */}
                     <div className="d-flex align-items-center justify-content-around mb-3">
-                        <table className="table table-dark table-striped" style={{ width: "75rem" }}>
+                        <table className="table" style={{ width: "75rem" }}>
                             <thead>
                                 <tr>
                                     <th className="border border-black" scope="col">Product Name</th>

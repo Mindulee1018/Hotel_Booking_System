@@ -106,3 +106,12 @@ input {
   box-sizing: border-box;
   border-radius: 5px;
 }
+.invisible-link-button {
+  color: inherit; /* Inherit the color from the parent */
+  text-decoration: none; /* Remove the underline */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.invisible-link-button:hover {
+  text-decoration: none; /* Remove underline on hover */
+}

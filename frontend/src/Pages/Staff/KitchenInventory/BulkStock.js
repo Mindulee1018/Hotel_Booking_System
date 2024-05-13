@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import useBulkStockDisplay from '../../../hooks/Staff/KitchenInventory/useBulkStockDisplay';
 import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
 import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
@@ -21,7 +22,7 @@ function BulkStock () {
   const [searchkey,setsearchkey]=useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [sort, setSort] = useState('');
-  const [reorderNotification, setReorderNotification] = useState({});
+
 
   //display only unique categories in filter
   useEffect(() => {
@@ -114,17 +115,7 @@ function BulkStock () {
       }
       return sortedList;
     };
-     //check reorder level
-     const checkReorderLevel = (BulkStock) => {
-      if (BulkStock.bquantity === BulkStock.breorderLevel && !reorderNotification[BulkStock._id]) {
-        alert(`Alert: Quantity for ${BulkStock.bname} has reached its reorder level.`);
-        // Set the notification sent flag to true for this item
-        setReorderNotification((prev) => ({
-          ...prev,
-          [BulkStock._id]: true,
-        }));
-      }
-    };
+     
 
     
 
@@ -197,7 +188,7 @@ return (
       
 
     <div className="d-flex align-items-center justify-content-around mb-3">
-      <table className="table table-dark table-striped" style={{ width: "75rem" }}>
+      <table className="table" style={{ width: "75rem" }}>
         <thead>
         <tr>
           <th className="border border-black" scope="col">
@@ -231,7 +222,7 @@ return (
 
         {sortData(filteredStockList).map((BulkStock) => {
           // Check reorder level for each item
-          checkReorderLevel(BulkStock);
+          
           return(
           <tbody key={BulkStock._id}>
             <tr>
@@ -248,7 +239,7 @@ return (
                     }}
                   ></input>
                 ) : (
-                  <td>{BulkStock.bname}</td>
+                  <td><Link to={`/kitchenBulkStock/${BulkStock.bname}`} className="invisible-link-button">{BulkStock.bname}</Link></td>
                 )}
               </td>
 
@@ -337,91 +328,11 @@ return (
               </td>
               <td>{new Date(BulkStock.createdAt).toLocaleString()}</td>
               <td>{new Date(BulkStock.updatedAt).toLocaleString()}</td>
-
-              <td>
-                <a
-                  href="#"
-                  style={{ width: "5rem" }}
-                  className="btn btn-outline-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#Modal"
-                  onClick={() => setNameToDelete(BulkStock.bname)}
-                >
-                  DELETE
-                </a>
-              </td>
-
-              <td>
-                {nameToUpdate === BulkStock._id ? (
-                  <a
-                    href="#"
-                    className="btn btn-primary"
-                    onClick={() => updateDetails()}
-                  >
-                    Save
-                  </a>
-                ) : (
-                  <a
-                    href="#"
-                    className="btn btn-outline-primary"
-                    style={{ width: "5rem" }}
-                    onClick={() => getUpdateBulkStock(BulkStock)}
-                  >
-                    Update
-                  </a>
-                )}
-              </td>
             </tr>
           </tbody>
           )
 })}
       </table>
-    </div>
-  </div>
-
-  {/* model  */}
-  <div
-    className="modal fade"
-    id="Modal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div className="modal-dialog modal-dialog-centered">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h1 className="modal-title fs-5" id="exampleModalLabel">
-            CAUTION
-          </h1>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="modal-body">
-          Are you sure you want to delete?
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-
-          <form action="" method="delete">
-            <button
-              className="btn btn-outline-danger"
-              onClick={handleDelete}
-            >
-              DELETE
-            </button>
-          </form>
-        </div>
-      </div>
     </div>
   </div>
   </div>

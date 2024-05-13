@@ -1,24 +1,25 @@
 import React, { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import useStockDetails from '../../../hooks/Staff/KitchenInventory/useStockDetails';
-import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
-import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
+import useBStockDetails from '../../../hooks/Staff/KitchenInventory/useBStockDetails';
+import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
+import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
 
-function StockDetails() {
-    const { stockName } = useParams();
-    const { stockDetails, isLoading, error } = useStockDetails(stockName);
-    const { deleteStock } = useDeleteStock();
-    const { updateStock } = useUpdateStock();
+function BStockDetails() {
+    const { bstockName } = useParams();
+    const { bstockDetails, isLoading, error } = useBStockDetails(bstockName);
+    const { deleteBulkStock } = useDeleteBulkStock();
+    const { updateBulkStock } = useUpdateBulkStock();
     const [nameToDelete, setNameToDelete] = useState("");
     const [nameToUpdate, setNameToUpdate] = useState("");
-    const [name, setName] = useState("");
-    const [category, setCategory] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [reorderLevel, setReorderLevel] = useState('');
-    const [price, setPrice] = useState("");
-    const [expiryDate, setExpiryDate] = useState("");
-    const [description, setDescription] = useState("");
+    const [bname, setBName] = useState("");
+    const [bcategory, setBCategory] = useState("");
+    const [bquantity, setBQuantity] = useState("");
+    const [breorderLevel, setBReorderLevel] = useState('');
+    const [bunits, setBUnits] = useState("");
+    const [bprice, setBPrice] = useState("");
+    const [bexpiryDate, setBExpiryDate] = useState("");
+    const [bdescription, setBDescription] = useState("");
     const [reorderNotification, setReorderNotification] = useState({});
 
 
@@ -32,34 +33,35 @@ function StockDetails() {
     }
 
     const handleDelete = async () => {
-        await deleteStock(nameToDelete);
-
-        setNameToDelete("");
+        await deleteBulkStock(nameToDelete);
        
-      };
-      const getUpdateStock = (stock) => {
-        setNameToUpdate(stock._id);
-        setName(stock.name);
-        setCategory(stock.category);
-        setQuantity(stock.quantity);
-        setReorderLevel(stock.reorderLevel);
-        setPrice(stock.price);
-        setExpiryDate(stock.expiryDate);
-        setDescription(stock.description);
+        setNameToDelete("");
       };
 
-      const updateDetails = async () => {
-        await updateStock(nameToUpdate,name, category,quantity,reorderLevel, price,expiryDate,description );
-      };
+      const getUpdateBulkStock = (bstock) => {
+      setNameToUpdate(bstock._id);
+      setBName(bstock.bname);
+      setBCategory(bstock.bcategory);
+      setBQuantity(bstock.bquantity);
+      setBReorderLevel(bstock.breorderLevel);
+      setBUnits(bstock.bunits);
+      setBPrice(bstock.bprice);
+      setBExpiryDate(bstock.bexpiryDate);
+      setBDescription(bstock.bdescription);
+    };
+
+    const updateDetails = async () => {
+      await updateBulkStock(nameToUpdate,bname, bcategory,bquantity,breorderLevel,bunits, bprice,bexpiryDate,bdescription );
+    };
 
       //check reorder level
-      const checkReorderLevel = (stock) => {
-        if (stock.quantity === stock.reorderLevel && !reorderNotification[stock._id]) {
-          alert(`Alert: Quantity for ${stock.name} has reached its reorder level.`);
+      const checkReorderLevel = (bstock) => {
+        if (bstock.bquantity === bstock.breorderLevel && !reorderNotification[bstock._id]) {
+          alert(`Alert: Quantity for ${bstock.bname} has reached its reorder level.`);
           // Set the notification sent flag to true for this item
           setReorderNotification((prev) => ({
             ...prev,
-            [stock._id]: true,
+            [bstock._id]: true,
           }));
         }
       };
@@ -74,133 +76,135 @@ function StockDetails() {
             <KitchenSidebar/>
             <div className="col">
         <div>
-            <h1 className="mb-4 mt-5">Stock Details for {stockName}</h1>
-            {stockDetails && stockDetails.length > 0 ? (
+            <h1 className="mb-4 mt-5">Stock Details for {bstockName}</h1>
+            {bstockDetails && bstockDetails.length > 0 ? (
                 <div className="d-flex align-items-center justify-content-around mb-3">
                 <table className="table"style={{ width: "75rem" }}>
                         <tr>
-                            <th className="border border-black" scope="col">
-                                Name</th>
-                            <th className="border border-black" scope="col">
-                                Category</th>
-                            <th className="border border-black" scope="col">
-                                Quantity
-                            </th>
-                            <th className="border border-black" scope="col">
-                                Reorder Level
-                            </th>
-                            <th className="border border-black" scope="col">
-                                Price
-                            </th>
-                            <th className="border border-black" scope="col">
-                                Expiry Date
-                            </th>
-                            <th className="border border-black" scope="col">
-                                Description
-                            </th>
+                        <th className="border border-black" scope="col">
+            Product Name
+          </th>
+          <th className="border border-black" scope="col">
+            Product Category
+          </th>
+          <th className="border border-black" scope="col">
+            Quantity 
+          </th>
+          <th className="border border-black" scope="col">
+            No of units available
+          </th>
+          <th className="border border-black" scope="col">
+            Latest Purchased Price At per unit
+          </th>
+          <th className="border border-black" scope="col">
+            Expiry Date
+          </th>
+          <th className="border border-black" scope="col">
+            Special Notes
+          </th>
                             <th></th>
                             <th></th>
                         </tr>
                     <tbody>
-                        {stockDetails.map((stock, index) => {
-                    checkReorderLevel(stock);
+                        {bstockDetails.map((bstock, index) => {
+                    checkReorderLevel(bstock);
                     return(
                      <tr key={index}>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
                       name="category"
-                      defaultValue={stock.name}
+                      defaultValue={bstock.bname}
                       disabled=""
                       onChange={(e) => {
-                        setCategory(e.target.value);
+                        setBCategory(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.name}</td>
+                    <td>{bstock.bname}</td>
                   )}
                 </td>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
                       name="category"
-                      defaultValue={stock.category}
+                      defaultValue={bstock.bcategory}
                       disabled=""
                       onChange={(e) => {
-                        setCategory(e.target.value);
+                        setBCategory(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.category}</td>
+                    <td>{bstock.bcategory}</td>
                   )}
                 </td>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="number"
                       name="quantity"
-                      defaultValue={stock.quantity}
+                      defaultValue={bstock.bquantity}
                       disabled=""
                       onChange={(e) => {
-                        setQuantity(e.target.value);
+                        setBQuantity(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.quantity}</td>
+                    <td>{bstock.bquantity}</td>
                   )}
                 </td>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="number"
-                      name="reorderlevel"
-                      defaultValue={stock.reorderLevel}
+                      name="units"
+                      defaultValue={bstock.bunits}
                       disabled=""
                       onChange={(e) => {
-                        setQuantity(e.target.value);
+                        setBUnits(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.reorderLevel}</td>
+                    <td>{bstock.bunits}</td>
                   )}
                 </td>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="number"
                       name="price"
-                      defaultValue={stock.price}
+                      defaultValue={bstock.bprice}
                       disabled=""
                       onChange={(e) => {
-                        setPrice(e.target.value);
+                        setBPrice(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.price}</td>
+                    <td>{bstock.bprice}</td>
                   )}
                 </td>
-                                <td>{stock.expiryDate}</td>
+                                <td>{bstock.bexpiryDate}</td>
                                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <input
                       class="tabledit-input form-control input-sm"
                       type="text"
                       name="description"
-                      defaultValue={stock.description}
+                      defaultValue={bstock.bdescription}
                       disabled=""
                       onChange={(e) => {
-                        setDescription(e.target.value);
+                        setBDescription(e.target.value);
                       }}
                     ></input>
                   ) : (
-                    <td>{stock.description}</td>
+                    <td>{bstock.bdescription}</td>
                   )}
                 </td>
 
@@ -210,13 +214,13 @@ function StockDetails() {
                          className="btn btn-danger"
                          data-bs-toggle="modal"
                          data-bs-target="#Modal"
-                         onClick={() => setNameToDelete(stock.name)}
+                         onClick={() => setNameToDelete(bstock.bname)}
                   >
                     DELETE
                   </a>
                 </td>
                 <td>
-                  {nameToUpdate === stock._id ? (
+                  {nameToUpdate === bstock._id ? (
                     <a
                       href="#"
                       className="btn btn-primary"
@@ -228,7 +232,7 @@ function StockDetails() {
                     <a
                       href="#"
                       className="btn btn-primary"
-                      onClick={() => getUpdateStock(stock)}
+                      onClick={() => getUpdateBulkStock(bstock)}
                     >
                       Update
                     </a>
@@ -296,5 +300,4 @@ function StockDetails() {
     );
 }
 
-export default StockDetails;
-   
+export default BStockDetails;

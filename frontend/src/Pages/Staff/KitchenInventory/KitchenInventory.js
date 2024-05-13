@@ -21,7 +21,6 @@ function KitchenInventory () {
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
     const [sort, setSort] = useState('');
-    const [reorderNotification, setReorderNotification] = useState({});
 
     //display only unique categories in filter
     useEffect(() => {
@@ -113,17 +112,7 @@ function KitchenInventory () {
         return sortedList;
       };
 
-      //check reorder level
-      const checkReorderLevel = (Stock) => {
-        if (Stock.quantity === Stock.reorderLevel && !reorderNotification[Stock._id]) {
-          alert(`Alert: Quantity for ${Stock.name} has reached its reorder level.`);
-          // Set the notification sent flag to true for this item
-          setReorderNotification((prev) => ({
-            ...prev,
-            [Stock._id]: true,
-          }));
-        }
-      };
+
 
     
     
@@ -224,8 +213,7 @@ return (
           
           {sortData(filteredStockList).map((Stock) => {
             // Check reorder level for each item
-            // Check reorder level for each item
-            checkReorderLevel(Stock);
+            
             return(
             
             <tbody key={Stock._id}>
@@ -243,7 +231,7 @@ return (
                       }}
                     ></input>
                   ) : (
-                    <td><Link to={`/kitchenStock/${Stock.name}`} className="btn btn-link">{Stock.name}</Link></td>
+                    <td><Link to={`/kitchenStock/${Stock.name}`} className="invisible-link-button">{Stock.name}</Link></td>
                   )}
                 </td>
 
