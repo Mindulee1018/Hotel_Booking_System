@@ -5,22 +5,61 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 
 const AddItem = () => {
     const navigate = useNavigate();
+    const [setErrors,errors] =useState();
     const [state, setState] = useState({
         itemID: "",
         itemName: "",
         description: "",
         unit_price: "",
         stockCount: "",
+        reorderPoint: ""
       })
     
-      const handleChange = (e) =>{
+      {/*const handleChange = (e) =>{
         const {name, value} = e.target;
     
         setState({...state,[name]:value})
       }
     
       const onsubmit = (e) => {
-        e.preventDefault();
+      e.preventDefault();*/}
+      
+      const [submitting, setSubmitting] = useState(false);
+    
+      const validateValues = (inputValues) => {
+        let errors = {};
+        if (inputValues.itemID.length < 3) {
+          errors.itemNo = "itemID is too short";
+        }
+        if (inputValues.itemName.length < 1) {
+          errors.itemName = "itemName is too short";
+        }
+        if (inputValues.description.length < 1) {
+          errors.color = "description is too short";
+        }
+        if (inputValues.unit_price.length < 1) {
+          errors.price = "price is too short";
+        }
+        if (inputValues.stockCount.length < 1) {
+          errors.stockCount = "stockCount is too short";
+        }
+        if (inputValues.reorderPoint.length < 1) {
+          errors.reorderPoint = "reorderPoint is too short";
+        }
+        return errors;
+      };
+
+      const handleChange = (e) =>{
+        setState({ ...state, [e.target.name]: e.target.value });
+        setErrors(validateValues(state));
+      }
+      
+      const handleSubmit = (event) =>{
+        event.preventDefault();
+        setErrors(validateValues(state));
+        setSubmitting(true);
+
+        if(Object.keys(errors).length === 0 && submitting){
     
         const 
         {
@@ -28,7 +67,8 @@ const AddItem = () => {
             itemName, 
             description,
             unit_price,
-            stockCount
+            stockCount,
+            reorderPoint
         } = state;
     
         const data = {
@@ -37,6 +77,7 @@ const AddItem = () => {
             description: description,
             unit_price: unit_price,
             stockCount: stockCount,
+            reorderPoint: reorderPoint
         }
         console.log(data);
 
@@ -55,7 +96,7 @@ const AddItem = () => {
           .catch((error) => {
             console.error('Error:', error);
           });
-      };
+      }};
     
   return (
     <>
@@ -88,6 +129,10 @@ const AddItem = () => {
         value={state.itemID}
         onChange={handleChange}
         />
+        {errors.itemID && (
+          <div class="text-danger mt-2">
+            ItemID should have 4 characters
+          </div>)}
     </div>
     <div class="col-6">
     <label class="form-label">ItemName</label>
@@ -99,6 +144,11 @@ const AddItem = () => {
         value={state.itemName}
         onChange={handleChange}
         />
+        {errors.itemName && (
+          <div class="text-danger mt-2">
+            ItemName can't be null
+          </div>
+          )}
     </div>
   </div>
   <div class="row mt-4">
@@ -112,6 +162,11 @@ const AddItem = () => {
         value={state.description}
         onChange={handleChange}
         />
+        {errors.description && (
+          <div class="text-danger mt-2">
+            Description can't be null
+          </div>
+          )}
     </div>
     <div class="col">
     <label class="form-label">unit_price</label>
@@ -123,6 +178,11 @@ const AddItem = () => {
         value={state.unit_price}
         onChange={handleChange}
         />
+         {errors.unit_price && (
+          <div class="text-danger mt-2">
+            Price can't be null
+          </div>
+          )}
     </div>
     <div class="col">
     <label class="form-label">Stock Count</label>
@@ -134,6 +194,27 @@ const AddItem = () => {
         value={state.stockCount}
         onChange={handleChange}
         />
+        {errors.stockCount && (
+          <div class="text-danger mt-2">
+            StockCount can't be null
+          </div>
+          )}
+    </div>
+    <div class="col">
+    <label class="form-label">Reorder Point</label>
+        <input 
+        type="text"
+        name="reorderPoint" 
+        className='form-control'
+        placeholder="Enter reorderPoint of the post"
+        value={state.reorderPoint}
+        onChange={handleChange}
+        />
+         {errors.reorderPoint && (
+          <div class="text-danger mt-2">
+            reorderPoint can't be null
+          </div>
+          )}
     </div>
 
   <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>

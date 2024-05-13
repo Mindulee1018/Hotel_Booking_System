@@ -5,6 +5,21 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 const RoomManagerView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [state, setState] = useState();
+
+  //message
+  const message = inventory.map((data, index) => {
+    if(data.stockCount < data.reorderPoint ){ 
+      return (
+        <div class="alert alert-warning mb-5" role="alert">
+          <span>item name:<b>{(index ? ', ' : '') + data.itemName}</b> is stockcount is low!</span>
+        </div>
+      )
+      
+    }
+    return null;
+  })
+
 
   useEffect(() => {
     const fetchInventory = async () => {
@@ -65,6 +80,7 @@ const RoomManagerView = () => {
                   <th scope="col">Description</th>
                   <th scope="col">Unit_Price</th>
                   <th scope="col">Stock Count</th>
+                  <th scope="col">Reorder Point</th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
@@ -76,6 +92,7 @@ const RoomManagerView = () => {
                     <td>{item.description}</td>
                     <td>{item.unit_price}</td>
                     <td>{item.stockCount}</td>
+                    <td>{item.reorderPoint}</td>
                     <td>
                       <div className="d-grid gap-2">
                         <button type="button" className="btn btn-success btn-sm">

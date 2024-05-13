@@ -7,13 +7,38 @@ import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 export const EditItem = () => {
   const [inventory, setInventory] = useState([]);
   const navigate = useNavigate();
+  const errors =useState();
   const [state, setState] = useState({
     itemID: '',
     itemName: '',
     description: '',
     unit_price: '',
     stockCount: '',
+    reorderPoint: ""
   });
+
+  {/*const validateValues = (inputValues) => {
+    let errors = {};
+    if (inputValues.itemID.length < 3) {
+      errors.itemNo = "itemID is too short";
+    }
+    if (inputValues.itemName.length < 1) {
+      errors.itemName = "itemName is too short";
+    }
+    if (inputValues.description.length < 1) {
+      errors.color = "Description is too short";
+    }
+    if (inputValues.unit_price.length < 1) {
+      errors.price = "price is too short";
+    }
+    if (inputValues.stockCount.length < 1) {
+      errors.stockCount = "stockCount is too short";
+    }
+    if (inputValues.reorderPoint.length < 1) {
+      errors.reorderPoint = "reorderPoint is too short";
+    }
+    return errors;
+  };*/}
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +56,7 @@ export const EditItem = () => {
       description,
       unit_price,
       stockCount,
+      // reorderPoint
     };
 
 
@@ -96,6 +122,10 @@ export const EditItem = () => {
                   value={state.itemID}
                   onChange={handleChange}
                 />
+                {errors.itemID && (
+                <div class="text-danger mt-2">
+                    ItemID should have 4 characters
+                </div>)}
               </div>
               <div className="col-6">
                 <label className="form-label">ItemName</label>
@@ -107,6 +137,11 @@ export const EditItem = () => {
                   value={state.itemName}
                   onChange={handleChange}
                 />
+                {errors.itemName && (
+                <div class="text-danger mt-2">
+                    ItemName can't be null
+                </div>
+              )}
               </div>
             </div>
             <div className="row mt-4">
@@ -120,6 +155,11 @@ export const EditItem = () => {
                   value={state.description}
                   onChange={handleChange}
                 />
+                {errors.description && (
+                <div class="text-danger mt-2">
+                    Description can't be null
+                </div>
+                )}
               </div>
               <div className="col">
                 <label className="form-label">Unit_Price</label>
@@ -131,6 +171,11 @@ export const EditItem = () => {
                   value={state.unit_price}
                   onChange={handleChange}
                 />
+                {errors.unit_price && (
+                <div class="text-danger mt-2">
+                    Unit Price can't be null
+                </div>
+                )}
               </div>
               <div className="col">
                 <label className="form-label">Stock Count</label>
@@ -142,7 +187,28 @@ export const EditItem = () => {
                   value={state.stockCount}
                   onChange={handleChange}
                 />
+                {errors.stockCount && (
+                <div class="text-danger mt-2">
+                     StockCount can't be null
+                </div>
+                )}
               </div>
+              <div class="col">
+    <label class="form-label">Reorder Point</label>
+        <input 
+        type="text"
+        name="reorderPoint" 
+        className='form-control'
+        placeholder="Enter reorderPoint of the post"
+        value={state.reorderPoint}
+        onChange={handleChange}
+        />
+         {errors.reorderPoint && (
+          <div class="text-danger mt-2">
+            reorderPoint can't be null
+          </div>
+          )}
+    </div>
               <button className="btn btn-success mt-5" type="submit" onClick={onSubmit}>
                 Save
               </button>
