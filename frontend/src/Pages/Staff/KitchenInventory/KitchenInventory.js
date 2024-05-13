@@ -11,7 +11,6 @@ function KitchenInventory () {
     const { updateStock } = useUpdateStock();
     const [nameToDelete, setNameToDelete] = useState("");
     const [nameToUpdate, setNameToUpdate] = useState("");
-    const [saveUpdate, setSaveUpdate] = useState("");
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -318,88 +317,13 @@ return (
                 <td>{new Date(Stock.createdAt).toLocaleString()}</td>
                 <td>{new Date(Stock.updatedAt).toLocaleString()}</td>
 
-                <td>
-                  <a
-                    href="#"
-                    className="btn btn-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#Modal"
-                    onClick={() => setNameToDelete(Stock.name)}
-                  >
-                    DELETE
-                  </a>
-                </td>
 
-                <td>
-                  {nameToUpdate === Stock._id ? (
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => updateDetails()}
-                    >
-                      Save
-                    </a>
-                  ) : (
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => getUpdateStock(Stock)}
-                    >
-                      Update
-                    </a>
-                  )}
-                </td>
+               
               </tr>
             </tbody>
             )
 })}
         </table>
-      </div>
-    </div>
-
-    {/* model  */}
-    <div
-      className="modal fade"
-      id="Modal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">
-              CAUTION
-            </h1>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            Are you sure you want to delete?
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-
-            <form action="" method="delete">
-              <button
-                className="btn btn-outline-danger"
-                onClick={handleDelete}
-              >
-                DELETE
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
     </div>
