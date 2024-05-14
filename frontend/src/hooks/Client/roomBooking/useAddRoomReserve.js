@@ -56,7 +56,7 @@ const useAddRoomReserve = () => {
                 setError(json.error);
             } else {
                 alert("reservation Success!")
-                navigate("/roomReservation");
+                navigate("/Dashboard");
             }
         } catch (error) {
             setError("An unexpected error occurred");
