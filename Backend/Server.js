@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const userRoutes = require("./Routes/user");
 const roominventoryRoutes = require("./Routes/roominventory");
+const RoomRestockRoutes = require("./Routes/RoomRestock");
 const offerRoutes = require("./Routes/offers");
 
 const watersportRoutes = require("./Routes/watersport");
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 
 app.use("/user", userRoutes);
 app.use("/roominventory", roominventoryRoutes);
+app.use("/RoomRestock", RoomRestockRoutes);
 app.use("/offer", offerRoutes);
 app.use("/watersport", watersportRoutes);
 app.use("/watersportReservation", WatersportReservationRoutes);
