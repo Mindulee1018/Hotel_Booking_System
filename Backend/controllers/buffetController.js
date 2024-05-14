@@ -47,18 +47,18 @@ const createBuffet= async (req, res) => {
 
 // Function to update an existing activity
 const updateBuffet = async (req, res) => {
-  const {buffetName } = req.params; // The name of the activity to update
-  const { BuffetName,  Description, Time, Price } = req.body; // The new data for the activity
+  const { buffetName } = req.params; 
+  const { Price } = req.body; 
 
   try {
     const updatedBuffet = await Buffet.findOneAndUpdate(
-      { buffet: buffetName }, // Find a document by its activity name
-      { BuffetName,  Description, Time, Price }, // The new values
-      { new: true } // Option to return the document after update
+      { BuffetName: buffetName }, 
+      { Price },
+      { new: true } 
     );
 
     if (!updatedBuffet) {
-      return res.status(404).json({ message: "Menu Item not found" });
+      return res.status(404).json({ message: "Buffet not found" });
     }
 
     res.status(200).json(updatedBuffet);
@@ -66,6 +66,7 @@ const updateBuffet = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 const deleteBuffet = async (req, res) => {
   try {

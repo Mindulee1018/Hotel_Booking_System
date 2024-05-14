@@ -4,7 +4,7 @@ const {
   createReservation,
   getAllReservations,
   getReservationsByEmail,
-  deleteReservation,
+  deleteTableReservationById,
   updateReservation,
   // getAvailableTables,
   // addTable
@@ -23,7 +23,7 @@ router.get("/:email", getReservationsByEmail);
 router.post("/add", createReservation);
 
 //DELETE reservation
-router.delete("/:id", deleteReservation);
+router.delete("/delete/:id", deleteTableReservationById);
 
 //UPDATE reservation
 router.patch("/:id", updateReservation);

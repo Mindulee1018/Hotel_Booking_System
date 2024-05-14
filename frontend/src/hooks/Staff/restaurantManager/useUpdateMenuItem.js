@@ -6,7 +6,7 @@ const useUpdateMenu = () => {
   const [price, setPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   const updateMenuItem = async (itemId, updatedProductName, updatedPrice) => {
     setIsLoading(true);
     setError(null);
@@ -31,6 +31,7 @@ const useUpdateMenu = () => {
       // Update local state if the update was successful
       setProductName(updatedProductName);
       setPrice(updatedPrice);
+      navigate("/menu");
     } catch (error) {
       setError(error.message || 'Failed to update menu item');
     } finally {

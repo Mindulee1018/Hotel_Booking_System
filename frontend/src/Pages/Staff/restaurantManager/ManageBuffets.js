@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import useDisplayBuffet from '../../../hooks/Client/restaurant/useDisplayBuffet'
 import useDeleteBuffet from '../../../hooks/Staff/restaurantManager/useDeleteBuffet'
 import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
+import { useNavigate } from "react-router-dom";
 
 const ManageBuffet = () => {
   const { buffetItems, isLoading, error } = useDisplayBuffet();
   const [id, setidToDelete] = useState("");
   const { deleteBuffetItem } = useDeleteBuffet();
-
+  const navigate = useNavigate();
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -16,6 +17,7 @@ const ManageBuffet = () => {
     return <div>Error: {error}</div>;
   }
 
+  const token = localStorage.getItem('user');
   const bufferToBase64 = (buf) => {
     var binstr = Array.prototype.map
       .call(buf, function (ch) {
@@ -30,6 +32,23 @@ const ManageBuffet = () => {
     console.log(isLoading, "handleDelete loading");
     setidToDelete("");
   };
+
+
+  const handleSelect = (productName, price) => {
+    if (!token) {
+      alert("you need to login first")
+      navigate("/login")
+      return
+    }
+    else {
+      navigate("/updateBuffet", {
+        state: {
+          BuffetName: productName,
+          price,
+        },
+      });
+    };
+  }
 
   return (
     <div className="row p-0">
@@ -75,8 +94,8 @@ const ManageBuffet = () => {
                      Delete Buffet Details
                     </a>
                     <a className="btn btn-primary"
-                      //onClick={() => getUpdateMenu(item._id)}
-                      href="/updateBuffet"
+                      onClick={() => handleSelect(item.BuffetName, item.Price)}
+                     
                     >Update</a>
                   </div>
                 </div>

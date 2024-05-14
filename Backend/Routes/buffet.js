@@ -23,7 +23,7 @@ router.get("/get",  getAllBuffetDetails);
 router.delete("/:id", deleteBuffet);
 
 //UPDATE reservation
-router.patch("/:id", updateBuffet);
+router.put("/update/:buffetName", updateBuffet);
 
 
 module.exports = router;

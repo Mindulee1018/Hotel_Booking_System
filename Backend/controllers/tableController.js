@@ -144,21 +144,26 @@ try {
   
 
 //delete a reservation
-const deleteReservation = async (req, res) => {
-  const { id } = req.params;
+const deleteTableReservationById = async (req, res) => {
+  const reservationId = req.params.id; // Extract reservation ID from request parameters
 
-  if (!mongoose.Types > ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such ID!" });
+  try {
+    // Find the reservation by ID and delete it
+    const deletedReservation = await Reservation.findByIdAndDelete(reservationId);
+
+    if (!deletedReservation) {
+      // If reservation with the given ID is not found, return 404 Not Found
+      return res.status(404).json({ error: 'Reservation not found' });
+    }
+
+    // If deletion is successful, return 200 OK with a success message
+    res.status(200).json({ message: 'Reservation deleted successfully', deletedReservation });
+  } catch (error) {
+    // If an error occurs during the deletion process, return 500 Internal Server Error
+    res.status(500).json({ error: 'Failed to delete reservation', details: error.message });
   }
-
-  const table = await Table.findOneAndDelete({ _id: id });
-
-  if (!table) {
-    return res.status(404).json({ error: "No Reservation Details!" });
-  }
-
-  res.status(200).json(table);
 };
+
 
 //update a reservation
 const updateReservation = async (req, res) => {
@@ -186,7 +191,7 @@ module.exports = {
   createReservation,
   getAllReservations,
   getReservationsByEmail,
-  deleteReservation,
+  deleteTableReservationById,
   updateReservation,
   createReservation,
 checkAvailability,

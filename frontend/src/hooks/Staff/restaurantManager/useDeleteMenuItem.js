@@ -27,7 +27,7 @@ const useDeleteMenu = () => {
         throw new Error(data.error);
       } else {
         navigate("/menu");
-        alert("Reservation deleted successfully!");
+        alert("Iteam deleted successfully!");
       }
     } catch (error) {
       setError(error.message);
