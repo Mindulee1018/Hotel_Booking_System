@@ -45,6 +45,8 @@ function AddNewOrder() {
         if (!Quantity || !cusName || !email || !contactNumber) {
           alert("All fields must be filled.");
           return false;
+        } else if(contactNumber.length !== 10) {
+          alert('Invalid Contact Number.');
         } else {
           setFormError("");
           return true; 

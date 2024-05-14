@@ -25,8 +25,12 @@ const [date, setDate] = useState('');
     if(!date || !timeSlot || !customerName || !Noofguests || !email || !contactNumber){
       alert("All feilds must be filled")
       return false;
+    }else if(contactNumber.length !== 10) {
+      alert('Invalid Contact Number.');
+    }else{
+      return true; 
     }
-    return true;
+   
   }
 
   function generatereservationNumber(prefix = 'TR', numDigits = 8) {
@@ -182,6 +186,7 @@ const [date, setDate] = useState('');
                 onChange={(e) => setContactNumber(parseInt(e.target.value))}
               />
             </div>
+            <p class="text-danger mt-3">When reserving a table through the hotel website, an advance payment of Rs. 1000.00 will be charged for the reservation.</p>
             <button
               className="btn btn-success mt-3" 
               onClick={handleNext}
