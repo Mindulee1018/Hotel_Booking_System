@@ -4,6 +4,7 @@ import useBulkStockDisplay from '../../../hooks/Staff/KitchenInventory/useBulkSt
 import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
 import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 
 function BulkStock () {
   const {BStockList, isLoading, error} = useBulkStockDisplay();
@@ -80,10 +81,6 @@ function BulkStock () {
   }
 });
 
-     
-
-
-
     //search and filter
     const filteredStockList = Object.values(aggregatedStockList).filter(BulkStock => (
       
@@ -115,7 +112,76 @@ function BulkStock () {
       }
       return sortedList;
     };
-     
+    const styles = StyleSheet.create({
+      page: {
+          flexDirection: 'row',
+          backgroundColor: '#ffffff'
+      },
+      section: {
+          margin: 10,
+          padding: 10,
+          flexGrow: 1
+      },
+      header: {
+          fontSize: 20,
+          marginBottom: 30,
+          textAlign: 'center'
+      },
+      row: {
+          flexDirection: 'row',
+          borderBottomColor: '#000000',
+          borderBottomWidth: 1,
+          padding: 5
+      },
+      cell: {
+          width: '20%',
+          textAlign: 'center',
+          fontSize: 10
+      },
+      footer: {
+        position: 'absolute',
+        bottom: 30,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 8 // Adjust font size for the footer
+    }
+    });
+    
+    const MyDocument = (
+      <Document>
+          <Page size="A4" style={styles.page}>
+              <View style={styles.section}>
+                  <Text style={styles.header}>Kitchen Inventory Report</Text>
+                  <View style={styles.row}>
+                      <Text style={styles.cell}>Product Name</Text>
+                      <Text style={styles.cell}>Product Category</Text>
+                      <Text style={styles.cell}>Quantity Available</Text>
+                      <Text style={styles.cell}>No of units available </Text>
+                      <Text style={styles.cell}>Latest Purchased Price At</Text>
+                      <Text style={styles.cell}>Special Notes</Text>
+                      <Text style={styles.cell}>Added Date and Time</Text>
+                      <Text style={styles.cell}>Last Updated</Text>
+                  </View>
+                  {sortData(filteredStockList).map(bstock => (
+                      <View style={styles.row} key={bstock._id}>
+                          <Text style={styles.cell}>{bstock.bname}</Text>
+                          <Text style={styles.cell}>{bstock.bcategory}</Text>
+                          <Text style={styles.cell}>{bstock.bquantity}</Text>
+                          <Text style={styles.cell}>{bstock.bunits}</Text>
+                          <Text style={styles.cell}>{bstock.bprice}</Text>
+                          <Text style={styles.cell}>{bstock.bdescription}</Text>
+                          <Text style={styles.cell}>{new Date(bstock.createdAt).toLocaleString()}</Text>
+                          <Text style={styles.cell}>{new Date(bstock.updatedAt).toLocaleString()}</Text>
+                      </View>
+                  ))}
+              </View>
+              <Text style={styles.footer}>
+                  Downloaded: {new Date().toLocaleString()}
+              </Text>
+          </Page>
+      </Document>
+    );
 
     
 
@@ -127,6 +193,11 @@ return (
       <div className="col">
   <div>
     <h1 className="mb-4 mt-5">Bulk Inventory</h1>
+    <PDFDownloadLink document={MyDocument} fileName="inventory_report.pdf"className="btn btn-primary mb-5"style={{marginRight:"2rem"}}>
+                        {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download PDF'
+                        }
+                    </PDFDownloadLink>
     <a href="/AddBulkStock" className="btn btn-primary mb-5">
             Add New Bulk Stock
           </a>

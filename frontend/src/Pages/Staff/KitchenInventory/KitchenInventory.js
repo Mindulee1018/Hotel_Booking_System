@@ -4,6 +4,7 @@ import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKit
 import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
 import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 
 function KitchenInventory () {
     const {StockList, isLoading, error} = useKitchenStockDisplay();
@@ -112,6 +113,75 @@ function KitchenInventory () {
         return sortedList;
       };
 
+      const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#ffffff'
+        },
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        header: {
+            fontSize: 20,
+            marginBottom: 30,
+            textAlign: 'center'
+        },
+        row: {
+            flexDirection: 'row',
+            borderBottomColor: '#000000',
+            borderBottomWidth: 1,
+            padding: 5
+        },
+        cell: {
+            width: '20%',
+            textAlign: 'center',
+            fontSize: 10
+        },
+        footer: {
+          position: 'absolute',
+          bottom: 30,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          fontSize: 8 // Adjust font size for the footer
+      }
+    });
+
+    const MyDocument = (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.section}>
+                    <Text style={styles.header}>Kitchen Inventory Report</Text>
+                    <View style={styles.row}>
+                        <Text style={styles.cell}>Product Name</Text>
+                        <Text style={styles.cell}>Product Category</Text>
+                        <Text style={styles.cell}>Quantity Available</Text>
+                        <Text style={styles.cell}>Latest Purchased Price At</Text>
+                        <Text style={styles.cell}>Special Notes</Text>
+                        <Text style={styles.cell}>Added Date and Time</Text>
+                        <Text style={styles.cell}>Last Updated</Text>
+                    </View>
+                    {sortData(filteredStockList).map(stock => (
+                        <View style={styles.row} key={stock._id}>
+                            <Text style={styles.cell}>{stock.name}</Text>
+                            <Text style={styles.cell}>{stock.category}</Text>
+                            <Text style={styles.cell}>{stock.quantity}</Text>
+                            <Text style={styles.cell}>{stock.price}</Text>
+                            <Text style={styles.cell}>{stock.description}</Text>
+                            <Text style={styles.cell}>{new Date(stock.createdAt).toLocaleString()}</Text>
+                            <Text style={styles.cell}>{new Date(stock.updatedAt).toLocaleString()}</Text>
+                        </View>
+                    ))}
+                </View>
+                <Text style={styles.footer}>
+                    Downloaded: {new Date().toLocaleString()}
+                </Text>
+            </Page>
+        </Document>
+    );
+
 
 
     
@@ -122,6 +192,11 @@ return (
             <div className="col">
     <div>
       <h1 className="mb-4 mt-5">Kitchen Inventory</h1>
+      <PDFDownloadLink document={MyDocument} fileName="inventory_report.pdf"className="btn btn-primary mb-5"style={{marginRight:"2rem"}}>
+                        {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download PDF'
+                        }
+                    </PDFDownloadLink>
       <a href="/AddStock" className="btn btn-primary mb-5">
               Add New Stock
             </a>
