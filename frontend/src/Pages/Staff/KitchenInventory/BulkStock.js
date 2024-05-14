@@ -4,7 +4,10 @@ import useBulkStockDisplay from '../../../hooks/Staff/KitchenInventory/useBulkSt
 import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
 import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet,Image } from '@react-pdf/renderer';
+
+import logo from '../../../Sunset Araliya horizontal.png';
+
 
 function BulkStock () {
   const {BStockList, isLoading, error} = useBulkStockDisplay();
@@ -122,10 +125,28 @@ function BulkStock () {
           padding: 10,
           flexGrow: 1
       },
-      header: {
+      heading: {
           fontSize: 20,
           marginBottom: 30,
+          marginTop: 70,
           textAlign: 'center'
+      },
+      header: {
+        position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          marginBottom: 20,
+          backgroundColor: '#007bff',
+          color: '#ffffff'
+      },
+      logo: {
+          width: 100,
+          height: 50
       },
       row: {
           flexDirection: 'row',
@@ -151,8 +172,11 @@ function BulkStock () {
     const MyDocument = (
       <Document>
           <Page size="A4" style={styles.page}>
+          <View style={styles.header}>
+                    <Image src={logo} style={styles.logo} />
+                </View>
               <View style={styles.section}>
-                  <Text style={styles.header}>Bulk Stock Report</Text>
+                  <Text style={styles.heading}>Bulk Stock Report</Text>
                   <View style={styles.row}>
                       <Text style={styles.cell}>Product Name</Text>
                       <Text style={styles.cell}>Product Category</Text>

@@ -4,7 +4,9 @@ import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKit
 import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
 import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet,Image } from '@react-pdf/renderer';
+
+import logo from '../../../Sunset Araliya horizontal.png';
 
 function KitchenInventory () {
     const {StockList, isLoading, error} = useKitchenStockDisplay();
@@ -123,11 +125,29 @@ function KitchenInventory () {
             padding: 10,
             flexGrow: 1
         },
-        header: {
-            fontSize: 20,
+        heading: {
+            fontSize: 15,
             marginBottom: 30,
+            marginTop: 70,
             textAlign: 'center'
         },
+        header: {
+          position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 10,
+            marginBottom: 20,
+            backgroundColor: '#007bff',
+            color: '#ffffff'
+      },
+      logo: {
+        width: 100,
+        height: 50
+      },
         row: {
             flexDirection: 'row',
             borderBottomColor: '#000000',
@@ -152,8 +172,11 @@ function KitchenInventory () {
     const MyDocument = (
         <Document>
             <Page size="A4" style={styles.page}>
+            <View style={styles.header}>
+                    <Image src={logo} style={styles.logo} />
+                </View>
                 <View style={styles.section}>
-                    <Text style={styles.header}>Fresh Produce Report</Text>
+                    <Text style={styles.heading}>Fresh Produce Report</Text>
                     <View style={styles.row}>
                         <Text style={styles.cell}>Product Name</Text>
                         <Text style={styles.cell}>Product Category</Text>
