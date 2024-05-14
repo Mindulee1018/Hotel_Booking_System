@@ -25,8 +25,9 @@ const [date, setDate] = useState('');
     if(!date || !timeSlot || !customerName || !Noofguests || !email || !contactNumber){
       alert("All feilds must be filled")
       return false;
-    }else if(contactNumber.length !== 10) {
+    }else if(contactNumber.length < 10) {
       alert('Invalid Contact Number.');
+      return false
     }else{
       return true; 
     }
