@@ -9,6 +9,7 @@ import useFetchUserEmails from "../../../hooks/Staff/useFetchUserEmails";
 function RoomBookings() {
   const { roomReservations = [], isLoading, error } = RoomReservationList();
   const { handleCheckOut } = useCheckoutRoomReserv();
+
   const {
     addNotification,
     isLoading: isNotifLoading,
@@ -20,8 +21,15 @@ function RoomBookings() {
     error: userEmailsError,
   } = useFetchUserEmails();
 
-  const [selectedEmail, setSelectedEmail] = useState("");
-  const [Message, setMessage] = useState("Ready for cleaning purpose");
+  const [selectedEmail, setSelectedEmail] = useState("roommanager@gmail.com");
+  const [selectedInventoryManagerEmail, setSelectedInventoryManagerEmail] =
+    useState("inventorymanager@gmail.com");
+
+  const [Message, setMessage] = useState("Ready for cleaning purpose.");
+  const [inventoryMessage, setInventoryMessage] = useState(
+    "Please restock the room items."
+  );
+
   const [activeReservation, setActiveReservation] = useState(null);
 
   const handleCheckoutAndNotify = async () => {
@@ -32,8 +40,17 @@ function RoomBookings() {
         activeReservation.RoomNumbers,
         Message
       );
+      if (selectedInventoryManagerEmail) {
+        await addNotification(
+          selectedInventoryManagerEmail,
+          activeReservation.RoomNumbers,
+          inventoryMessage
+        );
+      }
       setMessage("");
+      setInventoryMessage("");
       setSelectedEmail("");
+      setSelectedInventoryManagerEmail("");
       setActiveReservation(null);
     }
   };
@@ -56,17 +73,17 @@ function RoomBookings() {
         <ReceptionNavbar />
       </div>
       <div className="col-lg-10">
-      <RoomReservationNavbar />
+        <RoomReservationNavbar />
         <h2 className="my-5">Room Reservations</h2>
         <div className="card">
           <table className="table">
             <thead>
               <tr>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>No.of.Guests</th>
+                <th>Check-in-Date Check-out-Date</th>
+
+                <th>No.of Guests</th>
                 <th>Room Type</th>
-                <th>No.of.Rooms</th>
+                <th>No.of Rooms</th>
                 <th>Room Numbers</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -80,8 +97,10 @@ function RoomBookings() {
             <tbody>
               {roomReservations.map((reservation) => (
                 <tr key={reservation._id}>
-                  <td>{reservation.Checkindate}</td>
-                  <td>{reservation.Checkoutdate}</td>
+                  <td>
+                    {reservation.Checkindate}
+                    {reservation.Checkoutdate}
+                  </td>
                   <td>{reservation.NoOfGuests}</td>
                   <td>{reservation.Rtype}</td>
                   <td>{reservation.noofRooms}</td>
@@ -129,10 +148,13 @@ function RoomBookings() {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  Are you sure you want to checkout this reservation?
-                  <p>Select Email to send the notification</p>
+                  <p className="text-start fw-bold">
+                    Are you sure you want to checkout this reservation?
+                  </p>
+
+                  <p>Inform Room Manager</p>
                   <select
-                    className="form-select mt-3"
+                    className="form-select"
                     value={selectedEmail}
                     onChange={(e) => setSelectedEmail(e.target.value)}
                   >
@@ -143,13 +165,38 @@ function RoomBookings() {
                       </option>
                     ))}
                   </select>
-                  <p>Type a message:</p>
+
+                  {/* <p>Type a message:</p> */}
                   <textarea
                     className="form-control mt-3"
                     value={Message}
                     onChange={(e) => setMessage(e.target.value)}
                   />
+
+                  <p className="mt-3">Inform Inventory Manager</p>
+                  <select
+                    className="form-select "
+                    value={selectedInventoryManagerEmail}
+                    onChange={(e) =>
+                      setSelectedInventoryManagerEmail(e.target.value)
+                    }
+                  >
+                    <option value="">Select Manager Email (optional)</option>
+                    {userEmails.map((email, index) => (
+                      <option key={index} value={email}>
+                        {email}
+                      </option>
+                    ))}
+                  </select>
+
+                  
+                  <textarea
+                    className="form-control mt-3"
+                    value={inventoryMessage}
+                    onChange={(e) => setInventoryMessage(e.target.value)}
+                  />
                 </div>
+
                 <div className="modal-footer">
                   <button
                     type="button"
@@ -160,7 +207,7 @@ function RoomBookings() {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-outline-danger"
+                    className="btn btn-outline-success"
                     onClick={handleCheckoutAndNotify}
                     data-bs-dismiss="modal"
                   >

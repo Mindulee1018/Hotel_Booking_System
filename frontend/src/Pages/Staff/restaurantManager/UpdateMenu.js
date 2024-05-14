@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import useMenuList from "../../../hooks/Staff/restaurantManager/useMenu";
 import useUpdateMenu from "../../../hooks/Staff/restaurantManager/useUpdateMenuItem";
 
@@ -9,101 +10,77 @@ function UpdateMenu() {
   const [category, setCategory] = useState("");
   const { menuList, isLoading, error } = useMenuList();
   const [ID, setIdToUpdate] = useState("");
-   const [Image, setImage] = useState("");
+  const [Image, setImage] = useState("");
 
+  const location = useLocation();
+  const { productname, price, _id } = location.state || {};
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-  const handleupdate = async (ID) => {
+    try {
+      await updateMenuItem(_id, productName, Price);
+      alert("Menu item updated successfully");
+    } catch (error) {
+      console.error("Error updating menu item:", error);
+    }
+  };
 
-    setIdToUpdate('');
-    await updateMenuItem(ID)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    if (name === 'ProductName') {
+      setProductName(value);
+    } else if (name === 'Price') {
+      setPrice(value);
+    }
+  };
+  
 
-  }
   return (
     <div className="row d-flex align-items-center justify-content-center mb-4 mt-1">
-      <h1 className="mt-2 mb-3 ">Update Product Details</h1>
-    
-            <form
-            className="bg-primary bg-opacity-50"
-              onSubmit={handleupdate}
-              method="Post"
-              style={{ width: "25rem" }}
-            >
-              <div className="mb-3">
-                <label for="ProductName" className="form-label mt-3">
-                  Product Name:
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="ProductName"
-                  //   value={menu.productName}
-                  onChange={(e) => {
-                    setProductName(e.target.value);
-                  }}
-                />
-              </div>
+      <h2 className="mt-2 mb-3 ">Update Product </h2>
+      <form
+        className="bg-primary bg-opacity-50"
+        onSubmit={handleUpdate}
+        method="Post"
+        style={{ width: "25rem", position: "relative", top: "17vh" }}
+      >
+        <div className="mb-3">
+          <label htmlFor="ProductName" className="form-label mt-3">
+            Product Name:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="ProductName"
+            name="ProductName"
+            defaultValue={productname}
+            onChange={handleChange}
+          />
+        </div>
 
-              <div class="mb-3">
-                <label className="form-label mt-3">Price:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="Price"
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                />
-              </div>
-
-              <div class="mb-3">
-                <label className="form-label mt-3">category:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="category"
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                  }}
-                />
-              </div>
-              <div class="mb-3">
-                <label for="formFile" className="form-label mt-3">
-                  Image File
-                </label>
-                <input
-                  className="form-control"
-                  type="file"
-                  id="formFile"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
-                />
-              </div>
+        <div className="mb-3">
+          <label className="form-label mt-3">Price:</label>
+          <input
+            type="number"
+            className="form-control"
+            defaultValue={price}
+            id="Price"
+            name="Price"
+            onChange={handleChange}
+          />
+        </div>
 
 
+        <button type="submit" className="btn btn-success m-4" id="submit">
+          Update Details
+        </button>
 
-
-
-              <button
-                type="submit"
-                className="btn btn-success m-4"
-                id="submit"
-                onClick={() => {
-
-                }}
-              >
-                Update Details
-              </button>
-
-              <p id="Error"></p>
-            </form>
-          </div>
-    
-      
-
-    
-  )
+        <p id="Error"></p>
+      </form>
+    </div>
+  );
 }
 
 export default UpdateMenu;

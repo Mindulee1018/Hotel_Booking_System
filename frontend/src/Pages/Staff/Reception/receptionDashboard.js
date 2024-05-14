@@ -78,7 +78,7 @@ function ReceptionDashboard() {
   }
 
   return (
-    <div className="row">
+    <div className="row mb-5">
       <div className="col-lg-2" aria-colspan={2}>
         <ReceptionNavbar />
       </div>

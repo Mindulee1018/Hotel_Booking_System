@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams ,Link} from "react-router-dom";
+import React, { useEffect, useState,} from "react";
+import { useParams ,Link,useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faUtensils, faWifi } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,6 +8,7 @@ const ViewHall = () => {
   const { id } = useParams(); // Extract the id parameter from the URL
   const [hall, setHall] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHall = async () => {
@@ -26,6 +27,18 @@ const ViewHall = () => {
     };
     fetchHall();
   }, [id]); // Make sure to re-run the effect whenever the id changes
+
+  const handleNext = ()=>{
+    const token = localStorage.getItem('user');
+    if (!token) {
+      alert("You need to Login First")
+      navigate('/login'); 
+      return;
+    }else{
+      navigate('/availability')
+    }
+
+  }
 
   return (
     <div>
@@ -102,7 +115,7 @@ const ViewHall = () => {
           <div className="card-body">
             <h5 className="card-title">Check Availability</h5>
             <p className="card-text">Click here to check availability for your dates</p>
-            <Link to="/availability" className="btn btn-secondary">Check Availability</Link>
+            <a onClick={() =>handleNext()} className="btn btn-secondary">Check Availability</a>
           </div>
         </div>
       </div>

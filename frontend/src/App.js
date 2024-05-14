@@ -19,6 +19,7 @@ import Home from "./Pages/Client/userLogin/Home.js";
 import Signup from "./Pages/Client/userLogin/signup.js";
 import PasswordReset from "./Pages/Client/userLogin/PasswordReset.js";
 import ForgotPassword from "./Pages/Client/userLogin/ForgotPwd.js";
+import VerifyEmail from "./Pages/Client/userLogin/VerifyEmail.js";
 
 //Restaurant
 import DiningDash from "./Pages/Client/restaurant/DiningDash.js";
@@ -31,8 +32,6 @@ import DisplayBuffet from "./Pages/Client/restaurant/DisplayBuffet.js";
 import ManageOrders from "./Pages/Client/restaurant/DisplayOrders.js";
 
 //room
-import Room from "./Pages/Client/roomBooking/rooms.js";
-import Reservation from "./Pages/Client/roomBooking/reservation.js";
 import ReservationDetails from "./Pages/Client/roomBooking/CustomerDetails.js";
 import Mybookings from "./Pages/Client/roomBooking/MyBookings.js";
 import AddRoomReserve from "./Pages/Client/roomBooking/addRoomReservation.js";
@@ -58,7 +57,7 @@ import Offer from "./Pages/Client/offerPackage.js";
 
 
 ///////////manager side////////////
-import ManagerDash from "./Pages/Staff/ManagerDash";
+import ManagerDash from "./Pages/Staff/userManagement/ManagerDash.js";
 import Dashboard from "./Pages/Staff/ManagerDashboard";
 
 //reception
@@ -99,7 +98,7 @@ import Notifications from "./Pages/Staff/roomManager/notifications.js";
 
 //watersport activity management
 import AddActivity from "./Pages/Staff/Reception/AddActivity";
-import WatersportManage from "./Pages/Staff/Reception/WatersportManagement";
+import WatersportManage from "./Pages/Staff/ActivityManagement/WatersportManagement.js";
 
 //event management
 import Alldates from "../src/Pages/Staff/HallManagement/Alldates.js";
@@ -117,6 +116,7 @@ import KitchenInventory from "./Pages/Staff/KitchenInventory/KitchenInventory.js
 import AddBulkStock from "./Pages/Staff/KitchenInventory/AddBulkStock.js";
 import BulkStock from "./Pages/Staff/KitchenInventory/BulkStock.js";
 import CombinedInventory from "./Pages/Staff/KitchenInventory/CombinedInventory.js";
+import StockDetails from "./Pages/Staff/KitchenInventory/StockDetails.js";
 
 //Room Inventory
 import RoomManagerView from "./Pages/Staff/RoomInventory/RoomManagerView";
@@ -173,28 +173,27 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/ForgotPwd" element={<ForgotPassword />} />
           <Route path="/user/resetPassword/:token" element={<PasswordReset />}/>
+          <Route path="/user/verify/:verifytoken" element={<VerifyEmail />}/>
 
           {/* waterpost page */}
-          <Route path="/Watersports" element={<WatersportActivities />} />
+          <Route path="/Watersports" element={<Layout><WatersportActivities /></Layout>} />
 
           {/* offers page */}
           <Route path="/offerPackage" element={<Offer />} />
 
           {/* dining reservations */}
           <Route path="/DiningDashboard" element={<Layout2> <DiningDash /></Layout2>}/>
-          <Route path="/TableReservations" element={<TableReservation />} />
+          <Route path="/TableReservations" element={<Layout2><TableReservation /></Layout2>} />
           <Route path="/AddReservations" element={<AddReservation />} />
-          <Route path="/displaymenu" element={<MenuByCategoryPage />} />
-          <Route path="/displayOrders" element={<DisplayOrders />} />
+          <Route path="/displaymenu" element={<Layout2><MenuByCategoryPage /></Layout2>} />
+          <Route path="/displayOrders" element={<Layout2><DisplayOrders /></Layout2>} />
           <Route path="/AddOrder" element={<AddNewOrder />} />
-          <Route path="/DisplayBuffet" element={<DisplayBuffet />} />
+          <Route path="/DisplayBuffet" element={<Layout2><DisplayBuffet /></Layout2>} />
           <Route path="/manageTables" element={<ManageTableReservation />} />
           <Route path="/manageOrders" element={<ManageOrders />} />
 
           {/* room reservations */}
-          <Route path="/rooms" element={ <Layout><Room /></Layout>}/>
-          <Route path="/reservation" element={<Layout><Reservation /></Layout>}/>
-          <Route path="/CustomerDetails" element={<Layout><ReservationDetails /></Layout>}/>
+          <Route path="/CustomerDetails" element={<ReservationDetails />}/>
           <Route path="/roomReservation" element={<Layout><AddRoomReserve /></Layout>} />
           <Route path="/MyBookings" element={<Layout><Mybookings /></Layout>} />
 
@@ -202,9 +201,9 @@ function App() {
           <Route path="/editBooking/:id" element={<EditBooking />} />
           <Route path="/halls" element={<HallList />} />
           <Route path="/ViewHall/:id" element={<ViewHall />} /> 
-          <Route path="/AllHalls" element={<AllHallList />} />
+          <Route path="/AllHalls" element={<Layout><AllHallList /></Layout>} />
           <Route path="/AddHall/:id" element={<HallReservationForm />} />
-          <Route path="/availability" element={<HallAvailability />} />
+          <Route path="/availability" element={<Layout><HallAvailability /></Layout>} />
           <Route path="/bookHall" element={<BookHall />} />
           <Route path="/bookingdata/:id" element={<HallBookingData />} />
 
@@ -270,6 +269,7 @@ function App() {
           <Route path="/AddBulkStock" element={<AddBulkStock />} />
           <Route path="/BulkStock" element={<BulkStock />} />
           <Route path="/CombinedInventory" element={<CombinedInventory />} />
+          <Route path="//kitchenStock/:stockName" element={<StockDetails />} />
 
           {/* Room Inventory */}
           <Route path="/RoomManagerView" element={<RoomManagerView />} />

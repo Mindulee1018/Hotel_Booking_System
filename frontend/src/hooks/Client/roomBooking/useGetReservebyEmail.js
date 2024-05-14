@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-const GetReservebyEmail = (Email = "") => {
+const GetReservebyEmail = (Email) => {
     const [roomReservations, setRoomReservations] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+  
     
   
     useEffect(() => {
@@ -11,14 +12,10 @@ const GetReservebyEmail = (Email = "") => {
         setLoading(true);
         try {
           // Construct the URL based on whether email is provided or not
-          let url = `http://localhost:4000/roomreservation/getReservationsByEmail/${Email}`;
-          if (Email) {
-            url += `?email=${encodeURIComponent(Email)}`;
-          }
+          const response = await fetch (`http://localhost:4000/roomreservation/reservations/${Email}`);
           
-          const response = await fetch(url);
           if (!response.ok) {
-            throw new Error(`Failed to fetch reservations: ${response.status}`);
+            throw new Error(`Failed to fetch reservations`);
           }
           const json = await response.json();
           setRoomReservations(json);

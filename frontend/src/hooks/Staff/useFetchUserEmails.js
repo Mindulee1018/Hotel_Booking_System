@@ -8,12 +8,12 @@ const useFetchUserEmails = () => {
     useEffect(() => {
         const fetchUserEmails = async () => {
             try {
-                const response = await fetch('http://localhost:4000/userEmails/emails'); // Adjust the API endpoint as needed
+                const response = await fetch('http://localhost:4000/userEmails/emails');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setUserEmails(data); // Make sure this matches the structure of your response
+                setUserEmails(data);
             } catch (err) {
                 setError(err.message);
             } finally {

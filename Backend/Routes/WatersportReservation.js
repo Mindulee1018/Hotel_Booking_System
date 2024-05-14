@@ -10,7 +10,7 @@ const {
   updateReservation,
   getReservationsByDateTime,
   checkoutRserv,
-} = require("../controllers/SportReservController");
+} = require("../controllers/Receptionist/SportReservController");
 
 //add new reservation
 router.post("/add", addReservation);

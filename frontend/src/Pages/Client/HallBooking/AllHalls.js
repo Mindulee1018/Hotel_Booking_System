@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate,useLocation} from "react-router-dom";
 import { AuthContext } from '../../../context/AuthContext'; // Import the AuthContext
 import SearchHeader from '../../../components/SearchHeader';
 
 const AllHallList = () => {
   const [halls, setHalls] = useState(null);
   const { user } = useContext(AuthContext); // Access user state from AuthContext
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchHall = async () => {
@@ -35,6 +37,21 @@ const AllHallList = () => {
     }
   };
 
+  localStorage.removeItem('prevPath');
+  localStorage.setItem("prevPath", location.pathname);
+
+  const handleNext = ()=>{
+    const token = localStorage.getItem('user');
+    if (!token) {
+      alert("You need to Login First")
+      navigate('/login'); 
+      return;
+    }else{
+      navigate('/availability')
+    }
+
+  }
+
   return (
     <div className="imadethis">
       <SearchHeader />
@@ -46,7 +63,7 @@ const AllHallList = () => {
               <div className="card-body">
                 <h5 className="card-title">Check Availability</h5>
                 <p className="card-text">Check availability for your event date.</p>
-                <Link to="/availability" className="btn btn-primary">Check Now</Link>
+                <a className="btn btn-primary"  onClick={() =>handleNext()}>Check Now</a>
               </div>
             </div>
           </div>
@@ -88,7 +105,9 @@ const AllHallList = () => {
         {/* Reserve Now Button */}
         <div className="row justify-content-center mt-5">
           <div className="col-md-6">
-            <button className="btn btn-primary" onClick={handleReserveNow}>Reserve Now</button>
+          <Link to='/' className='btn btn-primary'>
+                       Back to home
+                      </Link>
           </div>
         </div>
       </div>

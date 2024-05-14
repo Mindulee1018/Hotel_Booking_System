@@ -24,6 +24,14 @@ function ReservationDetails() {
   const [phoneno, setphoneno] = useState("");
   const [Email, setEmail] = useState("");
 
+  function generatereservationNumber(prefix = 'RR', numDigits = 8) {
+    const randomNumber = Math.floor(Math.random() * Math.pow(10, numDigits));
+    const formattedNumber = String(randomNumber).padStart(numDigits, '0');
+    return prefix + formattedNumber;
+  }
+
+  const roomreservationNo = generatereservationNumber();
+
   useState(() => {
     if (user && user.email) {
       setEmail(user.email);
@@ -46,6 +54,7 @@ function ReservationDetails() {
         RoomNumbers,
         price,
         noOfRooms,
+        roomreservationNo
       },
     });
   };
@@ -54,6 +63,8 @@ function ReservationDetails() {
     event.preventDefault();
     handleNext();
   };
+
+
 
   return (
     <div
@@ -77,18 +88,18 @@ function ReservationDetails() {
           textAlign: "center",
         }}
       >
-        <div>
-          <h1>Reservation Details</h1>
+        <h2>Reservation Details</h2>
+        <div className="text-start ps-5 " style={{position:"relative" , left:"250px", width:"18vw"}}>
 
-          <p>Room Type: {Rtype}</p>
-          <p>Room Numbers: {RoomNumbers.join(", ")}</p>
-          <p>Number of Rooms: {noOfRooms}</p>
-          <p>Check-in Date: {Checkindate}</p>
-          <p>Check-out Date: {Checkoutdate}</p>
-          <p>Number of Guests: {NoOfGuests}</p>
-          <p>Total Price: Rs.{price}.00</p>
+          <p>Room Type: <span className="fw-bold">{Rtype}</span></p>
+          <p>Room Numbers: <span className="fw-bold">{RoomNumbers.join(", ")}</span></p>
+          <p>Number of Rooms:<span className="fw-bold">{noOfRooms}</span> </p>
+          <p className="pe-3">Check-in Date:<span className="fw-bold">{Checkindate}</span> </p>
+          <p>Check-out Date: <span className="fw-bold">{Checkoutdate}</span></p>
+          <p>Number of Guests:<span className="fw-bold">{NoOfGuests}</span> </p>
+          <p>Total Price: <span className="fw-bold">Rs.{price}.00</span></p>
         </div>
-        <h1>Enter Customer Details</h1>
+        <h2>Enter Customer Details</h2>
         <form
           onSubmit={handleNext}
           style={{
@@ -131,9 +142,26 @@ function ReservationDetails() {
             />
           </label>
           <label style={{ marginBottom: "10px" }}>
+            Phone Number:
+            <input
+              type="tel"
+              value={phoneno}
+              onChange={(e) => setphoneno(e.target.value)}
+              style={{
+                padding: "8px",
+                marginBottom: "20px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                boxSizing: "border-box",
+                flex: "1",
+              }}
+            />
+          </label>
+          <label style={{ marginBottom: "10px" }}>
             Email:
             <input
               type="Email"
+              readOnly
               value={Email}
               onChange={(e) => setEmail(e.target.value)}
               style={{
@@ -143,6 +171,7 @@ function ReservationDetails() {
                 borderRadius: "4px",
                 boxSizing: "border-box",
                 flex: "1",
+                width:"24vw"
               }}
             />
           </label>
@@ -159,25 +188,11 @@ function ReservationDetails() {
                 borderRadius: "4px",
                 boxSizing: "border-box",
                 flex: "1",
+                width:"24vw"
               }}
             />
           </label>
-          <label style={{ marginBottom: "10px" }}>
-            Phone Number:
-            <input
-              type="tel"
-              value={phoneno}
-              onChange={(e) => setphoneno(e.target.value)}
-              style={{
-                padding: "8px",
-                marginBottom: "20px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                boxSizing: "border-box",
-                flex: "1",
-              }}
-            />
-          </label>
+
           <button
             type="submit"
             style={{

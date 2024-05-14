@@ -23,13 +23,13 @@ const PasswordReset = () => {
 
   return (
 
-    <div className='vh-100 d-flex justify-content-center align-items-center'>
+    <div className='vh-100 d-flex justify-content-center align-items-center bg-primary bg-opacity-100'>
      
       <form onSubmit={handleSubmit} >
       <h2>Password Reset</h2>
       <div class="mb-3">
         <label for="password" class="form-label">New password</label><br></br>
-        <input type={showPassword ? "text" : "password"} id="password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+        <input  type={showPassword ? "text" : "password"} id="password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
         <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>
       </div>
       <div class="mb-3">
@@ -38,7 +38,7 @@ const PasswordReset = () => {
         <button type="button" onClick={toggleconPasswordVisibility}>{showconPassword ? "Hide" : "Show"}</button>
       </div>
 
-      <button type="submit" class="btn btn-primary" disabled={isLoading}>Submit</button>
+      <button type="submit" class="btn btn-outline-dark" disabled={isLoading}>Submit</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {status && <div className="error bg-primary my-2" style={{color:"white"}}>{status}</div>}
       </form>

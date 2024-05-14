@@ -67,25 +67,28 @@ const createMenuItem = async (req, res) => {
 
 // Function to update an existing activity
 const updateMenuItem = async (req, res) => {
-  const { activityName } = req.params; // The name of the activity to update
-  const { productName, Price } = req.body; // The new data for the activity
-
   try {
-    const updatedActivity = await Watersport.findOneAndUpdate(
-      { Activity: activityName }, // Find a document by its activity name
-      { productName, Price }, // The new values
-      { new: true } // Option to return the document after update
+    const { id } = req.params;
+    const { productName, Price } = req.body;
+
+    // Find the menu item by ID and update its name and price
+    const updatedMenuItem = await menu.findByIdAndUpdate(
+      id,
+      { productName, Price },
+      { new: true } // Return the updated document
     );
 
-    if (!updatedActivity) {
-      return res.status(404).json({ message: "Menu Item not found" });
+    if (!updatedMenuItem) {
+      return res.status(404).json({ error: "Menu item not found" });
     }
 
-    res.status(200).json(updatedActivity);
+    res.status(200).json(updatedMenuItem);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error updating menu item:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-};
+}
+
 
 const deleteMenuItem = async (req, res) => {
   try {

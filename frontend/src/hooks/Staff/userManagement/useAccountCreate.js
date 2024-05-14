@@ -7,7 +7,7 @@ export const useAccountCreate = () => {
   const navigation = useNavigate();
 
 
-  const create  = async (email, password,confirmPassword,name,role,isAdminCreation) => {
+  const create  = async (email, password,confirmPassword,name,role,isAdminCreation,verified) => {
     setIsLoading(true)
     setError(null)
 
@@ -20,7 +20,7 @@ export const useAccountCreate = () => {
     const response = await fetch('http://localhost:4000/user/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email, password ,name,role,isAdminCreation})
+      body: JSON.stringify({ email, password ,name,role,isAdminCreation,verified})
     })
     const json = await response.json()
 

@@ -15,11 +15,12 @@ function CreatePage() {
   const isAdminCreation = true;
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
+  const verified = true;
  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await create(email, password, confirmPassword,name,role,isAdminCreation)
+    await create(email, password, confirmPassword,name,role,isAdminCreation,verified)
   };
 
   const handleTogglePwd=()=>{
