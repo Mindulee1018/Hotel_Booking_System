@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const RoomManagerView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [state, setState] = useState();
+  const [state, setState] = useState({});
   const navigate = useNavigate();
 
   //message
@@ -96,7 +96,7 @@ const RoomManagerView = () => {
                     <td>{item.reorderPoint}</td>
                     <td>
                       <div className="d-grid gap-2">
-                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={(e) =>navigate(`/EditItem/${e.target.id}`)}>
+                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={(e) =>navigate(`/EditItem/${item._id}`)}>
   
                             update
                           

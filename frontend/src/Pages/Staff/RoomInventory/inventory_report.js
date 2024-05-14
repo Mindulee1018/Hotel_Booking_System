@@ -42,12 +42,13 @@ const Inventory_report = () => {
       pdf.save('RoomInventoryReport.pdf');
     });
   };
-
+ 
   return (
     <>
-      <div className="col">
+      <div className="row">
+        <InventorySideBar/>
+        <div className="col">
         <h1 dashboard="Inventory Management System" />
-      </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
           <div className="col py-3">
@@ -81,6 +82,8 @@ const Inventory_report = () => {
             </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
     </>
   );

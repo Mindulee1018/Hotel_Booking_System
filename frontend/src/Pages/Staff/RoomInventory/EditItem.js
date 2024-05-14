@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Inventorysidebar from '../../../components/InventoryManagerSideBar';
 
-
 export const EditItem = () => {
   const [inventory, setInventory] = useState([]);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const errors =useState();
   const { id } = useParams();
   const [state, setState] = useState({
     itemID: '',
@@ -17,7 +16,7 @@ export const EditItem = () => {
     reorderPoint: ''
   });
 
-  {/*const validateValues = (inputValues) => {
+  const validateValues = (inputValues) => {
     let errors = {};
     if (inputValues.itemID.length < 3) {
       errors.itemNo = "itemID is too short";
@@ -37,8 +36,8 @@ export const EditItem = () => {
     if (inputValues.reorderPoint.length < 1) {
       errors.reorderPoint = "reorderPoint is too short";
     }
-    return errors
-  };*/}
+    return errors;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +52,6 @@ export const EditItem = () => {
           const data = await response.json();
           setInventory(data);
           console.log(state)
-        
         } else {
           throw new Error('Failed to fetch data');
         }
@@ -63,7 +61,7 @@ export const EditItem = () => {
     };
   
     fetchData();
-  },[])
+  },[id]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -78,10 +76,6 @@ export const EditItem = () => {
       stockCount,
       // reorderPoint
     };
-
-    
-      
-  
 
     try {
       const response = await fetch(`http://localhost:4000/RoomRestock/update/${itemID}`, {
@@ -129,7 +123,7 @@ export const EditItem = () => {
                   onChange={handleChange}
                 /> 
                 {errors.itemID && (
-                <div class="text-danger mt-2">
+                <div className="text-danger mt-2">
                     ItemID should have 4 characters
                 </div>)}
               </div>
@@ -144,7 +138,7 @@ export const EditItem = () => {
                   onChange={handleChange}
                 />
                 {errors.itemName && (
-                <div class="text-danger mt-2">
+                <div className="text-danger mt-2">
                     ItemName can't be null
                 </div>
               )}
@@ -162,7 +156,7 @@ export const EditItem = () => {
                   onChange={handleChange}
                 />
                 {errors.description && (
-                <div class="text-danger mt-2">
+                <div className="text-danger mt-2">
                     Description can't be null
                 </div>
                 )}
@@ -178,7 +172,7 @@ export const EditItem = () => {
                   onChange={handleChange}
                 />
                 {errors.unit_price && (
-                <div class="text-danger mt-2">
+                <div className="text-danger mt-2">
                     Unit Price can't be null
                 </div>
                 )}
@@ -194,27 +188,27 @@ export const EditItem = () => {
                   onChange={handleChange}
                 />
                 {errors.stockCount && (
-                <div class="text-danger mt-2">
+                <div className="text-danger mt-2">
                      StockCount can't be null
                 </div>
                 )}
               </div>
-              <div class="col">
-    <label class="form-label">Reorder Point</label>
-        <input 
-        type="text"
-        name="reorderPoint" 
-        className='form-control'
-        placeholder="Enter reorderPoint of the post"
-        value={state.reorderPoint}
-        onChange={handleChange}
-        />
-         {errors.reorderPoint && (
-          <div class="text-danger mt-2">
-            reorderPoint can't be null
-          </div>
-          )}
-    </div>
+              <div className="col">
+                <label className="form-label">Reorder Point</label>
+                <input
+                  type="text"
+                  name="reorderPoint"
+                  className="form-control"
+                  placeholder="Enter reorderPoint of the post"
+                  value={state.reorderPoint}
+                  onChange={handleChange}
+                />
+                {errors.reorderPoint && (
+                <div className="text-danger mt-2">
+                    reorderPoint can't be null
+                </div>
+                )}
+              </div>
               <button className="btn btn-success mt-5" type="submit" onClick={onSubmit}>
                 Save
               </button>

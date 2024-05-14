@@ -29,9 +29,10 @@ const RoomItemRestock = () => {
 
   const restockRoomItems = async (Rid) => {
     try {
-      const response = await axios.put(`http://localhost:4000/api/restock/${Rid}`, { // Enclosed in backticks
+      console.log('Restocking items for room:', Rid);
+      const response = await axios.put(`http://localhost:4000/api/restock/${Rid}`, {
         itemName: 'Your Item Name',
-        quantity: 1 // You can adjust the quantity as needed
+        quantity: 1
       });
       console.log(response.data.message);
       fetchRooms(); // Fetch updated rooms data after restocking
@@ -39,6 +40,7 @@ const RoomItemRestock = () => {
       console.error('Error restocking room items:', error);
     }
   };
+  
   
 
   const onSubmit = async (e) => {
@@ -77,7 +79,9 @@ const RoomItemRestock = () => {
 
 
   return (
-    <div>
+    <div className='row'>
+      <InventorySideBar/>
+      <div className='col'>
       <h2>Room Item Restocking</h2>
       <ul>
         {rooms.map(room => (
@@ -96,7 +100,7 @@ const RoomItemRestock = () => {
           </li>
         ))}
       </ul>
-
+      </div>
     </div>
   );
 };

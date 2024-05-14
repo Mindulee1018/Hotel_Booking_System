@@ -37,9 +37,9 @@ function InventorySideBar() {
     newpwd.value = null;
   }
   return (
-    <div className="col-2 m-0 p-0">
+    <div className="col-2 m-0 p-0 vh-100" >
       <ul
-        className="nav flex-column pe-1 vh-100"
+        className="nav flex-column pe-1 vh-100 position-fixed"
         style={{ backgroundColor: "#1E3A8A" }}
       >
         <div className="d-flex justify-content-center align-items-center">
@@ -66,7 +66,7 @@ function InventorySideBar() {
               </span>
             </a>
           </li>
-          <li className="nav-item border">
+          {/*<li className="nav-item border">
             <a
               className="nav-link text-white fs-6"
               aria-current="page"
@@ -74,7 +74,7 @@ function InventorySideBar() {
             >
               Hotel View
             </a>
-          </li>
+          </li>*/}
           <li className="nav-item border">
             <a
               className="nav-link text-white fs-6"
@@ -106,20 +106,21 @@ function InventorySideBar() {
             <a
               className="nav-link text-white fs-6"
               aria-current="page"
-              href="/RoomRestock"
+              href="/Inventory_report"
             >
-              Restock Items
+              Generate Report
             </a>
           </li>
           <li className="nav-item border">
             <a
               className="nav-link text-white fs-6"
               aria-current="page"
-              href="/Inventory_report"
+              href="/RoomRestock"
             >
-              Generate Report
+              Restock Items
             </a>
           </li>
+          
         </div>
         <div className="">
           <a
