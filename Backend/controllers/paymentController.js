@@ -31,7 +31,7 @@ const sendEmail = async (req, res) => {
             from: 'aliasantiago03@gmail.com',
             to: email,
             subject: 'Thank You for Payment!',
-            text: 'Thank you for placing your order with us!'
+            text: 'Thank you for your payment! We value your trust in our services and look forward to serving you again.If you have any questions or concerns regarding your reservation, please do not hesitate to contact us.'
         });
         res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {

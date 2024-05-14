@@ -4,6 +4,9 @@ import useKitchenStockDisplay from '../../../hooks/Staff/KitchenInventory/useKit
 import useDeleteStock from '../../../hooks/Staff/KitchenInventory/useDeleteStock';
 import useUpdateStock from '../../../hooks/Staff/KitchenInventory/useUpdateStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet,Image } from '@react-pdf/renderer';
+
+import logo from '../../../Sunset Araliya horizontal.png';
 
 function KitchenInventory () {
     const {StockList, isLoading, error} = useKitchenStockDisplay();
@@ -21,7 +24,6 @@ function KitchenInventory () {
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
     const [sort, setSort] = useState('');
-    const [reorderNotification, setReorderNotification] = useState({});
 
     //display only unique categories in filter
     useEffect(() => {
@@ -113,17 +115,97 @@ function KitchenInventory () {
         return sortedList;
       };
 
-      //check reorder level
-      const checkReorderLevel = (Stock) => {
-        if (Stock.quantity === Stock.reorderLevel && !reorderNotification[Stock._id]) {
-          alert(`Alert: Quantity for ${Stock.name} has reached its reorder level.`);
-          // Set the notification sent flag to true for this item
-          setReorderNotification((prev) => ({
-            ...prev,
-            [Stock._id]: true,
-          }));
-        }
-      };
+      const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#ffffff'
+        },
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        heading: {
+            fontSize: 15,
+            marginBottom: 30,
+            marginTop: 70,
+            textAlign: 'center'
+        },
+        header: {
+          position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 10,
+            marginBottom: 20,
+            backgroundColor: '#007bff',
+            color: '#ffffff'
+      },
+      logo: {
+        width: 100,
+        height: 50
+      },
+        row: {
+            flexDirection: 'row',
+            borderBottomColor: '#000000',
+            borderBottomWidth: 1,
+            padding: 5
+        },
+        cell: {
+            width: '20%',
+            textAlign: 'center',
+            fontSize: 10
+        },
+        footer: {
+          position: 'absolute',
+          bottom: 30,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          fontSize: 8 // Adjust font size for the footer
+      }
+    });
+
+    const MyDocument = (
+        <Document>
+            <Page size="A4" style={styles.page}>
+            <View style={styles.header}>
+                    <Image src={logo} style={styles.logo} />
+                </View>
+                <View style={styles.section}>
+                    <Text style={styles.heading}>Fresh Produce Report</Text>
+                    <View style={styles.row}>
+                        <Text style={styles.cell}>Product Name</Text>
+                        <Text style={styles.cell}>Product Category</Text>
+                        <Text style={styles.cell}>Quantity Available</Text>
+                        <Text style={styles.cell}>Latest Purchased Price At</Text>
+                        <Text style={styles.cell}>Special Notes</Text>
+                        <Text style={styles.cell}>Added Date and Time</Text>
+                        <Text style={styles.cell}>Last Updated</Text>
+                    </View>
+                    {sortData(filteredStockList).map(stock => (
+                        <View style={styles.row} key={stock._id}>
+                            <Text style={styles.cell}>{stock.name}</Text>
+                            <Text style={styles.cell}>{stock.category}</Text>
+                            <Text style={styles.cell}>{stock.quantity}</Text>
+                            <Text style={styles.cell}>{stock.price}</Text>
+                            <Text style={styles.cell}>{stock.description}</Text>
+                            <Text style={styles.cell}>{new Date(stock.createdAt).toLocaleString()}</Text>
+                            <Text style={styles.cell}>{new Date(stock.updatedAt).toLocaleString()}</Text>
+                        </View>
+                    ))}
+                </View>
+                <Text style={styles.footer}>
+                    Downloaded: {new Date().toLocaleString()}
+                </Text>
+            </Page>
+        </Document>
+    );
+
+
 
     
     
@@ -133,6 +215,11 @@ return (
             <div className="col">
     <div>
       <h1 className="mb-4 mt-5">Kitchen Inventory</h1>
+      <PDFDownloadLink document={MyDocument} fileName="inventory_report.pdf"className="btn btn-primary mb-5"style={{marginRight:"2rem"}}>
+                        {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download PDF'
+                        }
+                    </PDFDownloadLink>
       <a href="/AddStock" className="btn btn-primary mb-5">
               Add New Stock
             </a>
@@ -224,8 +311,7 @@ return (
           
           {sortData(filteredStockList).map((Stock) => {
             // Check reorder level for each item
-            // Check reorder level for each item
-            checkReorderLevel(Stock);
+            
             return(
             
             <tbody key={Stock._id}>
@@ -243,7 +329,7 @@ return (
                       }}
                     ></input>
                   ) : (
-                    <td><Link to={`/kitchenStock/${Stock.name}`} className="btn btn-link">{Stock.name}</Link></td>
+                    <td><Link to={`/kitchenStock/${Stock.name}`} className="invisible-link-button">{Stock.name}</Link></td>
                   )}
                 </td>
 

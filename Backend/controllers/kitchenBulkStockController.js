@@ -102,5 +102,19 @@ const deleteBulkStock = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+// get a single stock by name
+const getsingleBulkName = async (req, res) => {
+    const { bstockname } = req.params;
 
-module.exports = { addBulkStock, getBulkStocks,getsingleBulkStock,updateBulkStock,deleteBulkStock };
+    try {
+        const stock = await BulkStock.find({ bname:bstockname });
+        if (!stock) {
+            return res.status(404).json({ error: 'No such product' });
+        }
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { addBulkStock, getBulkStocks,getsingleBulkStock,updateBulkStock,deleteBulkStock,getsingleBulkName };

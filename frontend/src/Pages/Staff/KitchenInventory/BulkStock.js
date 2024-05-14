@@ -1,8 +1,13 @@
 import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import useBulkStockDisplay from '../../../hooks/Staff/KitchenInventory/useBulkStockDisplay';
 import useDeleteBulkStock from '../../../hooks/Staff/KitchenInventory/useDeleteBulkStock';
 import useUpdateBulkStock from '../../../hooks/Staff/KitchenInventory/useUpdateBulkStock';
 import KitchenSidebar from '../../../components/KitchenSideBar';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet,Image } from '@react-pdf/renderer';
+
+import logo from '../../../Sunset Araliya horizontal.png';
+
 
 function BulkStock () {
   const {BStockList, isLoading, error} = useBulkStockDisplay();
@@ -21,7 +26,7 @@ function BulkStock () {
   const [searchkey,setsearchkey]=useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [sort, setSort] = useState('');
-  const [reorderNotification, setReorderNotification] = useState({});
+
 
   //display only unique categories in filter
   useEffect(() => {
@@ -79,10 +84,6 @@ function BulkStock () {
   }
 });
 
-     
-
-
-
     //search and filter
     const filteredStockList = Object.values(aggregatedStockList).filter(BulkStock => (
       
@@ -114,17 +115,97 @@ function BulkStock () {
       }
       return sortedList;
     };
-     //check reorder level
-     const checkReorderLevel = (BulkStock) => {
-      if (BulkStock.bquantity === BulkStock.breorderLevel && !reorderNotification[BulkStock._id]) {
-        alert(`Alert: Quantity for ${BulkStock.bname} has reached its reorder level.`);
-        // Set the notification sent flag to true for this item
-        setReorderNotification((prev) => ({
-          ...prev,
-          [BulkStock._id]: true,
-        }));
-      }
-    };
+    const styles = StyleSheet.create({
+      page: {
+          flexDirection: 'row',
+          backgroundColor: '#ffffff'
+      },
+      section: {
+          margin: 10,
+          padding: 10,
+          flexGrow: 1
+      },
+      heading: {
+          fontSize: 20,
+          marginBottom: 30,
+          marginTop: 70,
+          textAlign: 'center'
+      },
+      header: {
+        position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          marginBottom: 20,
+          backgroundColor: '#007bff',
+          color: '#ffffff'
+      },
+      logo: {
+          width: 100,
+          height: 50
+      },
+      row: {
+          flexDirection: 'row',
+          borderBottomColor: '#000000',
+          borderBottomWidth: 1,
+          padding: 5
+      },
+      cell: {
+          width: '20%',
+          textAlign: 'center',
+          fontSize: 10
+      },
+      footer: {
+        position: 'absolute',
+        bottom: 30,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 8 // Adjust font size for the footer
+    }
+    });
+    
+    const MyDocument = (
+      <Document>
+          <Page size="A4" style={styles.page}>
+          <View style={styles.header}>
+                    <Image src={logo} style={styles.logo} />
+                </View>
+              <View style={styles.section}>
+                  <Text style={styles.heading}>Bulk Stock Report</Text>
+                  <View style={styles.row}>
+                      <Text style={styles.cell}>Product Name</Text>
+                      <Text style={styles.cell}>Product Category</Text>
+                      <Text style={styles.cell}>Quantity Available</Text>
+                      <Text style={styles.cell}>No of units available </Text>
+                      <Text style={styles.cell}>Latest Purchased Price At</Text>
+                      <Text style={styles.cell}>Special Notes</Text>
+                      <Text style={styles.cell}>Added Date and Time</Text>
+                      <Text style={styles.cell}>Last Updated</Text>
+                  </View>
+                  {sortData(filteredStockList).map(bstock => (
+                      <View style={styles.row} key={bstock._id}>
+                          <Text style={styles.cell}>{bstock.bname}</Text>
+                          <Text style={styles.cell}>{bstock.bcategory}</Text>
+                          <Text style={styles.cell}>{bstock.bquantity}</Text>
+                          <Text style={styles.cell}>{bstock.bunits}</Text>
+                          <Text style={styles.cell}>{bstock.bprice}</Text>
+                          <Text style={styles.cell}>{bstock.bdescription}</Text>
+                          <Text style={styles.cell}>{new Date(bstock.createdAt).toLocaleString()}</Text>
+                          <Text style={styles.cell}>{new Date(bstock.updatedAt).toLocaleString()}</Text>
+                      </View>
+                  ))}
+              </View>
+              <Text style={styles.footer}>
+                  Downloaded: {new Date().toLocaleString()}
+              </Text>
+          </Page>
+      </Document>
+    );
 
     
 
@@ -136,6 +217,11 @@ return (
       <div className="col">
   <div>
     <h1 className="mb-4 mt-5">Bulk Inventory</h1>
+    <PDFDownloadLink document={MyDocument} fileName="inventory_report.pdf"className="btn btn-primary mb-5"style={{marginRight:"2rem"}}>
+                        {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download PDF'
+                        }
+                    </PDFDownloadLink>
     <a href="/AddBulkStock" className="btn btn-primary mb-5">
             Add New Bulk Stock
           </a>
@@ -197,7 +283,7 @@ return (
       
 
     <div className="d-flex align-items-center justify-content-around mb-3">
-      <table className="table table-dark table-striped" style={{ width: "75rem" }}>
+      <table className="table" style={{ width: "75rem" }}>
         <thead>
         <tr>
           <th className="border border-black" scope="col">
@@ -231,7 +317,7 @@ return (
 
         {sortData(filteredStockList).map((BulkStock) => {
           // Check reorder level for each item
-          checkReorderLevel(BulkStock);
+          
           return(
           <tbody key={BulkStock._id}>
             <tr>
@@ -248,7 +334,7 @@ return (
                     }}
                   ></input>
                 ) : (
-                  <td>{BulkStock.bname}</td>
+                  <td><Link to={`/kitchenBulkStock/${BulkStock.bname}`} className="invisible-link-button">{BulkStock.bname}</Link></td>
                 )}
               </td>
 
@@ -337,91 +423,11 @@ return (
               </td>
               <td>{new Date(BulkStock.createdAt).toLocaleString()}</td>
               <td>{new Date(BulkStock.updatedAt).toLocaleString()}</td>
-
-              <td>
-                <a
-                  href="#"
-                  style={{ width: "5rem" }}
-                  className="btn btn-outline-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#Modal"
-                  onClick={() => setNameToDelete(BulkStock.bname)}
-                >
-                  DELETE
-                </a>
-              </td>
-
-              <td>
-                {nameToUpdate === BulkStock._id ? (
-                  <a
-                    href="#"
-                    className="btn btn-primary"
-                    onClick={() => updateDetails()}
-                  >
-                    Save
-                  </a>
-                ) : (
-                  <a
-                    href="#"
-                    className="btn btn-outline-primary"
-                    style={{ width: "5rem" }}
-                    onClick={() => getUpdateBulkStock(BulkStock)}
-                  >
-                    Update
-                  </a>
-                )}
-              </td>
             </tr>
           </tbody>
           )
 })}
       </table>
-    </div>
-  </div>
-
-  {/* model  */}
-  <div
-    className="modal fade"
-    id="Modal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div className="modal-dialog modal-dialog-centered">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h1 className="modal-title fs-5" id="exampleModalLabel">
-            CAUTION
-          </h1>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="modal-body">
-          Are you sure you want to delete?
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-
-          <form action="" method="delete">
-            <button
-              className="btn btn-outline-danger"
-              onClick={handleDelete}
-            >
-              DELETE
-            </button>
-          </form>
-        </div>
-      </div>
     </div>
   </div>
   </div>
