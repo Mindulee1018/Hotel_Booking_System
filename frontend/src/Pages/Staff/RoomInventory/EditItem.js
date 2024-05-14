@@ -14,7 +14,7 @@ export const EditItem = () => {
     description: '',
     unit_price: '',
     stockCount: '',
-    reorderPoint: ""
+    reorderPoint: ''
   });
 
   {/*const validateValues = (inputValues) => {
@@ -84,7 +84,7 @@ export const EditItem = () => {
   
 
     try {
-      const response = await fetch(`http://localhost:4000/roominventory/update/${itemID}`, {
+      const response = await fetch(`http://localhost:4000/RoomRestock/update/${itemID}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

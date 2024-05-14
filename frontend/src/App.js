@@ -126,6 +126,7 @@ import View from "./Pages/Staff/RoomInventory/View.js";
 import Inventory_report from "./Pages/Staff/RoomInventory/Inventory_report.js";
 import ManagerView from "./Pages/Staff/RoomInventory/ManagerView.js";
 import RoomRestock from "./Pages/Staff/RoomInventory/RoomRestock.js";
+import AlertNotifications from "./Pages/Staff/RoomInventory/AlertNotifications.js";
 
 //offers managemet
 import AddNewOffer from "./Pages/Staff/Offers/addOffer.js";
@@ -282,6 +283,7 @@ function App() {
           <Route path="/Inventory_report" element={<Inventory_report/>} />
           <Route path="/ManagerView" element={<ManagerView />} />
           <Route path="/RoomRestock" element={<RoomRestock />} />
+          <Route path="/AlertNotifications" element={<AlertNotifications />} />
 
 
           {/* offers managemet */}

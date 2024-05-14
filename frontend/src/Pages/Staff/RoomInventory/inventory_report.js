@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import InventorySideBar from '../../../components/InventoryManagerSideBar';
 
 const Inventory_report = () => {
   const [inventory, setInventory] = useState([]);
