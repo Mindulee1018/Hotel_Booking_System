@@ -69,8 +69,8 @@ router.route('/update/:ID').patch(async (req, res) => {
         updateRoomInventory ,
         {new:true}
     );
-    // .then(() => {
-    //     res.status(200).send({status: "Room inventory is updated"})
+    //.then(() => {
+        //res.status(200).send({status: "Room inventory is updated"})
     if (!update) {
         return res.status(404).json({ message: "error" });
       }

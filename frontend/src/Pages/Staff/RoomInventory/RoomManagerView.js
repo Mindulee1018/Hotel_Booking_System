@@ -43,6 +43,15 @@ const RoomManagerView = () => {
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleUpdate = (id) => {
+    const selectedItem = inventory.find(item => item._id === id);
+    if (selectedItem) {
+      navigate(`/EditItem/${id}`, { state: { selectedItem } });
+    } else {
+      console.error("Item not found");
+    }
+  };
+
   const onDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:4000/roominventory/delete/${id}`, {
@@ -95,8 +104,15 @@ const RoomManagerView = () => {
                     <td>{item.stockCount}</td>
                     <td>{item.reorderPoint}</td>
                     <td>
+                        {item.stockCount < item.reorderPoint && (
+                          <div class="alert alert-warning" role="alert">
+                            Low stock count
+                          </div>
+                        )}
+                      </td>
+                    <td>
                       <div className="d-grid gap-2">
-                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={(e) =>navigate(`/EditItem/${item._id}`)}>
+                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={() => handleUpdate(item._id)}>
   
                             update
                           
