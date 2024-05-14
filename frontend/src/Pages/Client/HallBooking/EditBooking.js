@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Footer from '../../../components/Footer';
+import SearchHeader from '../../../components/SearchHeader';
 
 const EditBooking = () => {
     const { id } = useParams();
@@ -126,6 +128,7 @@ const EditBooking = () => {
           throw new Error('Failed to update reservation');
         }
         console.log('Reservation updated successfully');
+        alert("reservation updated successfully")
       } catch (error) {
         console.error('Error updating reservation:', error);
       }
@@ -137,7 +140,12 @@ const EditBooking = () => {
   
 
   return (
+    <div>
+      
+      <SearchHeader/>
+    
     <div className="container mt-5 serif">
+      
     <h2>Edit Reservation Form for {formData.bookingName} </h2>
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
@@ -269,6 +277,8 @@ const EditBooking = () => {
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
+    <Footer/>
+  </div>
   </div>
   );
 };

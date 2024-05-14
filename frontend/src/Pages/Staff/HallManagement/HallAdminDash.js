@@ -71,14 +71,7 @@ function HallAdminDash() {
               </div>
             </div>
           </div>
-          <div className="col-md-3 mb-4">
-            <div className="card h-100 rounded bg-light">
-              <div className="card-body d-flex flex-column align-items-center justify-content-center">
-                <h5 className="card-title pt-5 pb-5"><FontAwesomeIcon icon={faDatabase} className="mr-2" />Resources</h5>
-                <Link to="/HallResource" className="btn btn-primary" >View</Link>
-              </div>
-            </div>
-          </div>
+         
           {/* Add more cards as needed */}
         </div>
       </div>

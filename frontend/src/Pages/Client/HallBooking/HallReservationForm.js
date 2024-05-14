@@ -218,7 +218,7 @@ const HallReservationForm = () => {
           <input type="hidden" name="toTime" value={toTime} />
         </div>
         <div className="mb-3">
-          <p className="form-control">Total Time: {totalHours} hours </p>
+          <p className="form-control">Total price: {totalHours*3000} Rs </p>
           <input type="hidden" name="totalHours" value={totalHours} />
         </div>
         <div className="mb-3">
@@ -366,7 +366,12 @@ const HallReservationForm = () => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+      
       </form>
+      <p>   </p>
+      <Link to='/Addpayment' className='btn btn-primary'>
+                       pay now 
+                      </Link>
       
       <p>For further details please email or contact us</p>
        {/* Success Toast */}
@@ -383,9 +388,7 @@ const HallReservationForm = () => {
       
       
     </div>
-    <Link to='/Addpayment' className='btn btn-primary'>
-                       pay now 
-                      </Link>
+  
     <Link to='/availability' className='btn btn-primary'>
                        Back 
                       </Link>
