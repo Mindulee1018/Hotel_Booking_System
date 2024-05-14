@@ -153,7 +153,7 @@ function KitchenInventory () {
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.section}>
-                    <Text style={styles.header}>Kitchen Inventory Report</Text>
+                    <Text style={styles.header}>Fresh Produce Report</Text>
                     <View style={styles.row}>
                         <Text style={styles.cell}>Product Name</Text>
                         <Text style={styles.cell}>Product Category</Text>
