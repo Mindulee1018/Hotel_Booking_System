@@ -140,7 +140,7 @@ const EditHall = () => {
               </div>
 
               <div className="mb-3 d-flex justify-content-end">
-                <button type="submit" className="btn btn-save-changes">
+                <button type="submit" className="btn btn-primary">
                   Save Changes
                 </button>
               </div>
