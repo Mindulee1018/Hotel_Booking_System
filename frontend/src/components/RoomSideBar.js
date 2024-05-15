@@ -65,15 +65,7 @@ function RoomSideBar() {
               </span>
             </a>
           </li>
-          <li className="nav-item border">
-            <a
-              className="nav-link text-white fs-6"
-              aria-current="page"
-              href="/Profile"
-            >
-              Profile
-            </a>
-          </li>
+        
           <li className="nav-item border">
             <a
               className="nav-link text-white fs-6"

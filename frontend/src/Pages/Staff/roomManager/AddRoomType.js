@@ -17,12 +17,26 @@ const AddNewRoomType = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check if any of the fields are empty
     if (!Rtype || !description || !capacity || !NoOfBeds || !price || !NoofRooms || !RoomNumbers) {
       alert("All fields must be filled.");
       return;
     }
 
-    addRoomType(Rtype, description, capacity, NoOfBeds, price, NoofRooms, RoomNumbers,  Image);
+    // Check if any of the numeric fields are negative
+    if (capacity < 0 || NoOfBeds < 0 || price < 0 || NoofRooms < 0) {
+      alert("Numeric fields cannot be negative.");
+      return;
+    }
+
+    // Check if room numbers are valid
+    const roomNumbersArray = RoomNumbers.split(",").map((roomNumber) => Number(roomNumber.trim()));
+    if (roomNumbersArray.some((roomNumber) => roomNumber < 0)) {
+      alert("Room numbers cannot be negative.");
+      return;
+    }
+
+    addRoomType(Rtype, description, capacity, NoOfBeds, price, NoofRooms, RoomNumbers, Image);
   };
 
   return (

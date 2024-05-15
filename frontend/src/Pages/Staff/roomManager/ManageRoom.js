@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RoomTypeList from "../../../hooks/Client/roomBooking/useRoomTypeList";
 import useDeleteRoom from "../../../hooks/Staff/Rooms/useDeleteRoom";
 import useUpdateRoom from "../../../hooks/Staff/Rooms/useUpdateRoom";
 import RoomSideBar from "../../../components/RoomSideBar";
 
 function ManageRoom() {
-  const { roomTypes, isLoading, error } = RoomTypeList();
+  const { roomTypes: initialRoomTypes, isLoading, error } = RoomTypeList();
   const { deleteRoom } = useDeleteRoom();
   const { updateRoom } = useUpdateRoom();
 
@@ -14,13 +14,28 @@ function ManageRoom() {
   const [updatedCapacity, setUpdatedCapacity] = useState("");
   const [updatedNoOfBeds, setUpdatedNoOfBeds] = useState("");
   const [updatedPrice, setUpdatedPrice] = useState("");
-  const [roomIdToUpdate, setRoomIdToUpdate] = useState(""); 
+  const [roomIdToUpdate, setRoomIdToUpdate] = useState("");
+  const [roomTypes, setRoomTypes] = useState([]);
+
+  useEffect(() => {
+    setRoomTypes(initialRoomTypes);
+  }, [initialRoomTypes]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
+
   const handleDelete = async (id) => {
     await deleteRoom(id);
+  };
+
+  const getUpdateData = (room) => {
+    setRoomIdToUpdate(room._id);
+    setUpdatedRtype(room.Rtype);
+    setUpdatedDescription(room.description);
+    setUpdatedCapacity(room.capacity);
+    setUpdatedNoOfBeds(room.NoOfBeds);
+    setUpdatedPrice(room.price);
   };
 
   const handleUpdate = async () => {
@@ -32,6 +47,22 @@ function ManageRoom() {
       updatedNoOfBeds,
       updatedPrice
     );
+
+    const updatedRoomTypes = roomTypes.map((room) => {
+      if (room._id === roomIdToUpdate) {
+        return {
+          ...room,
+          Rtype: updatedRtype,
+          description: updatedDescription,
+          capacity: updatedCapacity,
+          NoOfBeds: updatedNoOfBeds,
+          price: updatedPrice,
+        };
+      }
+      return room;
+    });
+
+    setRoomTypes(updatedRoomTypes);
 
     // Clear the input fields and the roomIdToUpdate after updating
     setUpdatedRtype("");
@@ -65,7 +96,7 @@ function ManageRoom() {
 
   return (
     <div className="row p-0 m-0">
-      <RoomSideBar/>
+      <RoomSideBar />
       <div className="col p-0 m-0">
         <div className="col p-0 m-0">
           {roomTypes.map((room) => (
@@ -100,7 +131,7 @@ function ManageRoom() {
                   </button>
                   <button
                     className="btn btn-primary"
-                    onClick={() => setRoomIdToUpdate(room._id)}
+                    onClick={() => getUpdateData(room)}
                   >
                     Update Room Type
                   </button>
@@ -148,7 +179,11 @@ function ManageRoom() {
             className="form-control mb-2"
             placeholder="Updated Price"
           />
-          <button className="btn btn-primary" onClick={handleUpdate}>
+          <button
+            className="btn btn-primary"
+            //style={{ width: "10rem" }}
+            onClick={handleUpdate}
+          >
             Update
           </button>
         </div>
