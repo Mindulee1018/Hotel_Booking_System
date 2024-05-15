@@ -1,3 +1,4 @@
+//HallCalender.js
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -81,32 +82,14 @@ const HallCalendar = () => {
     <div className="container mt-5">
       <h2 className="mb-4">Admin Calendar</h2>
       <div className="mb-4">
-        <h3>Add New Event</h3>
+        
+       
         <div className="form-group">
-          <input
-            type="text"
-            className="form-control mb-2"
-            placeholder="Event Title"
-            name="title"
-            value={newEvent.title}
-            onChange={handleInputChange}
-          />
+        
           
-          <input
-            type="datetime-local"
-            className="form-control mb-2"
-            name="start"
-            value={moment(newEvent.start).format('YYYY-MM-DDTHH:mm')}
-            onChange={handleInputChange}
-          />
-          <input
-            type="datetime-local"
-            className="form-control mb-2"
-            name="end"
-            value={moment(newEvent.end).format('YYYY-MM-DDTHH:mm')}
-            onChange={handleInputChange}
-          />
-          <button className="btn btn-primary" onClick={handleAddEvent}>Add Event</button>
+         
+        
+         
         </div>
       </div>
       <div className="mb-4">

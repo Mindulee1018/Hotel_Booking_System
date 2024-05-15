@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link ,useNavigate,useLocation} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from '../../../context/AuthContext'; // Import the AuthContext
 import SearchHeader from '../../../components/SearchHeader';
+import Header from '../../../components/Header';
 
 const AllHallList = () => {
   const [halls, setHalls] = useState(null);
   const { user } = useContext(AuthContext); // Access user state from AuthContext
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const fetchHall = async () => {
@@ -37,23 +36,9 @@ const AllHallList = () => {
     }
   };
 
-  localStorage.removeItem('prevPath');
-  localStorage.setItem("prevPath", location.pathname);
-
-  const handleNext = ()=>{
-    const token = localStorage.getItem('user');
-    if (!token) {
-      alert("You need to Login First")
-      navigate('/login'); 
-      return;
-    }else{
-      navigate('/availability')
-    }
-
-  }
-
   return (
     <div className="imadethis">
+   
       <SearchHeader />
       <div className="container">
         {/* Card for Check Availability */}
@@ -61,9 +46,9 @@ const AllHallList = () => {
           <div className="col-md-6">
             <div className="card bg-light-blue text-black">
               <div className="card-body">
-                <h5 className="card-title">Check Availability</h5>
+                <h5 className="card-title">Pick a Date Now!!</h5>
                 <p className="card-text">Check availability for your event date.</p>
-                <a className="btn btn-primary"  onClick={() =>handleNext()}>Check Now</a>
+                <Link to="/availability" className="btn btn-primary">Book</Link>
               </div>
             </div>
           </div>

@@ -1,6 +1,9 @@
+//BookHall.js
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
+import Header from '../../../components/Header';
+import SearchHeader from '../../../components/SearchHeader';
 
 
 const BookHall = () => {
@@ -55,6 +58,8 @@ const BookHall = () => {
 
   return (
     <div>
+      <Header />
+     
     <div className="container mt-5 serif">
       <div className="mb-4">
         <h1 className="fw-bold display-4">Hall Bookings</h1>
@@ -70,22 +75,11 @@ const BookHall = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title fw-bold">{hallReserve.hall}</h5>
                   <p className="card-text">Event Type: {hallReserve.eventtype}</p>
-                  <p className="card-text">Capacity: {hallReserve.capacity}</p>
+                 
                   <p className="card-text">Selected Date: {hallReserve.selectdate}</p>
                   <p className="card-text"> Time: {hallReserve.fromTime}-{hallReserve.toTime}</p>
                   
-                  {hallReserve.Resources && hallReserve.Resources.length > 0 ? (
-                    <div>
-                      <p className="card-text">Resources:</p>
-                      <ul>
-                        {hallReserve.Resources.map((resource, index) => (
-                          <li key={index}>{resource.arrangementStyle}, {resource.foodArrangement}, {resource.barArrangement}, {resource.decorArrangement}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <p>No resources picked</p>
-                  )}
+                  
                   <div className="mt-auto d-flex justify-content-end">
                     <Link to={`/editBooking/${hallReserve._id}`} className="btn btn-primary me-2">Edit</Link>
                     <Link to={`/bookingdata/${hallReserve._id}`} className="btn btn-primary me-2">View</Link>
@@ -115,22 +109,10 @@ const BookHall = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title fw-bold">{hallReserve.hall}</h5>
                   <p className="card-text">Event Type: {hallReserve.eventtype}</p>
-                  <p className="card-text">Capacity: {hallReserve.capacity}</p>
+             
                   <p className="card-text">Selected Date: {hallReserve.selectdate}</p>
                   <p className="card-text"> Time: {hallReserve.fromTime}-{hallReserve.toTime}</p>
-                  
-                  {hallReserve.Resources && hallReserve.Resources.length > 0 ? (
-                    <div>
-                      <p className="card-text">Resources:</p>
-                      <ul>
-                        {hallReserve.Resources.map((resource, index) => (
-                          <li key={index}>{resource.arrangementStyle}, {resource.foodArrangement}, {resource.barArrangement}, {resource.decorArrangement}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <p>No resources picked</p>
-                  )}
+                
                   <div className="mt-auto d-flex justify-content-end">
                     <Link to={`/bookingdata/${hallReserve._id}`} className="btn btn-primary me-2">View</Link>
                     <button
@@ -149,7 +131,9 @@ const BookHall = () => {
         </div>
       
       </div>
-  
+      <Link to='/' className='btn btn-primary mt-3'>
+  Back to venues
+</Link>
       </div>
 
       {/* Delete Confirmation Modal */}

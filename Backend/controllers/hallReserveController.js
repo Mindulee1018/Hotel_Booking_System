@@ -56,6 +56,30 @@ const getReservationByEmail = async (req, res) => {
     }
 };
 
+const getReservationByDate = async (req, res) => {
+    try {
+        const { selectdate } = req.params;
+
+        // Constructing the filter object with the selectdate property
+        const filter = { selectdate: selectdate };
+
+        // Find reservations based on the provided date
+        const reservations = await HallReserve.find(filter);
+
+        if (!reservations || reservations.length === 0) {
+            return res.status(404).json({ success: false, message: 'No reservations found for the provided date' });
+        }
+
+        res.status(200).json({ success: true, data: reservations });
+    } catch (error) {
+        console.error('Error retrieving reservations by date:', error.message);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
+
+
+
 
 const editReservation = async (req, res) => {
     try {
@@ -155,4 +179,4 @@ const deleteReservation = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
-module.exports={addReservation,editReservation,getAllReservations,getReservationById,deleteReservation,getReservationByEmail}
+module.exports={addReservation,editReservation,getAllReservations,getReservationById,deleteReservation,getReservationByEmail,getReservationByDate}

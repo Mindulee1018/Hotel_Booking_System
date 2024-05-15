@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link ,useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from 'moment';
 import { AuthContext } from '../../../context/AuthContext';
-
+import SearchHeader from '../../../components/SearchHeader';
+import Footer from '../../../components/Footer';
 
 const HallAvailability = ({ halls }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -10,6 +11,50 @@ const HallAvailability = ({ halls }) => {
   const [toTime, setToTime] = useState('');
   const { user } = useContext(AuthContext);
   const [dateError, setDateError] = useState(null);
+  const [bookedHalls, setBookedHalls] = useState([]);
+
+  useEffect(() => {
+    //console.log(selectedDate)
+
+    if (selectedDate) {
+      fetchBookedHalls();
+    }
+  }, [selectedDate, fromTime, toTime]);
+
+  const fetchBookedHalls = async () => {
+    try {
+      //console.log(selectedDate, fromTime, toTime)
+      if (selectedDate && fromTime && toTime) {
+        const response = await fetch(`http://localhost:4000/hallR/hallresbydate/${selectedDate}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch reservations");
+        }
+        const reservations = await response.json();
+        const bookedHalls = reservations.data.filter(reservation => {
+
+          const reservationStart = moment(`${reservation.selectdate}T${reservation.fromTime}`);
+          const reservationEnd = moment(`${reservation.selectdate}T${reservation.toTime}`);
+          const userSelectedDate = selectedDate;
+          const userfromTime = fromTime;
+          const usertoTime = toTime;
+
+          const selectedStartTime = moment(`${userSelectedDate}T${userfromTime}`);
+          const selectedEndTime = moment(`${userSelectedDate}T${usertoTime}`);
+          // Check if the selected time range overlaps with any booked time range
+          console.log(selectedStartTime.isBefore(reservationStart), selectedEndTime.isAfter(reservationEnd))
+          return (
+            selectedStartTime.isBefore(reservationEnd) &&
+            selectedEndTime.isAfter(reservationStart)
+          );
+        }).map(reservation => reservation.hallid);
+        //console.log(bookedHalls)
+        setBookedHalls(bookedHalls);
+      }
+    } catch (error) {
+      console.error("Error fetching reservations data:", error);
+    }
+  };
+  
 
   const handleDateChange = (e) => {
     const selected = e.target.value;
@@ -31,74 +76,84 @@ const HallAvailability = ({ halls }) => {
   };
 
   const handleToTimeChange = (e) => {
-    setToTime(e.target.value);
-    console.log('To Time:', e.target.value);
+    const newToTime = e.target.value;
+    if (newToTime < fromTime) {
+      alert("To time cannot be before From time");
+      // You can set an error state or display a message to the user here
+    } else {
+      setToTime(newToTime);
+      console.log('To Time:', newToTime);
+    }
   };
 
   const handleBookButtonClick = () => {
-    if (!user) {
-      // If user is not logged in, show a confirmation dialog asking them to log in
-      const confirmLogin = window.confirm('You need to log in before you can make a booking. Do you want to log in now?');
-      if (confirmLogin) {
-        // Redirect user to the login page
-        window.location.href = '/login'; // Change the URL to your login page
-      } else {
-        // Stay on the same page if user cancels
-        window.location.href = '/availability';
-        return;
-      }
-    }
+    // Handle book button click
   };
-  
+
+  const isDateTimeSelected = selectedDate && fromTime && toTime;
+
   return (
-    <div className='mt-5 '>
-      <h1>Hall Availability</h1>
-      <p>
-        Let's find the perfect time for your event! Please choose the date and time you have in mind, and we'll check hall availability for you.
-      </p>
-      <div className="row mt-5 serif ">
-        <div className="col-md-4 mx-auto">
-          <div className="mb-3">
-            <label htmlFor="datePicker" className="form-label">Select Date</label>
-            <input type="date" id="datePicker" className={`form-control ${dateError ? 'is-invalid' : ''}`} onChange={handleDateChange} />
-            {dateError && <div className="invalid-feedback">{dateError}</div>}
+    <div>
+      <SearchHeader />
+      <div className='mt-5 serif'>
+        <h1>Hall Availability</h1>
+        <p>
+          Let's find the perfect time for your event! Please choose the date and time you have in mind, and we'll check hall availability for you.
+        </p>
+        <div className="row mt-5 serif ">
+          <div className="col-md-4 mx-auto">
+            <div className="mb-3">
+              <label htmlFor="datePicker" className="form-label">Select Date</label>
+              <input type="date" id="datePicker" className={`form-control ${dateError ? 'is-invalid' : ''}`} onChange={handleDateChange} />
+              {dateError && <div className="invalid-feedback">{dateError}</div>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="fromTimePicker" className="form-label">Select Time From</label>
+              <input type="time" id="fromTimePicker" className="form-control" onChange={handleFromTimeChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="toTimePicker" className="form-label">Select Time To</label>
+              <input type="time" id="toTimePicker" className="form-control" onChange={handleToTimeChange} />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="fromTimePicker" className="form-label">Select Time From</label>
-            <input type="time" id="fromTimePicker" className="form-control" onChange={handleFromTimeChange} />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="toTimePicker" className="form-label">Select Time To</label>
-            <input type="time" id="toTimePicker" className="form-control" onChange={handleToTimeChange} />
-          </div>
-        </div>
-        <div className="row mx-auto">
-          {halls ? (
-            halls.map((hall) => (
-              <div key={hall._id} className="col-md-4 mb-4 ">
-                <div className="card  rounded h-100 bg-light-blue hover-bg-light-blue serif">
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title fw-bold"> {hall.Name}</h5>
-                    <p className="card-text">Capacity: {hall.capacity}</p>
-                    <p className="card-text">Price: Rs{hall.price} per hour</p>
-                    <div className="d-flex mt-auto justify-content-end">
-                      <Link to={`/AddHall/${hall._id}?selectedDate=${selectedDate}&fromTime=${fromTime}&toTime=${toTime}&hallName=${hall.Name}`} className="btn btn-primary rounded-pill me-2" style={{ minWidth: '100px' }} onClick={handleBookButtonClick}>
-                        Book
-                      </Link>
+          <div className="row mx-auto">
+            {halls ? (
+              halls.map((hall) => {
+                const isHallBooked = bookedHalls.includes(hall.Name);
+                return (
+                  !isHallBooked && (
+                    <div key={hall._id} className="col-md-4 mb-4 ">
+                      <div className={`card rounded h-100 bg-light-blue hover-bg-light-blue serif`}>
+                        <div className="card-body d-flex flex-column">
+                          <h5 className="card-title fw-bold"> {hall.Name}</h5>
+                          <p className="card-text">Capacity: {hall.capacity}</p>
+                          <p className="card-text">Price: Rs{hall.price} per hour</p>
+                          <div className="d-flex mt-auto justify-content-end">
+                            <Link to={`/ViewHall/${hall._id}`} className="btn btn-primary rounded-pill me-2" style={{ minWidth: '100px' }}>
+                              View
+                            </Link>
+                            {isDateTimeSelected && !bookedHalls.includes(hall.Name) && (
+                              <Link to={`/AddHall/${hall._id}?selectedDate=${selectedDate}&fromTime=${fromTime}&toTime=${toTime}&hallName=${hall.Name}`} className="btn btn-primary rounded-pill me-2" style={{ minWidth: '100px' }} onClick={handleBookButtonClick}>
+                                Book
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="fs-5 fw-light italic">Loading...</p>
-          )}
+                  )
+                );
+              })
+            ) : (
+              <p className="fs-5 fw-light italic">Loading...</p>
+            )}
+          </div>
         </div>
+        <Link to='/AllHalls' className='btn btn-primary'>
+          Back
+        </Link>
       </div>
-      <Link to='/AllHalls' className='btn btn-primary'>
-        Back 
-      </Link>
-  
+    
     </div>
   );
 }
@@ -106,13 +161,8 @@ const HallAvailability = ({ halls }) => {
 const AllHallList = () => {
   const [halls, setHalls] = useState(null);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return; 
-    }
     const fetchHall = async () => {
       try {
         const response = await fetch("http://localhost:4000/hall/");

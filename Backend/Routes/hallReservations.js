@@ -1,3 +1,4 @@
+//hallReservations.js
 const express = require('express');
 const router = express.Router();
 const {
@@ -6,7 +7,9 @@ const {
     getAllReservations,
     getReservationById,
     deleteReservation,
-    getReservationByEmail
+    getReservationByEmail,
+    getReservationByDate
+ 
 } = require('../controllers/hallReserveController');
 
 // Route to add a new reservation
@@ -21,7 +24,10 @@ router.get('/hallres', getAllReservations);
 // Route to get a reservation by ID
 router.get('/hallres/:id', getReservationById);
 router.get('/hallresbyemail/:email', getReservationByEmail);
+router.get('/hallresbydate/:selectdate',getReservationByDate);
+
 
 router.delete('/hallres/:id', deleteReservation);
+
 
 module.exports = router;
