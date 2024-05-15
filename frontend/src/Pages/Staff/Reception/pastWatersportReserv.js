@@ -18,8 +18,6 @@ function PastWatersportReservations() {
     reservation.CusName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  
-
   if (isLoading) {
     return (
       <div className="alert alert-primary" role="alert">
@@ -64,10 +62,7 @@ function PastWatersportReservations() {
             <div>
               <h2>Past Reservations</h2>
               <div className="d-flex justify-content-around mb-3">
-                <table
-                  className="table"
-                  style={{ width: "75rem" }}
-                >
+                <table className="table" style={{ width: "75rem" }}>
                   <thead>
                     <tr className="border border-black">
                       <th className="border border-black">Customer Name</th>
@@ -84,11 +79,21 @@ function PastWatersportReservations() {
                     {filteredReservations.length > 0 ? (
                       filteredReservations.map((reservation) => (
                         <tr key={reservation._id}>
-                          <td className="border border-black">{reservation.CusName}</td>
-                          <td className="border border-black">{reservation.TelNo}</td>
-                          <td className="border border-black">{reservation.Address}</td>
-                          <td className="border border-black">{reservation.checkinDate}</td>
-                          <td className="border border-black">{reservation.checkinTime}</td>
+                          <td className="border border-black">
+                            {reservation.CusName}
+                          </td>
+                          <td className="border border-black">
+                            {reservation.TelNo}
+                          </td>
+                          <td className="border border-black">
+                            {reservation.Address}
+                          </td>
+                          <td className="border border-black">
+                            {reservation.checkinDate}
+                          </td>
+                          <td className="border border-black">
+                            {reservation.checkinTime}
+                          </td>
                           <td className="border border-black">
                             {reservation.activityList.map((activity, index) => (
                               <div key={index} className="text-start">
@@ -101,17 +106,17 @@ function PastWatersportReservations() {
                               </div>
                             ))}
                           </td>
-                          <td className="border border-black"><button
-                                  className="btn btn-outline-danger "
-                                  style={{ width: "10rem" }}
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#Modal"
-                                  onClick={() =>
-                                    setNameToDelete(reservation._id)
-                                  }
-                                >
-                                  Delete Reservation
-                                </button></td>
+                          <td className="border border-black">
+                            <button
+                              className="btn btn-outline-danger "
+                              style={{ width: "10rem" }}
+                              data-bs-toggle="modal"
+                              data-bs-target="#Modal"
+                              onClick={() => setNameToDelete(reservation._id)}
+                            >
+                              Delete Reservation
+                            </button>
+                          </td>
                         </tr>
                       ))
                     ) : (
@@ -124,51 +129,50 @@ function PastWatersportReservations() {
               </div>
 
               {/* model  */}
-            <div
-              className="modal fade"
-              id="Modal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="exampleModalLabel">
-                      CAUTION
-                    </h1>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    Are you sure you want to delete this Reservation?
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-
-                    <form action="" method="delete">
+              <div
+                className="modal fade"
+                id="Modal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h1 className="modal-title fs-5" id="exampleModalLabel">
+                        CAUTION
+                      </h1>
                       <button
-                        className="btn btn-outline-danger"
-                        onClick={handleDelete}
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      Are you sure you want to delete this Reservation?
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
                       >
-                        Delete
+                        Close
                       </button>
-                    </form>
+
+                      <form action="" method="delete">
+                        <button
+                          className="btn btn-outline-danger"
+                          onClick={handleDelete}
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
             </div>
           </div>
         </div>

@@ -10,6 +10,11 @@ function RoomBookings() {
   const { roomReservations = [], isLoading, error } = RoomReservationList();
   const { handleCheckOut } = useCheckoutRoomReserv();
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Splits the ISO string on 'T' and returns only the date part
+  };
+
   const {
     addNotification,
     isLoading: isNotifLoading,
@@ -98,8 +103,8 @@ function RoomBookings() {
               {roomReservations.map((reservation) => (
                 <tr key={reservation._id}>
                   <td>
-                    {reservation.Checkindate}
-                    {reservation.Checkoutdate}
+                    <p>{formatDate(reservation.Checkindate)}</p>
+                    <p>{formatDate(reservation.Checkoutdate)}</p>
                   </td>
                   <td>{reservation.NoOfGuests}</td>
                   <td>{reservation.Rtype}</td>
@@ -189,7 +194,6 @@ function RoomBookings() {
                     ))}
                   </select>
 
-                  
                   <textarea
                     className="form-control mt-3"
                     value={inventoryMessage}
