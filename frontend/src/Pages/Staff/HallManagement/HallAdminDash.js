@@ -48,7 +48,7 @@ function HallAdminDash() {
           <div className="col-md-3 mb-4 ">
             <div className="card h-100 rounded bg-light">
               <div className="card-body d-flex flex-column align-items-center justify-content-center pl-5">
-                <h5 className="card-title pt-5 pb-5"><FontAwesomeIcon icon={faHotel} className="mr-2" />Halls</h5>
+                <h5 className="card-title pt-5 pb-5"><FontAwesomeIcon icon={faHotel} className="mr-2 serif" />Halls</h5>
                 <Link to="/halls" className="btn btn-primary">View</Link>
               </div>
             </div>

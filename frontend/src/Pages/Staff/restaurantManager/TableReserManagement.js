@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useDisplayTableList from "../../../hooks/Staff/restaurantManager/useDisplayTableResvList";
 import useDeleteReservation from "../../../hooks/Staff/restaurantManager/useDeleteTableReservation";
 import RestaurantNavbar from "../../../components/RestaurantManagerNavbar";
@@ -16,10 +16,22 @@ const ManageTableReservation = () => {
   const { TableList, isLoading, error } = useDisplayTableList();
   const { deleteTableReservation } = useDeleteReservation();
   const [reservationIdToDelete, setReservationIdToDelete] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+  const [filteredTableList, setFilteredTableList] = useState([]);
+
+  useEffect(() => {
+    setFilteredTableList(TableList);
+  }, [TableList]);
 
   const handleDelete = async () => {
     await deleteTableReservation(reservationIdToDelete);
     setReservationIdToDelete("");
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchDate(e.target.value);
+    const filteredReservations = TableList.filter((reservation) => reservation.date.includes(e.target.value));
+    setFilteredTableList(filteredReservations);
   };
 
   if (isLoading) {
@@ -143,6 +155,15 @@ const ManageTableReservation = () => {
       </PDFDownloadLink>
 
         <div className="d-flex align-items-center justify-content-around mb-3">
+          <input
+            type="date"
+            className="form-control"
+            value={searchDate}
+            onChange={handleSearchChange}
+            placeholder="Search by date"
+          />
+        </div>
+        <div className="d-flex align-items-center justify-content-around mb-3">
           <table className="table" style={{ width: "50rem" }}>
             <thead>
               <tr>
@@ -157,7 +178,7 @@ const ManageTableReservation = () => {
               </tr>
             </thead>
             <tbody>
-              {TableList.map((reservation) => (
+              {filteredTableList.map((reservation) => (
                 <tr key={reservation._id}>
                   <td>{reservation.tableReservationNo}</td>
                   <td>{reservation.date}</td>

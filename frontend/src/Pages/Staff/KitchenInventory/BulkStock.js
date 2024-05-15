@@ -30,9 +30,18 @@ function BulkStock() {
   const [bprice, setBPrice] = useState("");
   const [bexpiryDate, setBExpiryDate] = useState("");
   const [bdescription, setBDescription] = useState("");
+<<<<<<< HEAD
   const [searchkey, setsearchkey] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [sort, setSort] = useState("");
+=======
+  const [searchkey,setsearchkey]=useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const [reorderNotification, setReorderNotification] = useState({});
+  const [expiryNotification, setExpiryNotification] = useState({});
+  const [sort, setSort] = useState('');
+
+>>>>>>> e031a7972c9fb6863d2007e5dd22afd48347f07a
 
   //display only unique categories in filter
   useEffect(() => {
@@ -105,6 +114,100 @@ function BulkStock() {
         aggregatedStockList[key].bprice = BulkStock.bprice;
         aggregatedStockList[key].bdescription = BulkStock.bdescription;
       }
+<<<<<<< HEAD
+=======
+      else if (sort === 'newestCreated') {
+        sortedList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      } else if (sort === 'oldestCreated') {
+        sortedList.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      } else if (sort === 'newestUpdated') {
+        sortedList.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+      } else if (sort === 'oldestUpdated') {
+        sortedList.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+      }
+      return sortedList;
+    };
+
+     //check reorder level
+     const checkReorderLevel = (BulkStock) => {
+      if (BulkStock.bquantity === BulkStock.breorderLevel && !reorderNotification[BulkStock._id]) {
+        alert(`Alert: Quantity for ${BulkStock.bname} has reached its reorder level.`);
+        // Set the notification sent flag to true for this item
+        setReorderNotification((prev) => ({
+          ...prev,
+          [BulkStock._id]: true,
+        }));
+      }
+    };
+
+    //check expiry date
+    const checkExpiryDate = (BulkStock) => {
+      const today = new Date();
+      const expiry = new Date(BulkStock.bexpiryDate);
+      const differenceInDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24)); // Calculate difference in days
+    
+      if (differenceInDays <= 2 && !expiryNotification[BulkStock._id]) { // Check if expiry is within 7 days
+        alert(`Alert: ${BulkStock.bname} is expiring soon. Only ${differenceInDays} days left.`);
+        // Set the notification sent flag to true for this item
+        setExpiryNotification((prev) => ({
+          ...prev,
+          [BulkStock._id]: true,
+        }));
+      }
+    };
+
+    const styles = StyleSheet.create({
+      page: {
+          flexDirection: 'row',
+          backgroundColor: '#ffffff'
+      },
+      section: {
+          margin: 10,
+          padding: 10,
+          flexGrow: 1
+      },
+      heading: {
+          fontSize: 20,
+          marginBottom: 30,
+          marginTop: 70,
+          textAlign: 'center'
+      },
+      header: {
+        position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          marginBottom: 20,
+          backgroundColor: '#007bff',
+          color: '#ffffff'
+      },
+      logo: {
+          width: 100,
+          height: 50
+      },
+      row: {
+          flexDirection: 'row',
+          borderBottomColor: '#000000',
+          borderBottomWidth: 1,
+          padding: 5
+      },
+      cell: {
+          width: '20%',
+          textAlign: 'center',
+          fontSize: 10
+      },
+      footer: {
+        position: 'absolute',
+        bottom: 30,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 8 // Adjust font size for the footer
+>>>>>>> e031a7972c9fb6863d2007e5dd22afd48347f07a
     }
   });
 
@@ -478,6 +581,159 @@ function BulkStock() {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+      
+
+    <div className="d-flex align-items-center justify-content-around mb-3">
+      <table className="table" style={{ width: "75rem" }}>
+        <thead>
+        <tr>
+          <th className="border border-black" scope="col">
+            Product Name
+          </th>
+          <th className="border border-black" scope="col">
+            Product Category
+          </th>
+          <th className="border border-black" scope="col">
+            Quantity 
+          </th>
+          <th className="border border-black" scope="col">
+            No of units available
+          </th>
+          <th className="border border-black" scope="col">
+            Latest Purchased Price At per unit
+          </th>
+          <th className="border border-black" scope="col">
+            Special Notes
+          </th>
+          <th className="border border-black" scope="col">
+            Added Date and Time
+          </th>
+          <th className="border border-black" scope="col">
+            Last Updated
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+
+        {sortData(filteredStockList).map((BulkStock) => {
+          // Check reorder level for each item
+          checkReorderLevel(BulkStock);
+      checkExpiryDate(BulkStock);
+          
+          return(
+          <tbody key={BulkStock._id}>
+            <tr>
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="text"
+                    name="bname"
+                    defaultValue={BulkStock.bname}
+                    disabled=""
+                    onChange={(e) => {
+                      setBName(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td><Link to={`/kitchenBulkStock/${BulkStock.bname}`} className="invisible-link-button">{BulkStock.bname}</Link></td>
+                )}
+              </td>
+
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="text"
+                    name="bcategory"
+                    defaultValue={BulkStock.bcategory}
+                    disabled=""
+                    onChange={(e) => {
+                      setBCategory(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td>{BulkStock.bcategory}</td>
+                )}
+              </td>
+
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="number"
+                    name="bquantity"
+                    defaultValue={BulkStock.bquantity}
+                    disabled=""
+                    onChange={(e) => {
+                      setBQuantity(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td>{BulkStock.bquantity}</td>
+                )}
+              </td>
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="number"
+                    name="bunits"
+                    defaultValue={BulkStock.bunits}
+                    disabled=""
+                    onChange={(e) => {
+                      setBUnits(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td>{BulkStock.bunits}</td>
+                )}
+              </td>
+
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="number"
+                    name="bprice"
+                    defaultValue={BulkStock.bprice}
+                    disabled=""
+                    onChange={(e) => {
+                      setBPrice(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td>{BulkStock.bprice}</td>
+                )}
+              </td>
+
+              <td>
+                {nameToUpdate === BulkStock._id ? (
+                  <input
+                    class="tabledit-input form-control input-sm"
+                    type="text"
+                    name="description"
+                    defaultValue={BulkStock.bdescription}
+                    disabled=""
+                    onChange={(e) => {
+                      setBDescription(e.target.value);
+                    }}
+                  ></input>
+                ) : (
+                  <td>{BulkStock.bdescription}</td>
+                )}
+              </td>
+              <td>{new Date(BulkStock.createdAt).toLocaleString()}</td>
+              <td>{new Date(BulkStock.updatedAt).toLocaleString()}</td>
+            </tr>
+          </tbody>
+          )
+})}
+      </table>
+>>>>>>> e031a7972c9fb6863d2007e5dd22afd48347f07a
     </div>
   );
 }
