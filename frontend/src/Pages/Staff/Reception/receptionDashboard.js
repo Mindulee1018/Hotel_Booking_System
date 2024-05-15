@@ -215,7 +215,7 @@ function ReceptionDashboard() {
       <div className="row">
         <div className="col-lg-2"></div>
         <div className="col-lg-10">
-          <h2 className="m-5">Activity Reservations Summary</h2>
+        <h2 className="m-5">{new Date().toLocaleString()}Activity Reservations Summary</h2>
 
           <PDFDownloadLink
             document={MyDocument}
