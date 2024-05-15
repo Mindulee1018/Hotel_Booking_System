@@ -4,7 +4,8 @@ const multer = require("multer");
 
 const {
     getRoomTypes,
-    addRoomType
+    addRoomType,
+    updateRoom
 } = require("../controllers/roomTypeController");
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -14,5 +15,8 @@ router.post("/add",upload.single("Image"), addRoomType);
 
 //read reservations
 router.get("/", getRoomTypes);
+
+//update a room
+router.patch("/updateRoom/:id", updateRoom);
 
 module.exports = router;
