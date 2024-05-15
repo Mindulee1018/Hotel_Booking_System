@@ -18,8 +18,9 @@ function Bookings() {
   }
 
   return (
-    <div>
+    <div className="row">
       <RoomSideBar />
+      <div className="col">
       <h2>Bookings</h2>
       <div className="card">
         <table className="table col p-0 m-0">
@@ -29,12 +30,12 @@ function Bookings() {
               <th>Check-out</th>
               <th>No.of.Guests</th>
               <th>Room Type</th>
-              <th>No.of.Rooms</th>
+              {/* <th>No.of.Rooms</th> */}
               <th>Room Numbers</th>
               <th>First Name</th>
-              <th>Last Name</th>
+              {/* <th>Last Name</th> */}
               <th>Email</th>
-              <th>Address</th>
+              {/* <th>Address</th> */}
               <th>Contact No</th>
               <th>Total Price</th>
             </tr>
@@ -59,6 +60,7 @@ function Bookings() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );
