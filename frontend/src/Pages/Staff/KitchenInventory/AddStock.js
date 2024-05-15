@@ -42,6 +42,18 @@ const AddStock = () => {
             return true;
         
     };
+    const getCurrentDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        let day = today.getDate();
+    
+        // Add leading zero if month or day is less than 10
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+    
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <div className="row p-0">
@@ -71,7 +83,7 @@ const AddStock = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="expiryDate" className="form-label">Best Before Date</label>
-                        <input type="date" className="form-control" id="expiryDate" onChange={(e) => setExpiryDate(e.target.value)} />
+                        <input type="date" className="form-control" id="expiryDate" min={getCurrentDate()} onChange={(e) => setExpiryDate(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Special Notes</label>

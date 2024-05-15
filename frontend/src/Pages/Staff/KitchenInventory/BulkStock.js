@@ -25,6 +25,8 @@ function BulkStock () {
   const [bdescription, setBDescription] = useState("");
   const [searchkey,setsearchkey]=useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [reorderNotification, setReorderNotification] = useState({});
+  const [expiryNotification, setExpiryNotification] = useState({});
   const [sort, setSort] = useState('');
 
 
@@ -115,6 +117,35 @@ function BulkStock () {
       }
       return sortedList;
     };
+
+     //check reorder level
+     const checkReorderLevel = (BulkStock) => {
+      if (BulkStock.bquantity === BulkStock.breorderLevel && !reorderNotification[BulkStock._id]) {
+        alert(`Alert: Quantity for ${BulkStock.bname} has reached its reorder level.`);
+        // Set the notification sent flag to true for this item
+        setReorderNotification((prev) => ({
+          ...prev,
+          [BulkStock._id]: true,
+        }));
+      }
+    };
+
+    //check expiry date
+    const checkExpiryDate = (BulkStock) => {
+      const today = new Date();
+      const expiry = new Date(BulkStock.bexpiryDate);
+      const differenceInDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24)); // Calculate difference in days
+    
+      if (differenceInDays <= 2 && !expiryNotification[BulkStock._id]) { // Check if expiry is within 7 days
+        alert(`Alert: ${BulkStock.bname} is expiring soon. Only ${differenceInDays} days left.`);
+        // Set the notification sent flag to true for this item
+        setExpiryNotification((prev) => ({
+          ...prev,
+          [BulkStock._id]: true,
+        }));
+      }
+    };
+
     const styles = StyleSheet.create({
       page: {
           flexDirection: 'row',
@@ -317,6 +348,8 @@ return (
 
         {sortData(filteredStockList).map((BulkStock) => {
           // Check reorder level for each item
+          checkReorderLevel(BulkStock);
+      checkExpiryDate(BulkStock);
           
           return(
           <tbody key={BulkStock._id}>
