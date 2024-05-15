@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams } from 'react-router-dom';
 import Footer from '../../../components/Footer';
 import SearchHeader from '../../../components/SearchHeader';
 
@@ -276,7 +276,11 @@ const EditBooking = () => {
         ></textarea>
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
+    
     </form>
+    <Link to='/bookHall' className='btn btn-primary mt-3'>
+  Back 
+</Link>
     <Footer/>
   </div>
   </div>

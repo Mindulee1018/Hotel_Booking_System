@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import Header from '../../../components/Header';
+import SearchHeader from '../../../components/SearchHeader';
 
 
 const BookHall = () => {
@@ -58,6 +59,7 @@ const BookHall = () => {
   return (
     <div>
       <Header />
+     
     <div className="container mt-5 serif">
       <div className="mb-4">
         <h1 className="fw-bold display-4">Hall Bookings</h1>
@@ -129,7 +131,9 @@ const BookHall = () => {
         </div>
       
       </div>
-  
+      <Link to='/' className='btn btn-primary mt-3'>
+  Back to venues
+</Link>
       </div>
 
       {/* Delete Confirmation Modal */}

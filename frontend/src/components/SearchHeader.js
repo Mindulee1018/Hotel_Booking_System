@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-
 const SearchHeader = ({ type }) => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
@@ -114,6 +113,188 @@ const SearchHeader = ({ type }) => {
       {/* Add the styles here */}
       <style>
         {`
+        .header {
+          background-color: #003f5c;
+          color: white;
+          display: flex;
+          justify-content: center;
+          position: relative;
+        }
+        
+        .headerContainer {
+          width: 100%;
+          max-width: 1024px;
+          margin: 20px 0px 100px 0px;
+        }
+        
+        .headerContainer.listMode {
+          margin: 20px 0px 0px 0px;
+        }
+        
+        .headerList {
+          display: flex;
+          gap: 40px;
+          margin-bottom: 50px;
+        }
+        
+        .headerListItem {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .headerListItem.active {
+          border: 1px solid white;
+          padding: 10px;
+          border-radius: 20px;
+        }
+        
+        .headerDesc {
+          margin: 20px 0px;
+        }
+        
+        .headerBtn {
+          background-color: #0071c2;
+          color: white;
+          font-weight: 500;
+          border-radius: 0.5rem;
+          padding: 10px;
+          cursor: pointer;
+        }
+        
+        .headerSearch {
+          height: 5rem;
+          background-color: white;
+          border: 3px solid #003f5c;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          padding: 10px 0px;
+          border-radius: 3rem;
+          position: absolute;
+          bottom: -25px;
+          width: 100%;
+          max-width: 1024px;
+          
+        }
+        
+        .headerIcon {
+          color: lightgray;
+        }
+        
+        .headerSearchItem {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .headerSearchInput {
+          border: none;
+          outline: none;
+        
+            
+        }
+        
+        .headerSearchText {
+          color: lightgray;
+          cursor: pointer;
+        }
+        
+        .date {
+          position: absolute;
+          top: 50px;
+          z-index: 2;
+        }
+        
+        .options {
+          z-index: 2;
+          position: absolute;
+          top: 50px;
+          background-color: white;
+          color: gray;
+          border-radius: 5px;
+          -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+          box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+        }
+        
+        .optionItem {
+          width: 200px;
+          display: flex;
+          justify-content: space-between;
+          margin: 10px;
+        }
+        
+        .optionCounter {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 12px;
+          color: black;
+        }
+        
+        .optionCounterButton {
+          width: 30px;
+          height: 30px;
+          border: 1px solid #0071c2;
+          color: #0071c2;
+          cursor: pointer;
+          background-color: white;
+        }
+        
+        .optionCounterButton:disabled {
+          cursor: not-allowed;
+        }
+        .navbar{
+       
+        height: 50px;
+        background-color: #003f5c;
+        display: flex;
+        justify-content: center;
+      }
+      
+      .navContainer{
+        width: 100%;
+        max-width: 1024px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .logo{
+        font-weight: 500;
+      }
+      
+      .navButton{
+        margin-left: 20px;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: #003580;
+      };
+             
+            
+            .navContainer{
+              width: 100%;
+              max-width: 1024px;
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+            
+            .logo{
+              font-weight: 500;
+            }
+            
+            .navButton{
+              margin-left: 20px;
+              border: none;
+              padding: 5px 10px;
+              cursor: pointer;
+              color: #003580;
+            }
+      
           .text-light-blue {
             color: #1e2d54; /* Light blue color */
           }
