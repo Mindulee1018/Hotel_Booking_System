@@ -163,9 +163,9 @@ const Header = () => {
             <hr></hr>
             <div style={{ position: "relative", top: "23px" }}>
               <h5 className="ps-1">Reservations History</h5>
-              <div type="submit" className="btn btn-danger btn-sm mt-3 mb-5" id="submit" data-bs-toggle="modal" data-bs-target="#Modal" style={{ backgroundColor: "rgb(85, 180, 254)" }}
-              >
-                View
+              <div type="submit"  id="submit" 
+              ><a href="/MyBookings" className="btn btn-primary btn-sm mt-3 mb-5">View</a>
+               
               </div>
             </div>
             <hr></hr>
