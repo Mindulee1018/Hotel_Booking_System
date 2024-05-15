@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { useLogout } from "../hooks/Client/userLogin/useLogout";
-import { useUpdate } from '../hooks//Client/userLogin/useUpdate';
+import { useLogout } from '../hooks/Client/userLogin/useLogout';
+import { useUpdate } from '../hooks/Client/userLogin/useUpdate';
 import { useAuthContext } from '../hooks/useAuthContext'
 function HallAdminsidebar(){
 
@@ -31,24 +31,21 @@ function HallAdminsidebar(){
     }
     return(
         <div className="col-3 m-0 p-0">
-        <ul className="nav flex-column pe-1 vh-100" style={{ backgroundColor: "#1E3A8A" }}>
+        <ul className="nav flex-column bg-black pe-1 vh-100">
       
         <div className="d-flex justify-content-center align-items-center"><img src="Sunset Araliya horizontal.png" style={{width:"150px"}} className="mt-4 "></img></div>
         <div className="d-flex flex-column  mt-5 justify-content-around fs-5" style={{height:"250px"}}>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Staffmanage">Staff Management</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/halls">All halls</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Usermanage">User Management</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/AllReservations">Manage Reservations</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/Accountmanage">Account Management</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/HallCalender">Event Calender</a>
           </li>
           <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/AdminDashbord">Home</a>
-          </li>
-          <li className="nav-item border">
-            <a className="nav-link text-white fs-6" aria-current="page" href="/AdminDashbord" data-bs-toggle="modal" data-bs-target="#Modal2" >Profile</a>
+            <a className="nav-link text-white fs-6" aria-current="page" href="/HallAdminDash">Back to Dash</a>
           </li>
         </div>
         <div className=""><a href ="" id="userStatus" className="btn mt-5" sty onClick={handlelogout} style={{backgroundColor:"rgb(85, 180, 254)", position:"relative", top:"190px"}}>Logout</a></div>
@@ -64,8 +61,8 @@ function HallAdminsidebar(){
           <form onSubmit={handleSubmit}>
             <div className="modal-content">
               <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Admin Profile</h1>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={resetfeilds}></button>
+                <h1 className="modal-title fs-5" id="exampleModalLabel">Event Dashboard Profile</h1>
+                
               </div>
               {user &&(
                   <div>
