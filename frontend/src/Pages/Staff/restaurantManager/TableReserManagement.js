@@ -107,7 +107,7 @@ const ManageTableReservation = () => {
           {/* <Image src={logo} style={styles.logo} /> */}
         </View>
         <View style={styles.section}>
-          <Text style={styles.heading}> Watersport Reservation Reports</Text>
+          <Text style={styles.heading}> Table Reservation Report</Text>
           <View style={styles.row}>
             <Text style={styles.cell}>No</Text>
             <Text style={styles.cell}>Date</Text>
@@ -116,14 +116,13 @@ const ManageTableReservation = () => {
             <Text style={styles.cell}>Noofguests</Text>
             <Text style={styles.cell}>Email</Text>
             <Text style={styles.cell}>Contact No</Text>
-            <Text style={styles.cell}>Actions</Text>
           </View>
           {TableList.map((reservation) => (
             <View style={styles.row} key={reservation._id}>
               <Text style={styles.cell}>{reservation.tableReservationNo}</Text>
               <Text style={styles.cell}>{reservation.date}</Text>
               <Text style={styles.cell}>{reservation.customerName}</Text>
-              <Text style={styles.cell}>{reservation.timeSlots}</Text>
+              <Text style={styles.cell}>{reservation.timeSlot}</Text>
               <Text style={styles.cell}>{reservation.Noofguests}</Text>
               <Text style={styles.cell}>{reservation.email}</Text>
               <Text style={styles.cell}>{reservation.contactNumber}</Text>
