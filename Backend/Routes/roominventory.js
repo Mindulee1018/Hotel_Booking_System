@@ -10,13 +10,15 @@ router.route("/add").post((req, res) => {
     const description = req.body.description;
     const unit_price = req.body.unit_price;
     const stockCount = req.body.stockCount;
+    const reorderPoint = req.body.reorderPoint;
 
     const newRoomInventory = new roominventory({
         itemID,
         itemName,
         description,
         unit_price,
-        stockCount
+        stockCount,
+        reorderPoint
     })
 
     newRoomInventory.save().then(() =>{
@@ -36,11 +38,20 @@ router.route("/").get((req, res) => {
     })
 })
 
+router.route("/:id").get((req, res) => {
+    const {id}= req.params;
+    roominventory.findOne({itemID:id}).then((inventory) => {
+        res.json(inventory)
+    }).catch((err) => {
+        console.log(err)
+    })
+})
+
 
 //updating data
 router.route('/update/:ID').patch(async (req, res) => {
     const {ID}= req.params;
-    const {itemID,itemName,description,unit_price,stockCount
+    const {itemID,itemName,description,unit_price,stockCount,reorderPoint
     } = req.body;
 
     try{
@@ -49,7 +60,8 @@ router.route('/update/:ID').patch(async (req, res) => {
         itemName,
         description,
         unit_price,
-        stockCount
+        stockCount,
+        reorderPoint
     }
 
     const update = await roominventory.findOneAndUpdate(
@@ -57,8 +69,8 @@ router.route('/update/:ID').patch(async (req, res) => {
         updateRoomInventory ,
         {new:true}
     );
-    // .then(() => {
-    //     res.status(200).send({status: "Room inventory is updated"})
+    //.then(() => {
+        //res.status(200).send({status: "Room inventory is updated"})
     if (!update) {
         return res.status(404).json({ message: "error" });
       }

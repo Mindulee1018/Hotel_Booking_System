@@ -125,6 +125,11 @@ import RoomManagerView from "./Pages/Staff/RoomInventory/RoomManagerView";
 import AddItem from "./Pages/Staff/RoomInventory/AddItem.js";
 import EditItem from "./Pages/Staff/RoomInventory/EditItem.js";
 import HotelView from "./Pages/Staff/RoomInventory/HotelView.js";
+import View from "./Pages/Staff/RoomInventory/View.js";
+import Inventory_report from "./Pages/Staff/RoomInventory/Inventory_report.js";
+import ManagerView from "./Pages/Staff/RoomInventory/ManagerView.js";
+import RoomRestock from "./Pages/Staff/RoomInventory/RoomRestock.js";
+import AlertNotifications from "./Pages/Staff/RoomInventory/AlertNotifications.js";
 
 //offers managemet
 import AddNewOffer from "./Pages/Staff/Offers/addOffer.js";
@@ -278,8 +283,14 @@ function App() {
           {/* Room Inventory */}
           <Route path="/RoomManagerView" element={<RoomManagerView />} />
           <Route path="/AddItem" element={<AddItem />} />
-          <Route path="/EditItem" element={<EditItem />} />
+          <Route path="/EditItem/:id" element={<EditItem />} />
           <Route path="/HotelView" element={<HotelView />} />
+          <Route path="/View" element={<View />} />
+          <Route path="/Inventory_report" element={<Inventory_report/>} />
+          <Route path="/ManagerView" element={<ManagerView />} />
+          <Route path="/RoomRestock" element={<RoomRestock />} />
+          <Route path="/AlertNotifications" element={<AlertNotifications />} />
+
 
           {/* offers managemet */}
           <Route path="/Addoffer" element={<AddNewOffer />} />

@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Inventorysidebar from '../../../components/InventoryManagerSideBar';
-
+import { useNavigate } from "react-router-dom";
 
 const RoomManagerView = () => {
   const [inventory, setInventory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [state, setState] = useState({});
+  const navigate = useNavigate();
+
+  //message
+  const message = inventory.map((data, index) => {
+    if(data.stockCount < data.reorderPoint ){ 
+      return (
+        <div class="alert alert-warning mb-5" role="alert">
+          <span>item name:<b>{(index ? ', ' : '') + data.itemName}</b> is stockcount is low!</span>
+        </div>
+      )
+      
+    }
+    return null;
+  })
+
 
   useEffect(() => {
     const fetchInventory = async () => {
@@ -26,6 +42,15 @@ const RoomManagerView = () => {
   const filter = inventory.filter(item =>
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleUpdate = (id) => {
+    const selectedItem = inventory.find(item => item._id === id);
+    if (selectedItem) {
+      navigate(`/EditItem/${id}`, { state: { selectedItem } });
+    } else {
+      console.error("Item not found");
+    }
+  };
 
   const onDelete = async (id) => {
     try {
@@ -65,6 +90,7 @@ const RoomManagerView = () => {
                   <th scope="col">Description</th>
                   <th scope="col">Unit_Price</th>
                   <th scope="col">Stock Count</th>
+                  <th scope="col">Reorder Point</th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
@@ -76,12 +102,20 @@ const RoomManagerView = () => {
                     <td>{item.description}</td>
                     <td>{item.unit_price}</td>
                     <td>{item.stockCount}</td>
+                    <td>{item.reorderPoint}</td>
+                    <td>
+                        {item.stockCount < item.reorderPoint && (
+                          <div class="alert alert-warning" role="alert">
+                            Low stock count
+                          </div>
+                        )}
+                      </td>
                     <td>
                       <div className="d-grid gap-2">
-                        <button type="button" className="btn btn-success btn-sm">
-                          <a href={`/EditItem`} style={{ textDecoration: 'none', color: 'white' }}>
+                        <button type="button" className="btn btn-success btn-sm" id={item.itemID} onClick={() => handleUpdate(item._id)}>
+  
                             update
-                          </a>
+                          
                         </button>
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(item._id)}>Delete</button>
                       </div>
