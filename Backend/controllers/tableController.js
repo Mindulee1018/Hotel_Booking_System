@@ -113,7 +113,7 @@ try {
     timeSlot,
   });
 
-  const isAvailable = reservationCount < 6;
+  const isAvailable = reservationCount < 2;
 
   res.status(200).json({
     available: isAvailable,

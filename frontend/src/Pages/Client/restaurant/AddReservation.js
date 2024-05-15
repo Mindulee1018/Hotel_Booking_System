@@ -91,9 +91,9 @@ const [date, setDate] = useState('');
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center vh-130">
     <div className="container text-center"> 
-      <h3 className="mt-4">Table Reservation</h3>
+      <h3 className="mt-0">Table Reservation</h3>
       <div className="d-flex flex-column align-items-center">
         <div className="card mb-3 w-50">
           <div className="card-header"> 
