@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import ReceptionNavbar from "../../../components/receptionNavbar";
 import useActivityList from "../../../hooks/Staff/Reception/useActivityList";
 import useWatersportReservation from "../../../hooks/Staff/Reception/useWatersportReservations";
+import {
+  PDFDownloadLink,
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 
 function ReceptionDashboard() {
   const {
@@ -77,6 +86,88 @@ function ReceptionDashboard() {
     return <div>Error: {errorActivities || errorReservations}</div>;
   }
 
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#ffffff",
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+    heading: {
+      fontSize: 20,
+      marginBottom: 30,
+      marginTop: 70,
+      textAlign: "center",
+    },
+    header: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 10,
+      marginBottom: 20,
+      backgroundColor: "#007bff",
+      color: "#ffffff",
+    },
+    logo: {
+      width: 100,
+      height: 50,
+    },
+    row: {
+      flexDirection: "row",
+      borderBottomColor: "#000000",
+      borderBottomWidth: 1,
+      padding: 5,
+    },
+    cell: {
+      width: "20%",
+      textAlign: "center",
+      fontSize: 10,
+    },
+    footer: {
+      position: "absolute",
+      bottom: 30,
+      left: 0,
+      right: 0,
+      textAlign: "center",
+      fontSize: 8, // Adjust font size for the footer
+    },
+  });
+
+  const MyDocument = (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          {/* <Image src={logo} style={styles.logo} /> */}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.heading}> Watersport Reservation Reports</Text>
+          <View style={styles.row}>
+            <Text style={styles.cell}>Activity Name</Text>
+            <Text style={styles.cell}>No.of.reservations</Text>
+            <Text style={styles.cell}> Reserved Time slots</Text>
+          </View>
+          {reservationDetails.map((detail) => (
+            <View style={styles.row} key={detail.Activity}>
+              <Text style={styles.cell}>{detail.activity}</Text>
+              <Text style={styles.cell}>{detail.count}</Text>
+              <Text style={styles.cell}>{detail.timeSlots}</Text>
+            </View>
+          ))}
+        </View>
+        <Text style={styles.footer}>
+          Downloaded: {new Date().toLocaleString()}
+        </Text>
+      </Page>
+    </Document>
+  );
+
   return (
     <div className="row mb-5">
       <div className="col-lg-2" aria-colspan={2}>
@@ -125,6 +216,18 @@ function ReceptionDashboard() {
         <div className="col-lg-2"></div>
         <div className="col-lg-10">
           <h2 className="m-5">Activity Reservations Summary</h2>
+
+          <PDFDownloadLink
+            document={MyDocument}
+            fileName="Activity_Reservation_Report.pdf"
+            className="btn btn-primary mb-5"
+            
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Loading document..." : "Download PDF"
+            }
+          </PDFDownloadLink>
+
           <div className="d-flex justify-content-center">
             <table style={{ width: "35rem" }}>
               <thead>
@@ -140,7 +243,9 @@ function ReceptionDashboard() {
                   <tr key={detail.Activity}>
                     <td className="border border-black">{detail.activity}</td>
                     <td className="border border-black">{detail.count}</td>
-                    <td className="border border-black">{detail.timeSlots || "None"}</td>
+                    <td className="border border-black">
+                      {detail.timeSlots || "None"}
+                    </td>
                   </tr>
                 ))}
               </tbody>
