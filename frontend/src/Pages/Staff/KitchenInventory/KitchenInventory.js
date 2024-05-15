@@ -23,6 +23,8 @@ function KitchenInventory () {
     const [description, setDescription] = useState("");
     const [searchkey,setsearchkey]=useState('');
     const [filterCategory, setFilterCategory] = useState('');
+    const [reorderNotification, setReorderNotification] = useState({});
+    const [expiryNotification, setExpiryNotification] = useState({});
     const [sort, setSort] = useState('');
 
     //display only unique categories in filter
@@ -113,6 +115,33 @@ function KitchenInventory () {
           sortedList.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
         }
         return sortedList;
+      };
+
+      //check reorder level
+      const checkReorderLevel = (Stock) => {
+        if (Stock.quantity <= Stock.reorderLevel && !reorderNotification[Stock._id]) {
+          alert(`Alert: Quantity for ${Stock.name} has reached its reorder level.`);
+          // Set the notification sent flag to true for this item
+          setReorderNotification((prev) => ({
+            ...prev,
+            [Stock._id]: true,
+          }));
+        }
+      };
+      //check expiry date
+      const checkExpiryDate = (Stock) => {
+        const today = new Date();
+        const expiry = new Date(Stock.expiryDate);
+        const differenceInDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24)); // Calculate difference in days
+      
+        if (differenceInDays <= 2 && !expiryNotification[Stock._id]) { // Check if expiry is within 7 days
+          alert(`Alert: ${Stock.name} is expiring soon. Only ${differenceInDays} days left.`);
+          // Set the notification sent flag to true for this item
+          setExpiryNotification((prev) => ({
+            ...prev,
+            [Stock._id]: true,
+          }));
+        }
       };
 
       const styles = StyleSheet.create({
@@ -311,6 +340,8 @@ return (
           
           {sortData(filteredStockList).map((Stock) => {
             // Check reorder level for each item
+            checkReorderLevel(Stock);
+            checkExpiryDate(Stock);
             
             return(
             
