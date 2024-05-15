@@ -107,6 +107,7 @@ const [date, setDate] = useState('');
                 className="form-control"
                 id="reservation-date"
                 value={date}
+                min={new Date().toISOString().split("T")[0]}
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
