@@ -9,9 +9,10 @@ const useTableList = () => {
   useEffect(() => {
     const fetchTable = async () => {
       setIsLoading(true);
+      window.location.reload();
       try {
         // Fetch Table list
-        const Response = await fetch("http://localhost:4000/tables/");
+        const Response = await fetch("http://localhost:4000/table/");
         if (!Response.ok) {
           throw new Error("Failed to fetch Table list");
         }

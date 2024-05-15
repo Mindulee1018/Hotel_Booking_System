@@ -8,19 +8,20 @@ function SelectActivity() {
   const { ActivityList, isLoading, error } = useActivityList();
   const navigate = useNavigate();
 
+  const [showWarning, setShowWarning] = useState(false);
   const [idList, setIdList] = useState([]);
 
   const handleAddClick = (activityIds, Price) => {
-    // Navigate to the next page and pass the activityId
-    //navigate("/addWatersportsReservation", { state: { activityIds } });
-    navigate("/addWatersportsReservation", { state: { activityList: idList } });
+    if (idList.length === 0) {
+      setShowWarning(true); // Show warning when no activity is selected
+    } else {
+      navigate("/addWatersportsReservation", { state: { activityList: idList } });
+    }
   };
 
   const getActivities = (event, id, Price, qtyPerRound) => {
     const checked = event.target.checked;
     if (checked) {
-      // const ids = idList;
-      // ids.push(id);
       setIdList((currentList) => [
         ...currentList,
         {
@@ -32,13 +33,10 @@ function SelectActivity() {
           noOfRides: 1,
         },
       ]);
-      //setIdList(ids);
     } else {
-      // const ids = idList;
-      // const filteredIdList = ids.filter((filterId) => filterId === id);
       setIdList((currentList) => currentList.filter((item) => item.id !== id));
-      //setIdList(filteredIdList);
     }
+    setShowWarning(false); // Hide warning once an item is checked
   };
 
   return (
@@ -111,6 +109,7 @@ function SelectActivity() {
             <button
               className="btn btn-primary"
               onClick={() => handleAddClick(idList)}
+              disabled={idList.length == 0}
             >
               Next
             </button>
