@@ -25,8 +25,13 @@ const [date, setDate] = useState('');
     if(!date || !timeSlot || !customerName || !Noofguests || !email || !contactNumber){
       alert("All feilds must be filled")
       return false;
+    }else if(contactNumber.length < 10) {
+      alert('Invalid Contact Number.');
+      return false
+    }else{
+      return true; 
     }
-    return true;
+   
   }
 
   function generatereservationNumber(prefix = 'TR', numDigits = 8) {
@@ -88,7 +93,7 @@ const [date, setDate] = useState('');
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
     <div className="container text-center"> 
-      <h3>Table Reservation</h3>
+      <h3 className="mt-4">Table Reservation</h3>
       <div className="d-flex flex-column align-items-center">
         <div className="card mb-3 w-50">
           <div className="card-header"> 
@@ -191,6 +196,7 @@ const [date, setDate] = useState('');
             {reservationMessage && ( 
               <p className="mt-3 text-muted">{reservationMessage}</p>
             )}
+             <p class="text-info mt-2 fw-bold">When reserving a table through the hotel website, an advance payment of Rs. 1000.00 will be charged.</p>
           </div>
         </div>
       </div>

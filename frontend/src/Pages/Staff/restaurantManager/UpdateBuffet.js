@@ -1,33 +1,36 @@
 import React, { useState } from "react";
 import useDisplayBuffet from "../../../hooks/Client/restaurant/useDisplayBuffet";
 import useUpdateBuffet from "../../../hooks/Staff/restaurantManager/useUpdateBuffet";
+import { useLocation } from "react-router-dom";
 
 function UpdateBuffet() {
-  const { buffetDetails  } = useUpdateBuffet();
+  const { updatePrice  } = useUpdateBuffet();
   const { buffetItems, isLoading, error } = useDisplayBuffet();
-  const [BuffetName, setBuffetName] = useState("");
-  const [ Description, setDescription] = useState("");
-  const [Time, setTime] = useState("");
-  const [Price, setPrice] = useState("");
-  const [Image, setImage] = useState("");
-  const [ID, setIdToUpdate] = useState("");
+
    
 
+  const location = useLocation();
+  const { BuffetName, price} = location.state || {};
 
+  const [newPrice, setNewPrice] = useState(price);
 
-  const handleupdate = async (ID) => {
-
-    setIdToUpdate('');
-    await buffetDetails(ID)
-
-  }
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      await updatePrice(BuffetName, newPrice);
+      alert("Buffet price updated successfully!");
+    } catch (error) {
+      console.error("Error updating buffet price:", error);
+      alert("An error occurred while updating buffet price.");
+    }
+  };
   return (
     <div className="row d-flex align-items-center justify-content-center mb-4 mt-1">
       <h1 className="mt-2 mb-3 ">Update Buffet Details</h1>
       
             <form
              className="bg-primary bg-opacity-50"
-              onSubmit={handleupdate}
+              onSubmit={handleUpdate}
               method="Post"
               style={{ width: "25rem" }}
             >
@@ -39,36 +42,12 @@ function UpdateBuffet() {
                   type="text"
                   className="form-control"
                   id="BuffetName"
-                  //   value={menu.productName}
-                  onChange={(e) => {
-                    setBuffetName(e.target.value);
-                  }}
+                    defaultValue={BuffetName}
+                    readOnly
                 />
               </div>
               
-              <div class="mb-3">
-                <label className="form-label mt-3">Description:</label>
-                <input
-                  type="textarea"
-                  className="form-control"
-                  id="Description"
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-              </div>
 
-              <div class="mb-3">
-                <label className="form-label mt-3">Time:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="Time"
-                  onChange={(e) => {
-                    setTime(e.target.value);
-                  }}
-                />
-              </div>
 
               <div class="mb-3">
                 <label className="form-label mt-3">Price:</label>
@@ -76,26 +55,10 @@ function UpdateBuffet() {
                   type="number"
                   className="form-control"
                   id="Price"
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
+                  defaultValue={price}
+                  onChange={(e) => setNewPrice(e.target.value)}
                 />
               </div>
-              <div class="mb-3">
-                <label for="formFile" className="form-label mt-3">
-                  Image File
-                </label>
-                <input
-                  className="form-control"
-                  type="file"
-                  id="formFile"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
-                />
-              </div>
-
-
 
 
 
@@ -107,7 +70,7 @@ function UpdateBuffet() {
 
                 }}
               >
-                Add Buffet Details
+                Update Buffet Details
               </button>
 
               <p id="Error"></p>

@@ -54,8 +54,17 @@ const userSchema = new Schema({
     default: 0,
   },
 
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+
 
 })
+
+userSchema.path('_id').validate(function (value) {
+  return mongoose.Types.ObjectId.isValid(value);
+}, 'Invalid ID format');
 
 // static signup method
 userSchema.statics.signup = async function (email, password, name, role, isAdminCreation = false, verified = false) {

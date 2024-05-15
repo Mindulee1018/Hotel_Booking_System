@@ -261,10 +261,6 @@ const Updateuserpwd = async (req, res) => {
 
 
 
-
-
-
-
 const forgotpwd = async (req, res) => {
 
   const { email } = req.body;
@@ -414,6 +410,9 @@ const getusers = async (req, res) => {
 };
 
 
+
+
+
 //get single user
 const getsingleuser = async (req, res) => {
 
@@ -433,5 +432,69 @@ const getsingleuser = async (req, res) => {
 }
 
 
+const generateReport = async (req, res) => {
+  try {
+    // Count total number of users
+    const totalUsers = await User.countDocuments();
 
-module.exports = { signupUser,verifyEmail, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd }
+    // Group users by role
+    const roleDistribution = await User.aggregate([
+      { $group: { _id: "$role", count: { $sum: 1 } } }
+    ]);
+
+    // Count verified and unverified users
+    const verifiedUsers = await User.countDocuments({ verified: true });
+    const unverifiedUsers = await User.countDocuments({ verified: false });
+
+    // Constructing the report object
+    const report = {
+      totalUsers,
+      verifiedUsers,
+      unverifiedUsers,
+      roleDistribution
+    };
+
+    // Sending the report as JSON response
+    res.status(200).json(report);
+  } catch (error) {
+    console.error("Error generating report:", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+const getNewAccountsWithinOneMonth = async (req, res) => {
+  try {
+    // Calculate the date one month ago from today
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  
+    const newUsers = await User.find({
+      createdAt: { $gte: oneMonthAgo },
+      role: 'user'
+    }).select('email verified');
+
+  
+    const newAccountsCount = newUsers.length;
+
+    const response = {
+      count: newAccountsCount,
+      users: newUsers.map(user => ({
+        email: user.email,
+        verified: user.verified
+      }))
+    };
+
+   
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error fetching new user accounts:", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+
+module.exports = { signupUser,verifyEmail, loginUser, getmanagers, getusers, getstaff, getsingleuser, deleteuser, Updateuserpwd, forgotpwd, resetpwd,generateReport,getNewAccountsWithinOneMonth}

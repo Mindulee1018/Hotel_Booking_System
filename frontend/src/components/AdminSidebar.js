@@ -47,6 +47,9 @@ function Adminsidebar(){
             <a className="nav-link text-white fs-6" aria-current="page" href="/Accountmanage">Account Management</a>
           </li>
           <li className="nav-item border">
+            <a className="nav-link text-white fs-6" aria-current="page" href="/AdminReports">Reports</a>
+          </li>
+          <li className="nav-item border">
             <a className="nav-link text-white fs-6" aria-current="page" href="/AdminDashbord">Home</a>
           </li>
           <li className="nav-item border">
