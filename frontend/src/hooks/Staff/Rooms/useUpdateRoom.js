@@ -27,7 +27,7 @@ const useUpdateRoom = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/rooms/updateRoom/${id}`,
+        `http://localhost:4000/roomType/updateRoom/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -39,9 +39,10 @@ const useUpdateRoom = () => {
         const json = await response.json();
         setError(json.error);
       } else {
-        navigate("/rooms");
-        alert("Room updated successfully");
+        navigate("/ManageRoom");
+        alert('Room updated successfully');
       }
+
     } catch (error) {
       setError("An unexpected error occurred");
     } finally {

@@ -16,6 +16,7 @@ function ManageRoom() {
   const [updatedPrice, setUpdatedPrice] = useState("");
   const [roomIdToUpdate, setRoomIdToUpdate] = useState("");
   const [roomTypes, setRoomTypes] = useState([]);
+  const [showAlert, setShowAlert] = useState(false); // State variable for showing alert
 
   useEffect(() => {
     setRoomTypes(initialRoomTypes);
@@ -63,6 +64,9 @@ function ManageRoom() {
     });
 
     setRoomTypes(updatedRoomTypes);
+
+    // Show alert when room type is updated successfully
+    setShowAlert(true);
 
     // Clear the input fields and the roomIdToUpdate after updating
     setUpdatedRtype("");
@@ -181,13 +185,13 @@ function ManageRoom() {
           />
           <button
             className="btn btn-primary"
-            //style={{ width: "10rem" }}
             onClick={handleUpdate}
           >
             Update
           </button>
         </div>
       )}
+      
     </div>
   );
 }
