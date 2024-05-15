@@ -29,6 +29,8 @@ const AddRoomReserve = () => {
   const [noOfRooms, setnoOfRooms] = useState(0);
   const [selectedRoomType, setSelectedRoomType] = useState("");
   const [availableRooms, setAvailableRooms] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priceFilter, setPriceFilter] = useState("");
 
   const { roomTypes } = RoomTypeList();
   const { roomReservations } = RoomReservationList();
@@ -132,6 +134,13 @@ const AddRoomReserve = () => {
     }
   };
 
+  const filteredRoomTypes = roomTypes.filter(roomtype =>
+    roomtype.Rtype.toLowerCase().includes(searchQuery.toLowerCase())
+    && (!priceFilter || roomtype.price <= priceFilter)
+  );
+
+
+
   return (
     <div>
       <div className="row mt-4 ms-3 mb-5 d-flex">
@@ -185,13 +194,32 @@ const AddRoomReserve = () => {
                   value={noOfRooms}
                   onChange={(e) => setnoOfRooms(e.target.value)}
                 />
+
+
               </form>
             </div>
           </div>
         </div>
 
+
+
         <div className="col-9 ">
-          {roomTypes.map((roomtype) => (
+          <label htmlFor="search">Search by Room Type:</label>
+          <input
+            type="text"
+            id="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+
+          <label htmlFor="priceFilter">Filter by Price:</label>
+          <input
+            type="number"
+            id="priceFilter"
+            value={priceFilter}
+            onChange={(e) => setPriceFilter(parseFloat(e.target.value))}
+          />
+          {filteredRoomTypes.map((roomtype) => (
             <div
               key={roomtype._id}
               onClick={() => setSelectedRoomType(roomtype.Rtype)}
@@ -218,9 +246,8 @@ const AddRoomReserve = () => {
                             height: "350px",
                             objectFit: "cover",
                           }}
-                          src={`data:${
-                            roomtype.Image.contentType
-                          };base64,${bufferToBase64(roomtype.Image.data.data)}`}
+                          src={`data:${roomtype.Image.contentType
+                            };base64,${bufferToBase64(roomtype.Image.data.data)}`}
                           alt={roomtype.Rtype}
                         />
                       )}
@@ -294,5 +321,4 @@ const AddRoomReserve = () => {
     </div>
   );
 };
-
 export default AddRoomReserve;
