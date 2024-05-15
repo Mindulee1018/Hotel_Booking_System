@@ -24,7 +24,7 @@ const useDeleteRoom = () => {
       if (!response.ok) {
         throw new Error(data.error);
       }else {
-        navigate("/UpdateDeleteRoom");
+        navigate("/ManageRoom");
         alert('Room deleted successfully');
       }
 

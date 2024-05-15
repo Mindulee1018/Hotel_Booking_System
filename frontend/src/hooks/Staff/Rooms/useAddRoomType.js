@@ -46,7 +46,7 @@ const useAddRoomType = () => {
         setError(json.error || "Something went wrong");
       } else {
         setIsSuccess(true);
-        navigate("/"); // Adjust this if you want to navigate to a specific path
+        navigate("/ManageRoom"); // Adjust this if you want to navigate to a specific path
       }
     } catch (error) {
       setError("An unexpected error occurred: " + error.message);
