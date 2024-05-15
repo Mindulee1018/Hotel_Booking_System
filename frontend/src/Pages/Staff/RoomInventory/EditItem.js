@@ -112,7 +112,7 @@ export const EditItem = () => {
       };
 
       try {
-        const response = await fetch(`http://localhost:4000/RoomRestock/update/${itemID}`, {
+        const response = await fetch(`http://localhost:4000/roominventory/update/${itemID}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
