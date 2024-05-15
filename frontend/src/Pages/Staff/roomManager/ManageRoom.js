@@ -101,7 +101,7 @@ function ManageRoom() {
         <div className="col p-0 m-0">
           {roomTypes.map((room) => (
             <div key={room._id} className="col-md-4 mb-3">
-              <div className="card">
+              <div className="card mt-5 ms-5" style={{width: "70rem"}}>
                 <div className="card-body d-flex">
                   <div>
                     {room.Image && room.Image.data && (
