@@ -40,7 +40,7 @@ const useUpdateRoom = () => {
         setError(json.error);
       } else {
         alert("Room updated successfully");
-        navigate("/rooms");
+        navigate("/ManageRoom");
         
       }
     } catch (error) {
